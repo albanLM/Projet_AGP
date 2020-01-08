@@ -15,5 +15,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/COO libs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
