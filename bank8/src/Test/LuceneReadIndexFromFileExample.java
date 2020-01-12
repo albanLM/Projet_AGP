@@ -25,7 +25,7 @@ public class LuceneReadIndexFromFileExample {
         IndexSearcher searcher = createSearcher();
          
         //Search indexed contents using search term
-        TopDocs foundDocs = searchInContent("end", searcher);
+        TopDocs foundDocs = searchInContent("too", searcher);
         
          
         //Total found documents
@@ -39,7 +39,7 @@ public class LuceneReadIndexFromFileExample {
     }
      
     private static TopDocs searchInContent(String textToFind, IndexSearcher searcher) throws Exception{
-    	TopScoreDocCollector collector = TopScoreDocCollector.create(200, 1);
+    	TopScoreDocCollector collector = TopScoreDocCollector.create(10, 1);
     	
     	QueryParser qp = new QueryParser("contents", new StandardAnalyzer());
     	qp.setDefaultOperator(QueryParser.Operator.AND);

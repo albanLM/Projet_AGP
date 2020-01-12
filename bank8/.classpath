@@ -18,6 +18,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring Framework Library"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LuceneLib"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lucene"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
