@@ -1,0 +1,47 @@
+package db.textual;
+
+import java.io.IOException;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+
+public class LuceneSystem {
+	
+	
+	private String indexDir;
+	private String dataDir; ;
+	private Indexer indexer;
+	private Searcher searcher;
+	
+	public LuceneSystem(String indexDir, String dataDir) {
+		this.dataDir = dataDir; 
+		this.indexDir = indexDir; 
+	}
+	
+	
+	 public void createIndex() throws IOException {
+	      indexer = new Indexer(indexDir);
+	      indexer.createIndex(dataDir);
+	      indexer.close();
+	      		
+	   }
+	   
+	   public void search(String searchQuery) throws IOException, ParseException   {
+		      searcher = new Searcher(indexDir);
+		      long startTime = System.currentTimeMillis();
+		      TopDocs hits = searcher.search(searchQuery);
+		      long endTime = System.currentTimeMillis();
+
+		      System.out.println(hits.totalHits +
+		         " documents found. Time :" + (endTime - startTime) +" ms");
+		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
+		         Document doc = searcher.getDocument(scoreDoc);
+		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
+		      }
+		      
+		   }
+	   
+	   
+}
