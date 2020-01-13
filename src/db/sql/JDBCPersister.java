@@ -8,6 +8,10 @@ import data.Visit;
 
 public class JDBCPersister {
 	
+	public JDBCPersister() {
+		
+	}
+	
 	public void persistPlace(Place place){
 		
 	}
