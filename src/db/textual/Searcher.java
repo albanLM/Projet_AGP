@@ -21,9 +21,9 @@ import org.apache.lucene.store.FSDirectory;
 
 public class Searcher {
 	
-   IndexSearcher indexSearcher;
-   QueryParser queryParser;
-   Query query;
+	private IndexSearcher indexSearcher;
+	private QueryParser queryParser;
+	private Query query;
    
    
    public Searcher(String indexPath) throws IOException {
@@ -35,12 +35,11 @@ public class Searcher {
    }
 
    TopDocs search(String textToFind) throws IOException, ParseException {
-	   System.out.print("salut0 "+textToFind);
 	   TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
 
-   	QueryParser qp = new QueryParser("contents", new StandardAnalyzer());
+   	queryParser = new QueryParser("contents", new StandardAnalyzer());
 
-   	Query query = qp.parse(textToFind);
+   	query = queryParser.parse(textToFind);
 
    	indexSearcher.search(query, collector);
 
@@ -49,7 +48,7 @@ public class Searcher {
    }
    
    public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
-	   System.out.print("salut0 "+scoreDoc.toString());
+	
 		      return indexSearcher.doc(scoreDoc.doc);	
    }
    
