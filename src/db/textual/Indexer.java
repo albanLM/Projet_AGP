@@ -44,14 +44,12 @@ public class Indexer {
    }
 
    private Document getDocument(Path file) throws IOException {
-	   
 	      Document document = new Document();
-
-	      document.add(new StringField("path", file.toString(), Field.Store.YES));
+	      document.add(new StringField("path", file.getFileName().toString().replace(".txt", ""), Field.Store.YES));
 	      document.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
-	      
+	      document.add(new StringField("type", file.toFile().getParentFile().getName(), Field.Store.YES));
 	      return document;
-	      
+	     
    }
 
 	   private void indexFile(Path file) throws IOException {
