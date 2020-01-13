@@ -26,7 +26,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 
 public class LuceneWriteIndexFromFileExample {
-   public static void main(String[] args){
+   public  void main(String[] args){
        //Input folder
        String docsPath = "inputFiles";
         
@@ -35,11 +35,13 @@ public class LuceneWriteIndexFromFileExample {
 
        //Input Path Variable
        final Path docDir = Paths.get(docsPath);
+       
+       System.out.println("docDir "+docDir.toString());
 
        try{
            //org.apache.lucene.store.Directory instance
            Directory dir = FSDirectory.open( Paths.get(indexPath) );
-            
+           System.out.println("docDir "+dir.toString());
            //analyzer with the default stop words
            Analyzer analyzer = new StandardAnalyzer();
             
@@ -61,7 +63,7 @@ public class LuceneWriteIndexFromFileExample {
        }
    }
     
-   static void indexDocs(final IndexWriter writer, Path path) throws IOException {
+  public  void indexDocs(final IndexWriter writer, Path path) throws IOException {
        //Directory?
        if (Files.isDirectory(path)) {
            //Iterate directory
@@ -85,7 +87,7 @@ public class LuceneWriteIndexFromFileExample {
        }
    }
 
-   static void indexDoc(IndexWriter writer, Path file, long lastModified) throws IOException {
+   public void indexDoc(IndexWriter writer, Path file, long lastModified) throws IOException {
        try (InputStream stream = Files.newInputStream(file)) {
            //Create lucene Document
            Document doc = new Document();
@@ -93,7 +95,7 @@ public class LuceneWriteIndexFromFileExample {
            doc.add(new StringField("path", file.toString(), Field.Store.YES));
            doc.add(new LongPoint("modified", lastModified));
            doc.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
-            
+
            //Updates a document by first deleting the document(s) 
            //containing <code>term</code> and then adding the new
            //document.  The delete and then add are atomic as seen

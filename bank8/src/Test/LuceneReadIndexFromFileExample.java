@@ -18,14 +18,14 @@ import org.apache.lucene.store.FSDirectory;
  
 public class LuceneReadIndexFromFileExample {
     //directory contains the lucene indexes
-    private static final String INDEX_DIR = "indexedFiles";
+    private final static String INDEX_DIR = "indexedFiles";
  
     public static void main(String[] args) throws Exception {
         //Create lucene searcher. It search over a single IndexReader.
         IndexSearcher searcher = createSearcher();
          
         //Search indexed contents using search term
-        TopDocs foundDocs = searchInContent("too", searcher);
+        TopDocs foundDocs = searchInContent("it", searcher);
         
          
         //Total found documents
@@ -38,12 +38,11 @@ public class LuceneReadIndexFromFileExample {
         }
     }
      
-    private static TopDocs searchInContent(String textToFind, IndexSearcher searcher) throws Exception{
+    private  static TopDocs searchInContent(String textToFind, IndexSearcher searcher) throws Exception{
     	TopScoreDocCollector collector = TopScoreDocCollector.create(10, 1);
     	
     	QueryParser qp = new QueryParser("contents", new StandardAnalyzer());
-    	qp.setDefaultOperator(QueryParser.Operator.AND);
-
+    	
     	Query query = qp.parse(textToFind);
 
     	searcher.search(query, collector);

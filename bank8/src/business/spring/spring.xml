@@ -97,6 +97,4 @@
 	</aop:config>
 	<bean id="serviceReporter" class="business.spring.AOPReporter" />
 
-
-
 </beans>
