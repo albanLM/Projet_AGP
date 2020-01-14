@@ -1,5 +1,7 @@
 package db.sql;
 
+import java.util.ArrayList;
+
 import com.mysql.jdbc.Connection;
 
 import data.Hotel;
@@ -16,23 +18,35 @@ public class JDBCReader {
 		conn = co;
 	}
 	
-	public Place readPlace(){
+	public Place readPlace(int id){
 		return null;
 	}
 	
-	public TransportMethod readTransportMethod(){
+	public ArrayList<Place> readAllPlaces(){
+		return null;
+	}
+	
+	public TransportMethod readTransportMethod(int id){
+		return null;
+	}
+	
+	public ArrayList<TransportMethod> readAllTransportMethods(){
 		return null;
 	}
 
-	public Hotel readHotel(){
+	public Hotel readHotel(int id){
+		return null;
+	}
+	
+	public ArrayList<Hotel> readAllHotels(){
 		return null;
 	}
 
-	public Trajectory readTrajectory(){
+	public Visit readVisit(int id){
 		return null;
 	}
-
-	public Visit readVisit(){
+	
+	public ArrayList<Visit> readAllVisits(){
 		return null;
 	}
 }
