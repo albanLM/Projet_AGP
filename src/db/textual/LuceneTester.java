@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
 
-import com.mysql.jdbc.Connection;
-
 import db.sql.BuildRequest;
 
 public class LuceneTester {
@@ -14,12 +12,10 @@ public class LuceneTester {
 	   private static String indexDir = "indexFiles";
 	   private static String dataDir = "inputFiles";
 
-
 	   public static void main(String[] args) {
-
 		   LuceneSystem system;
 		   BuildRequest builder; 
-		   builder = new BuildRequest(null); 
+		   builder = new BuildRequest(); 
 	         system = new LuceneSystem(indexDir, dataDir);
 	         try {
 	        	system.createIndex();
@@ -40,7 +36,6 @@ public class LuceneTester {
 						"   ]\n" + 
 						"}"; 
 				System.out.println(builder.isAskingHotel(request)); 
-						System.out.println(builder.build(request)); 
 			} catch (IOException | ParseException | JSONException e) {
 				e.printStackTrace();
 			}

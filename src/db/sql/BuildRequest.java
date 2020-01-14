@@ -1,19 +1,20 @@
 package db.sql;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mysql.jdbc.Connection;
-
 
 public class BuildRequest {
 	
+	private String type; 
+	private String sql; 
+	HashMap<String, String> where = new HashMap<String, String>(); 
 	
-	private Connection conn;
-	public BuildRequest(Connection co) {
-		conn = co ; 
+	public BuildRequest() {
+		
 	}
 	
 	public boolean isAskingHotel(String request) throws JSONException {
@@ -37,23 +38,32 @@ public class BuildRequest {
 		return false; 
 	}
 	
-	public String build(String request) throws JSONException {
-		String sql = ""; 
+	public void search(String request) throws JSONException {
 		JSONObject jsonObject = new JSONObject(request);
-		String type = jsonObject.getString("type"); 
-		sql = "SELECT * FROM "+type +" WHERE "; 
+		type = jsonObject.getString("type"); 
 		JSONArray whereArray = jsonObject.getJSONArray("where"); 
 		JSONObject object = whereArray.optJSONObject(0);
-	      Iterator<String> iterator = object.keys();
+	    Iterator<String> iterator = object.keys();
 	      while(iterator.hasNext()) {
 	        String currentKey = iterator.next();
 	        String currentValue = whereArray.getJSONObject(0).getString(currentKey); 
-	        
-	        sql+= currentKey + " = "+ currentValue;
-	        if(iterator.hasNext()) sql+= " AND "; 
+	        where.put(currentKey, currentValue); 
 	      }
-		
-        return sql; 
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public HashMap<String, String> getWhere() {
+		return where;
+	}
+
+	public void setWhere(HashMap<String, String> where) {
+		this.where = where;
+	}
 }
