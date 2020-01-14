@@ -27,8 +27,6 @@ public class JoinSqlTextual implements OperatorInterface{
 	public void init() throws IOException, ParseException, SQLException, JSONException {
 		TextualIterator textualIterator;
 		SqlIterator sqlIterator;
-	
-		System.out.println("JoinSqlTextual : "+queryJson);
     	
 		String[] queryAll = ParseRequest.splitSqlText(queryJson);
 
@@ -48,13 +46,12 @@ public class JoinSqlTextual implements OperatorInterface{
         			ScoreDoc d = textualIterator.next();
 		        	Document doc = lucene.getSearcher().getDocument(d); 
 		        	if(doc.get("path").equalsIgnoreCase(rsR[1])){
-		        		System.out.println("ssaaaasas");
 		        		String addRes = rsR[0]+"#"+doc.get("contents")+"#"+d.score; 
 		        		results.add(addRes);
 		        	}
 		        	d = textualIterator.next();
         		}
-        		textualIterator.reset();
+        		
         	}
 			
 	}
@@ -70,7 +67,7 @@ public class JoinSqlTextual implements OperatorInterface{
             return null;
         }
         String doc = results.get(currentPosition);
-        System.out.println("ssss"+doc); 
+
         currentPosition ++;
         return doc; 
 	}
