@@ -5,8 +5,8 @@ public class Hotel extends Place {
 	private float pricePerDay;
 	private Place beach;
 
-	public Hotel(int id, String name, Coordinates coord, String descriptionFile, float pricePerDay, Place beach) {
-		super(id, name, coord, descriptionFile);
+	public Hotel(String name, Coordinates coord, String descriptionFile, float pricePerDay, Place beach) {
+		super(name, coord, descriptionFile);
 		this.pricePerDay = pricePerDay;
 		this.beach = beach;
 	}
