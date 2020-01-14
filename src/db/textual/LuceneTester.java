@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import jdk.nashorn.internal.parser.JSONParser;
 
 public class LuceneTester {
 
@@ -31,9 +34,14 @@ public class LuceneTester {
 						"         \"article\":\"article_text\",\n" + 
 						"         \"document\":\"document_text\"\n" + 
 						"      }\n" + 
-						"   ]\n" + 
+						"   ],\n" + 
+						"   \"search\":\"hotel\"\n" +
 						"}"; 
-				System.out.println(builder.isAskingHotel(request)); 
+				
+				JSONObject json = new JSONObject(request);
+				builder.buildQuery(json, "SELECT X X FROM");
+				System.out.println(builder.getQuery());
+				System.out.println(builder.isAskingHotel()); 
 			} catch (IOException | ParseException | JSONException e) {
 				e.printStackTrace();
 			}
