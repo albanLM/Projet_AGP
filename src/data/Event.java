@@ -1,7 +1,6 @@
 package data;
 
 public abstract class Event {
-	private int id;
 	private float time;
 	private float price;
 
