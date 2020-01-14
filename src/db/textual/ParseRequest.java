@@ -2,7 +2,6 @@ package db.textual;
 
 public class ParseRequest {
 	
-	
 	public static String[] splitSqlText(String query) {
 	        return query.split("(?i)with");
 	}
@@ -11,3 +10,5 @@ public class ParseRequest {
 		return query.contains("with"); 
 	}
 }
+
+
