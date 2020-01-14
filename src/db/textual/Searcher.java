@@ -37,11 +37,11 @@ public class Searcher {
    TopDocs search(String textToFind) throws IOException, ParseException {
 	   TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
 
-   	queryParser = new QueryParser("contents", new StandardAnalyzer());
+   		queryParser = new QueryParser("contents", new StandardAnalyzer());
 
-   	query = queryParser.parse(textToFind);
+   		query = queryParser.parse(textToFind);
 
-   	indexSearcher.search(query, collector);
+   		indexSearcher.search(query, collector);
 
        TopDocs hits = indexSearcher.search(query, 100);
        return hits;
