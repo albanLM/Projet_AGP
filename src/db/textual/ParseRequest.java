@@ -2,16 +2,12 @@ package db.textual;
 
 public class ParseRequest {
 	
-	private String query; 
-	public ParseRequest(String query) {
-		this.query = query; 
-	}
 	
-	public String[] splitSqlText() {
+	public static String[] splitSqlText(String query) {
 	        return query.split("(?i)with");
 	}
 	
-	public boolean isWith() {
+	public static boolean isWith(String query) {
 		return query.contains("with"); 
 	}
 }

@@ -23,23 +23,21 @@ public class LuceneSystem {
 	 public void createIndex() throws IOException {
 	      indexer = new Indexer(indexDir);
 	      indexer.createIndex(dataDir);
-	      indexer.close();
-	      		
+	      indexer.close();	
 	   }
 	   
 	   public TopDocs search(String searchQuery) throws IOException, ParseException   {
 		      searcher = new Searcher(indexDir);
-		      long startTime = System.currentTimeMillis();
 		      TopDocs hits = searcher.search(searchQuery);
-		      long endTime = System.currentTimeMillis();
+		     
 
-		      // Iterate a topdocs element and get information about every document
-		      System.out.println(hits.totalHits +
-		         " documents found. Time :" + (endTime - startTime) +" ms");
-		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
-		         Document doc = searcher.getDocument(scoreDoc);
-		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
-		      }
+//		      // Iterate a topdocs element and get information about every document
+//		      System.out.println(hits.totalHits +
+//		         " documents found. Time :" + (endTime - startTime) +" ms");
+//		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
+//		         Document doc = searcher.getDocument(scoreDoc);
+//		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
+//		      }
 			return hits;
 		      
 		   }
