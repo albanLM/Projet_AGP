@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
 
-import db.sql.BuildRequest;
-
 public class LuceneTester {
 
 	   private static String indexDir = "indexFiles";

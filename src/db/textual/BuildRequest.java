@@ -1,4 +1,4 @@
-package db.sql;
+package db.textual;
 import java.util.HashMap;
 import java.util.Iterator;
 
