@@ -25,62 +25,63 @@ import org.apache.lucene.store.FSDirectory;
 
 public class Indexer {
 
-   private IndexWriter writer;
+    private IndexWriter writer;
 
-   public Indexer(String indexDirectoryPath) throws IOException {
-      
-	   Analyzer analyzer = new StandardAnalyzer();
-      
-       IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-       iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);  
-      Directory indexDirectory =  FSDirectory.open(Paths.get(indexDirectoryPath));
+    public Indexer(String indexDirectoryPath) throws IOException {
+        /*Analyzer analyzer = new StandardAnalyzer();
 
-    
-      writer = new IndexWriter(indexDirectory, iwc);
-   }
+        IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+        iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
+        Directory indexDirectory = FSDirectory.open(Paths.get(indexDirectoryPath));
 
-   public void close() throws CorruptIndexException, IOException {
-      writer.close();
-   }
+        writer = new IndexWriter(indexDirectory, iwc);*/
+    }
 
-   private Document getDocument(Path file) throws IOException {
-	      Document document = new Document();
-	      document.add(new StringField("path", file.getFileName().toString().replace(".txt", ""), Field.Store.YES));
-	      document.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
-	      document.add(new StringField("type", file.toFile().getParentFile().getName(), Field.Store.YES));
-	      return document;
-	     
-   }
+    public void close() throws CorruptIndexException, IOException {
+        /*writer.close();*/
+    }
 
-	   private void indexFile(Path file) throws IOException {
-	      Document document = getDocument(file);
-	      
-	      writer.updateDocument(new Term("path", file.toString()), document);
-	      
-	    
-	   }
+    private Document getDocument(Path file) throws IOException {
+        /*Document document = new Document();
+        document.add(new StringField("path", file.getFileName().toString().replace(".txt", ""), Field.Store.YES));
+        document.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
+        document.add(new StringField("type", file.toFile().getParentFile().getName(), Field.Store.YES));
+        return document;*/
+        return null;
+    }
+
+    private void indexFile(Path file) throws IOException {
+        /*Document document = getDocument(file);
+        writer.updateDocument(new Term("path", file.toString()), document);*/
+    }
 
 
-   public void createIndex(String dataDirPath) throws IOException {
-	   Path file = Paths.get(dataDirPath); 
-	   if (Files.isDirectory(file)) {
-		   
-		   Files.walkFileTree(file, new SimpleFileVisitor<Path>() {
-               @Override
-               public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                   try{
-                       //Index this file
-                	   indexFile(file);                   } 
-                   catch (IOException ioe) {
-                       ioe.printStackTrace();
-                   }
-                   return FileVisitResult.CONTINUE;
-               }
-           });
-       } 
-       else{
-    	   indexFile(file);
-       }
-		
-   }
+    public void createIndex(String dataDirPath) throws IOException {
+        /*Path file = Paths.get(dataDirPath);
+        if (Files.isDirectory(file)) {
+
+            Files.walkFileTree(file, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    try {
+                        //Index this file
+                        indexFile(file);
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } else {
+            indexFile(file);
+        }*/
+    }
+
+    public IndexWriter getWriter() {
+        return writer;
+    }
+
+    public void setWriter(IndexWriter writer) {
+        this.writer = writer;
+    }
 }

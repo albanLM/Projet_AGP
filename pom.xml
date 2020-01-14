@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <lucene.version>8.3.1</lucene.version>
   </properties>
 
@@ -41,11 +41,13 @@
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-queries</artifactId>
       <version>${lucene.version}</version>
-    </dependency><dependency>
+    </dependency>
+    <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
-    </dependency><dependency>
+    </dependency>
+    <dependency>
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <version>2.1</version>
@@ -64,7 +66,9 @@
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20190722</version>
-    </dependency></dependencies>
+    </dependency>
+    <!--MySQL-->
+</dependencies>
 
   <build>
     <finalName>Kalimera</finalName>
