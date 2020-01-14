@@ -31,16 +31,47 @@ public class LuceneSystem {
 		      TopDocs hits = searcher.search(searchQuery);
 		     
 
-//		      // Iterate a topdocs element and get information about every document
-//		      System.out.println(hits.totalHits +
-//		         " documents found. Time :" + (endTime - startTime) +" ms");
-//		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
-//		         Document doc = searcher.getDocument(scoreDoc);
-//		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
-//		      }
+		      // Iterate a topdocs element and get information about every document
+		      System.out.println(hits.totalHits);
+		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
+		         Document doc = searcher.getDocument(scoreDoc);
+		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
+		      }
 			return hits;
 		      
 		   }
+
+	public String getIndexDir() {
+		return indexDir;
+	}
+
+	public void setIndexDir(String indexDir) {
+		this.indexDir = indexDir;
+	}
+
+	public String getDataDir() {
+		return dataDir;
+	}
+
+	public void setDataDir(String dataDir) {
+		this.dataDir = dataDir;
+	}
+
+	public Indexer getIndexer() {
+		return indexer;
+	}
+
+	public void setIndexer(Indexer indexer) {
+		this.indexer = indexer;
+	}
+
+	public Searcher getSearcher() {
+		return searcher;
+	}
+
+	public void setSearcher(Searcher searcher) {
+		this.searcher = searcher;
+	}
 	   
 	   
 }

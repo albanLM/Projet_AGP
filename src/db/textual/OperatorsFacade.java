@@ -7,6 +7,7 @@ public class OperatorsFacade {
 		
 	}
 	
+	
 	public void sqlOperator(String query) {
 		
 	}
