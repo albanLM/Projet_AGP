@@ -4,8 +4,8 @@ public class Trajectory extends Event {
 
 	private TransportMethod transportMethod;
 	
-	public Trajectory(int id, float time, float price, TransportMethod transportMethod) {
-		super(id, time, price);
+	public Trajectory(float time, float price, TransportMethod transportMethod) {
+		super(time, price);
 		this.transportMethod = transportMethod;
 	}
 

@@ -4,8 +4,8 @@ public class Visit extends Event {
 
 	private Place place;
 	
-	public Visit(int id, float time, float price, Place place) {
-		super(id, time, price);
+	public Visit(float time, float price, Place place) {
+		super(time, price);
 		this.place = place;
 	}
 
