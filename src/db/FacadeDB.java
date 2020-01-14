@@ -17,7 +17,6 @@ import db.textual.JoinSqlTextual;
 import db.textual.LuceneSystem;
 import db.textual.ParseRequest;
 import db.textual.SqlIterator;
-import db.textual.TextualIterator;
 public class FacadeDB {
 	
 	private BuildRequest build; 
@@ -38,8 +37,8 @@ public class FacadeDB {
 	}
 	
 	public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException{
-		TextualIterator textualIt;
 		SqlIterator sqlIt; 
+		JoinSqlTextual join; 
 		ArrayList<Hotel> hotels = new ArrayList<Hotel>(); 
 		String query = "SELECT id, description FROM place, hotel WHERE " 
 			+	"place.id = hotel.id_beach "; 
@@ -48,9 +47,22 @@ public class FacadeDB {
 		String sql = build.getQuery(); 
 		
 		if(ParseRequest.isWith(sql)) {
-			String[] split = ParseRequest.splitSqlText(sql); 
-			sqlIt = new SqlIterator(split[0]); 
-			textualIt = new TextualIterator(system, split[1]);
+			join = new JoinSqlTextual(system, sql); 
+			try {
+				join.init();
+				while(join.hasNext()) {
+					String result[] = join.next().split("#"); 
+					String id = result[0]; 
+					String contents = result[1]; 
+					Hotel hotel = jdbc.readHotel(Integer.parseInt(id));
+					hotel.setDescriptionFile(contents);
+					hotels.add(hotel); 
+				}
+			} catch (IOException | ParseException | SQLException | JSONException e) {
+				e.printStackTrace();
+			} 
+			
+			return hotels;
 		}
 		else {
 			sqlIt = new SqlIterator(sql); 
@@ -70,7 +82,6 @@ public class FacadeDB {
 	}
 	
 	public ArrayList<Hotel> getBeaches(JSONObject jsonObject) throws JSONException{
-		TextualIterator textualIt;
 		SqlIterator sqlIt; 
 		JoinSqlTextual join; 
 		ArrayList<Hotel> beaches = new ArrayList<Hotel>(); 
@@ -79,13 +90,17 @@ public class FacadeDB {
 		build = new BuildRequest(); 
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 
-		if(ParseRequest.isWith(sql)) {
-			System.out.println("sasa"); 
+		if(ParseRequest.isWith(sql)) { 
 			join = new JoinSqlTextual(system, sql); 
 			try {
 				join.init();
 				while(join.hasNext()) {
-					System.out.println(join.next()); 
+					String result[] = join.next().split("#"); 
+					String id = result[0]; 
+					String contents = result[1]; 
+					Hotel beach = jdbc.readHotel(Integer.parseInt(id));
+					beach.setDescriptionFile(contents);
+					beaches.add(beach); 
 				}
 			} catch (IOException | ParseException | SQLException | JSONException e) {
 				e.printStackTrace();
@@ -112,14 +127,29 @@ public class FacadeDB {
 	
 	public ArrayList<Place> getPlaces(JSONObject jsonObject) throws JSONException {
 		ArrayList<Place> places = new ArrayList<Place>();
+		JoinSqlTextual join; 
 		String query = "SELECT id, description FROM place WHERE "; 
 		build = new BuildRequest(); 
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 
-		TextualIterator textualIt;
 		SqlIterator sqlIt; 
 		if(ParseRequest.isWith(sql)) {
-			String[] split = ParseRequest.splitSqlText(sql); 
+			join = new JoinSqlTextual(system, sql); 
+			try {
+				join.init();
+				while(join.hasNext()) {
+					String result[] = join.next().split("#"); 
+					String id = result[0]; 
+					String contents = result[1]; 
+					Hotel place= jdbc.readHotel(Integer.parseInt(id));
+					place.setDescriptionFile(contents);
+					places.add(place); 
+				}
+			} catch (IOException | ParseException | SQLException | JSONException e) {
+				e.printStackTrace();
+			} 
+			
+			return places;
 		}
 		else {
 			sqlIt = new SqlIterator(sql); 
