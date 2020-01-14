@@ -27,17 +27,19 @@ public class BuildRequest {
 		return type.equalsIgnoreCase("place"); 
 	}
 	
-	public void buildQuery(JSONObject jsonObject, String query) throws JSONException {
-		
+	public void buildQuery(JSONObject jsonObject, String sql) throws JSONException {
+		query = sql; 
+		System.out.println(jsonObject.toString());
 		if(jsonObject.has("where")) {
-			query+=" WHERE "; 
+			query+=" AND "; 
 			JSONArray whereArray = jsonObject.getJSONArray("where"); 
 			JSONObject object = whereArray.optJSONObject(0);
-		    Iterator<String> iterator = object.keys();
+		    @SuppressWarnings("unchecked")
+			Iterator<String> iterator = object.keys();
 		      while(iterator.hasNext()) {
 		        String currentKey = iterator.next();
 		        String currentValue = whereArray.getJSONObject(0).getString(currentKey); 
-		        query += currentKey+" = "+currentValue; 
+		        query += currentKey+""+currentValue; 
 		        if(iterator.hasNext()) query+= " AND "; 
 		      }
 		}

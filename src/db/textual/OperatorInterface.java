@@ -1,12 +1,18 @@
 package db.textual;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.json.JSONException;
+
 public interface OperatorInterface {
 
-	public void init(); 
+	public void init() throws IOException, ParseException, SQLException, JSONException; 
 	
-	public boolean hasNext(); 
+	public boolean hasNext() throws SQLException; 
 	
-	public int next(); 
+	public Object next(); 
 	
 	public void reset(); 
 }
