@@ -19,7 +19,7 @@ public class PersistenceFacade {
 		reader = new JDBCReader(co);
 	}
 	
-	public void persist(Object o) throws SQLException, ClassNotPersistableException{
+	public void persist(Object o) throws SQLException, ClassNotPersistableException {
 		if(o instanceof Hotel){
 			persister.persistHotel((Hotel) o);
 		}

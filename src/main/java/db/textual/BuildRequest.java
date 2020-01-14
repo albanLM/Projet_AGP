@@ -1,5 +1,4 @@
 package db.textual;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -10,60 +9,51 @@ import org.json.JSONObject;
 public class BuildRequest {
 	
 	private String type; 
-	private String sql; 
-	HashMap<String, String> where = new HashMap<String, String>(); 
+	private String query; 
 	
 	public BuildRequest() {
 		
 	}
 	
-	public boolean isAskingHotel(String request) throws JSONException {
-		JSONObject jsonObject = new JSONObject(request);
-		String type = jsonObject.getString("type"); 
-		if(type.equalsIgnoreCase("hotel")) return true; 
-		return false; 
+	public boolean isAskingHotel() {
+		return type.equalsIgnoreCase("Hotel"); 
 	}
 	
-	public boolean isAskingTransport(String request) throws JSONException {
-		JSONObject jsonObject = new JSONObject(request);
-		String type = jsonObject.getString("type"); 
-		if(type.equalsIgnoreCase("transport")) return true; 
-		return false; 
+	public boolean isAskingTransport() {
+		return type.equalsIgnoreCase("Transport"); 
 	}
 	
-	public boolean isAskingPlace(String request) throws JSONException {
-		JSONObject jsonObject = new JSONObject(request);
-		String type = jsonObject.getString("type"); 
-		if(type.equalsIgnoreCase("place")) return true; 
-		return false; 
+	public boolean isAskingPlace() {
+		return type.equalsIgnoreCase("place"); 
 	}
 	
-	public void search(String request) throws JSONException {
-		JSONObject jsonObject = new JSONObject(request);
-		type = jsonObject.getString("type"); 
-		JSONArray whereArray = jsonObject.getJSONArray("where"); 
-		JSONObject object = whereArray.optJSONObject(0);
-	    Iterator<String> iterator = object.keys();
-	      while(iterator.hasNext()) {
-	        String currentKey = iterator.next();
-	        String currentValue = whereArray.getJSONObject(0).getString(currentKey); 
-	        where.put(currentKey, currentValue); 
-	      }
+	public void buildQuery(JSONObject jsonObject, String query) throws JSONException {
+		
+		if(jsonObject.has("where")) {
+			query+=" WHERE "; 
+			JSONArray whereArray = jsonObject.getJSONArray("where"); 
+			JSONObject object = whereArray.optJSONObject(0);
+		    Iterator<String> iterator = object.keys();
+		      while(iterator.hasNext()) {
+		        String currentKey = iterator.next();
+		        String currentValue = whereArray.getJSONObject(0).getString(currentKey); 
+		        query += currentKey+" = "+currentValue; 
+		        if(iterator.hasNext()) query+= " AND "; 
+		      }
+		}
+		if(jsonObject.has("search")) {
+			String search; 
+			search = jsonObject.getString("search"); 
+			query+= " WITH "+ search; 
+		}
 	}
 
-	public String getType() {
-		return type;
+	public String getQuery() {
+		return query;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setQuery(String query) {
+		this.query = query;
 	}
 
-	public HashMap<String, String> getWhere() {
-		return where;
-	}
-
-	public void setWhere(HashMap<String, String> where) {
-		this.where = where;
-	}
 }
