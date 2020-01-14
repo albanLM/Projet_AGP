@@ -28,10 +28,6 @@ public class JDBCRemover {
 		
 	}
 
-	public void removeTrajectory(Trajectory trajectory){
-		
-	}
-
 	public void removeVisit(Visit visit){
 		
 	}

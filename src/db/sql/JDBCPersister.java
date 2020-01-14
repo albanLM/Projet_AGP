@@ -28,10 +28,6 @@ public class JDBCPersister {
 		
 	}
 
-	public void persistTrajectory(Trajectory trajectory){
-		
-	}
-
 	public void persistVisit(Visit visit){
 		
 	}
