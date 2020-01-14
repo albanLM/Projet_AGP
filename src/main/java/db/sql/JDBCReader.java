@@ -27,14 +27,17 @@ public class JDBCReader {
 		PreparedStatement placeStatement = conn.prepareStatement(placeQuery);
 		placeStatement.setInt(1,id);
 		ResultSet resultPlace = placeStatement.executeQuery();
-		
-		PreparedStatement coordsStatement = conn.prepareStatement(coordsQuery);
-		coordsStatement.setInt(1,resultPlace.getInt("id_coords"));
-		ResultSet resultCoords = coordsStatement.executeQuery();
-		
-		Coordinates coords = new Coordinates(resultCoords.getInt("x"),resultCoords.getInt("y"));
-		
-		return new Place(resultPlace.getString("name"),coords,resultPlace.getString("descriptionFile"));
+		if(resultPlace.next()) {
+			PreparedStatement coordsStatement = conn.prepareStatement(coordsQuery);
+			coordsStatement.setInt(1,resultPlace.getInt("id_coord"));
+			ResultSet resultCoords = coordsStatement.executeQuery();
+			if(resultCoords.next()) {
+				Coordinates coords = new Coordinates(resultCoords.getInt("x"),resultCoords.getInt("y"));
+				return new Place(resultPlace.getString("name"),coords,resultPlace.getString("descriptionFile"));
+			}
+			return null; 
+		}
+		return null; 
 	}
 	
 	public ArrayList<Place> readAllPlaces() throws SQLException{
@@ -86,15 +89,17 @@ public class JDBCReader {
 	public Hotel readHotel(int id) throws SQLException{
 		Place place = this.readPlace(id);
 		
-		String hotelQuery = "SELECT * FROM Hotel WHERE id=?";
+		String hotelQuery = "SELECT * FROM Hotel WHERE id_place=?";
 		
 		PreparedStatement hotelStatement = conn.prepareStatement(hotelQuery);
 		hotelStatement.setInt(1,id);
 		ResultSet resultHotel = hotelStatement.executeQuery();
-		
-		Place beach = this.readPlace(resultHotel.getInt("id_beach"));
-		
-		return new Hotel(place.getName(),place.getCoord(),place.getDescriptionFile(),resultHotel.getFloat("pricePerDay"),beach);
+		if(resultHotel.next()) {
+			Place beach = this.readPlace(resultHotel.getInt("id_beach"));
+			
+			return new Hotel(place.getName(),place.getCoord(),place.getDescriptionFile(),resultHotel.getFloat("pricePerDay"),beach);
+		}
+		return null; 
 	}
 	
 	public ArrayList<Hotel> readAllHotels() throws SQLException{

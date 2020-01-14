@@ -41,6 +41,22 @@ public class LuceneSystem {
 			return hits;
 		      
 		   }
+
+	public Indexer getIndexer() {
+		return indexer;
+	}
+
+	public void setIndexer(Indexer indexer) {
+		this.indexer = indexer;
+	}
+
+	public Searcher getSearcher() {
+		return searcher;
+	}
+
+	public void setSearcher(Searcher searcher) {
+		this.searcher = searcher;
+	}
 	   
 	   
 }

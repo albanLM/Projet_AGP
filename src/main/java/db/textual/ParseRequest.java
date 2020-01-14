@@ -7,7 +7,7 @@ public class ParseRequest {
 	}
 	
 	public static boolean isWith(String query) {
-		return query.contains("with"); 
+		return query.contains("WITH"); 
 	}
 }
 
