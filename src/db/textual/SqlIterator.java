@@ -14,16 +14,31 @@ public class SqlIterator implements OperatorInterface{
 	}
 	
 	public void init() {
-		
+		if (result.size() == 0) {
+          
+        }
 	}
 	
 	
 	public boolean hasNext() {
-		return false; 
-	}
+		init();
+        return currentPosition < result.size();
+    }
 	
 	public int next() {
+		if(!hasNext()) {
+			return null; 
+		}
+		if()
+		currentPosition++;
 		return 0;
 	}
+
+	@Override
+	public void reset() {
+		currentPosition = 0; 
+	}
+	
+	
 
 }

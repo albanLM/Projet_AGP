@@ -7,4 +7,6 @@ public interface OperatorInterface {
 	public boolean hasNext(); 
 	
 	public int next(); 
+	
+	public void reset(); 
 }
