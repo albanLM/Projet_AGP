@@ -1,19 +1,27 @@
 package db;
 
 import java.awt.List;
+import java.io.IOException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import data.Hotel;
 import db.textual.BuildRequest;
+import db.textual.LuceneSystem;
 import db.textual.ParseRequest;
 public class FacadeDB {
 	
 	private BuildRequest build; 
+	private LuceneSystem system;
 	
-	public FacadeDB() {
-		
+	public FacadeDB(String indexDir, String dataDir) {
+		system = new LuceneSystem(indexDir, dataDir);
+		try {
+			system.createIndex();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List getHotels(JSONObject jsonObject) throws JSONException{
@@ -24,7 +32,7 @@ public class FacadeDB {
 		String sql = build.getQuery(); 
 		
 		if(ParseRequest.isWith(sql)) {
-			
+			String[] split = ParseRequest.splitSqlText(sql); 
 		}
 		else {
 			
@@ -40,6 +48,7 @@ public class FacadeDB {
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 
 		if(ParseRequest.isWith(sql)) {
+			String[] split = ParseRequest.splitSqlText(sql); 
 			
 		}
 		else {
@@ -54,7 +63,7 @@ public class FacadeDB {
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 
 		if(ParseRequest.isWith(sql)) {
-			
+			String[] split = ParseRequest.splitSqlText(sql); 
 		}
 		else {
 			
