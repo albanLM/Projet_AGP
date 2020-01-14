@@ -27,11 +27,9 @@ public class SqlIterator implements OperatorInterface{
 	
 	public int next() {
 		if(!hasNext()) {
-			return null; 
+			return 1; 
 		}
-		if()
-		currentPosition++;
-		return 0;
+		return 0; 
 	}
 
 	@Override
