@@ -1,5 +1,7 @@
 package db.sql;
 
+import com.mysql.jdbc.Connection;
+
 import data.Hotel;
 import data.Place;
 import data.Trajectory;
@@ -8,8 +10,10 @@ import data.Visit;
 
 public class JDBCPersister {
 	
-	public JDBCPersister() {
-		
+	private Connection conn;
+	
+	public JDBCPersister(Connection co) {
+		conn = co;
 	}
 	
 	public void persistPlace(Place place){
@@ -21,10 +25,6 @@ public class JDBCPersister {
 	}
 
 	public void persistHotel(Hotel hotel){
-		
-	}
-
-	public void persistTrajectory(Trajectory trajectory){
 		
 	}
 
