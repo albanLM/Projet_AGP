@@ -3,11 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/COO libs"/>
-<<<<<<< HEAD
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libCOO"/>
+
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lucene"/>
-=======
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
->>>>>>> branch 'master' of https://github.com/albanLM/Projet_AGP
+
 	<classpathentry kind="output" path="bin"/>
 </classpath>
