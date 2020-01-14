@@ -1,25 +1,15 @@
 package data;
 
 public class TransportMethod {
-	private int id;
 	private String name;
 	private int speed;
 	private float pricePerKm;
 	
-	public TransportMethod(int id, String name, int speed, float pricePerKm) {
+	public TransportMethod(String name, int speed, float pricePerKm) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.speed = speed;
 		this.pricePerKm = pricePerKm;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {

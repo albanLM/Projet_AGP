@@ -3,30 +3,19 @@ package data;
 import java.util.ArrayList;
 
 public class Trip {
-
-	private int id;
 	private Hotel hotel;
 	private ArrayList<Excursion> excursions;
 	private float price;
 	private Date start;
 	private Date end;
 	
-	public Trip(int id, Hotel hotel, ArrayList<Excursion> excursions, float price, Date start, Date end) {
+	public Trip(Hotel hotel, ArrayList<Excursion> excursions, float price, Date start, Date end) {
 		super();
-		this.id = id;
 		this.hotel = hotel;
 		this.excursions = excursions;
 		this.price = price;
 		this.start = start;
 		this.end = end;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Hotel getHotel() {

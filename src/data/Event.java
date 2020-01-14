@@ -1,23 +1,13 @@
 package data;
 
 public abstract class Event {
-	private int id;
 	private float time;
 	private float price;
 
-	public Event(int id, float time, float price) {
+	public Event(float time, float price) {
 		super();
-		this.id = id;
 		this.time = time;
 		this.price = price;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public float getTime() {
