@@ -27,7 +27,7 @@ public class JDBCPersister {
 		Connection dbConnection = DatabaseConnection.getConnection();
 		
 		String readCoordinatesQuery = "SELECT id FROM Coordinates WHERE x = ? AND y = ?";
-		String insertCoordinatesQuery = "INSERT INTO Place (x, y) VALUES (?,?)";
+		String insertCoordinatesQuery = "INSERT INTO Coordinates (x, y) VALUES (?,?)";
 		
 		//Check if coord already exists in the database
 		PreparedStatement preparedStatement = dbConnection.prepareStatement(readCoordinatesQuery);
@@ -52,8 +52,6 @@ public class JDBCPersister {
 			preparedStatement.close();
 		}
 	}
-	
-	String readCoordinatesPK = "SELECT id FROM Coordinates WHERE x = ? AND y = ?";
 	
 	public void persistPlace(Place place) throws SQLException{
 		
@@ -90,15 +88,101 @@ public class JDBCPersister {
 		preparedStatement.close();
 	}
 
-	public void persistHotel(Hotel hotel){
+	public void persistHotel(Hotel hotel) throws SQLException{
+		//First, persist the Place part of hotel and its beach
+		Place place = new Place(hotel.getName(), hotel.getCoord(), hotel.getDescriptionFile());
+		persistPlace(place);
+		persistPlace(hotel.getBeach());
+		
+		Connection dbConnection = DatabaseConnection.getConnection();
+		
+		String readPlacePKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
+		String readBeachPKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
+		String insertHotelQuery = "INSERT INTO Hotel (id_place, pricePerDay, id_beach) VALUES (?,?,?)";
+
+		//Then, get the primary key of the Place part and the beach
+		PreparedStatement preparedStatement = dbConnection.prepareStatement(readPlacePKQuery);
+		
+		preparedStatement.setString(1, place.getName());
+		preparedStatement.setString(2, place.getDescriptionFile());
+		
+		ResultSet result = preparedStatement.executeQuery();
+		result.next();
+		
+		int placePK = result.getInt("id");
+		
+		preparedStatement.close();
+		
+		preparedStatement = dbConnection.prepareStatement(readBeachPKQuery);
+		
+		preparedStatement.setString(1, hotel.getBeach().getName());
+		preparedStatement.setString(2, hotel.getBeach().getDescriptionFile());
+		
+		result = preparedStatement.executeQuery();
+		result.next();
+		
+		int beachPK = result.getInt("id");
+
+		//Set place in the database
+		preparedStatement = dbConnection.prepareStatement(insertHotelQuery);
+		
+		preparedStatement.setInt(1, placePK);
+		preparedStatement.setFloat(2, hotel.getPricePerDay());
+		preparedStatement.setInt(3, beachPK);
+
+		preparedStatement.executeUpdate();
+
+		preparedStatement.close();
 		
 	}
 
-	public void persistVisit(Visit visit){
+	public void persistVisit(Visit visit) throws SQLException{
+		//First, persist the Place of visit
+		persistPlace(visit.getPlace());
 		
+		Connection dbConnection = DatabaseConnection.getConnection();
+		
+		String readPlacePKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
+		String insertVisitQuery = "INSERT INTO Visit (visitTime, price, id_place) VALUES (?,?,?)";
+
+		//Then, get the primary key of the Place
+		PreparedStatement preparedStatement = dbConnection.prepareStatement(readPlacePKQuery);
+		
+		preparedStatement.setString(1, visit.getPlace().getName());
+		preparedStatement.setString(2, visit.getPlace().getDescriptionFile());
+		
+		ResultSet result = preparedStatement.executeQuery();
+		result.next();
+		
+		int placePK = result.getInt("id");
+		
+		preparedStatement.close();
+
+		//Set visit in the database
+		preparedStatement = dbConnection.prepareStatement(insertVisitQuery);
+		
+		preparedStatement.setFloat(1, visit.getTime());
+		preparedStatement.setFloat(2, visit.getPrice());
+		preparedStatement.setInt(3, placePK);
+
+		preparedStatement.executeUpdate();
+
+		preparedStatement.close();
 	}
 
-	public void persistTransportMethod(TransportMethod method){
+	public void persistTransportMethod(TransportMethod method) throws SQLException{
+		String insertVisitQuery = "INSERT INTO TransportMethod (name, speed, pricePerKm) VALUES (?,?,?)";
+
+		Connection dbConnection = DatabaseConnection.getConnection();
 		
+		PreparedStatement preparedStatement = dbConnection.prepareStatement(insertVisitQuery);
+		
+		preparedStatement.setString(1, method.getName());
+		preparedStatement.setInt(2, method.getSpeed());
+		preparedStatement.setFloat(3, method.getPricePerKm());
+		
+		preparedStatement.executeUpdate();
+
+		preparedStatement.close();
 	}
 }
