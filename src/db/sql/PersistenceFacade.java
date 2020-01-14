@@ -3,6 +3,7 @@ package db.sql;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import data.Coordinates;
 import data.Hotel;
 import data.Place;
 import data.TransportMethod;
@@ -19,22 +20,26 @@ public class PersistenceFacade {
 		reader = new JDBCReader(co);
 	}
 	
-	public void persist(Object o) throws SQLException, ClassNotPersistableException{
-		if(o instanceof Hotel){
-			persister.persistHotel((Hotel) o);
+	public void persist(Object obj) throws SQLException, ClassNotPersistableException{
+		if(obj instanceof Coordinates){
+			persister.persistCoordinates((Coordinates) obj);
 		}
-		else if(o instanceof Place){
-			persister.persistPlace((Place) o); 
+		else if(obj instanceof Hotel){
+			persister.persistHotel((Hotel) obj);
 		}
-		else if(o instanceof Visit) {
-			persister.persistVisit((Visit) o);
+		else if(obj instanceof Place){
+			persister.persistPlace((Place) obj); 
 		}
-		else if(o instanceof TransportMethod) {
-			persister.persistTransportMethod((TransportMethod) o);
+		else if(obj instanceof Visit) {
+			persister.persistVisit((Visit) obj);
+		}
+		else if(obj instanceof TransportMethod) {
+			persister.persistTransportMethod((TransportMethod) obj);
 		}
 		else {
 			throw new ClassNotPersistableException();
 		}
+		System.out.println("Insertion completed");
 	}
 	
 	public JDBCReader getReader(){
