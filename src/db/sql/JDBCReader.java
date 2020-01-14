@@ -1,5 +1,7 @@
 package db.sql;
 
+import com.mysql.jdbc.Connection;
+
 import data.Hotel;
 import data.Place;
 import data.Trajectory;
@@ -7,8 +9,11 @@ import data.TransportMethod;
 import data.Visit;
 
 public class JDBCReader {
-	public JDBCReader() {
-		
+	
+	private Connection conn;
+	
+	public JDBCReader(Connection co){
+		conn = co;
 	}
 	
 	public Place readPlace(){

@@ -1,5 +1,7 @@
 package db.sql;
 
+import com.mysql.jdbc.Connection;
+
 import data.Hotel;
 import data.Place;
 import data.Trajectory;
@@ -8,8 +10,10 @@ import data.Visit;
 
 public class JDBCRemover {
 
-	public JDBCRemover() {
-		
+	private Connection conn;
+	
+	public JDBCRemover(Connection co) {
+		conn = co;
 	}
 	
 	public void removePlace(Place place){
