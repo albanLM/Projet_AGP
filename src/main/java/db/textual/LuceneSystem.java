@@ -11,7 +11,7 @@ public class LuceneSystem {
 	
 	
 	private String indexDir;
-	private String dataDir; ;
+	private String dataDir;
 	private Indexer indexer;
 	private Searcher searcher;
 	
