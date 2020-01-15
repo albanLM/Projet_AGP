@@ -1,5 +1,6 @@
 package db;
 
+import business.SpringIoC;
 import data.Hotel;
 import data.Place;
 import org.json.JSONException;
@@ -22,10 +23,7 @@ class FacadeDBTest {
 
     @BeforeAll
     static void beforeAll() {
-        indexDir = "indexFiles";
-        dataDir = "inputFiles";
-
-        facade = new FacadeDB(indexDir, dataDir);
+        facade = (FacadeDB) SpringIoC.getBean("dbFacade");
     }
 
     @BeforeEach

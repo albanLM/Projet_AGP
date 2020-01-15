@@ -24,7 +24,6 @@ public class TerminalDBUtility {
 			line = scanner.nextLine();
 			if(line.equals("search")) {
 				ConsoleIHM.consoleIHM();
-
 			}
 			else if(line.equals("insert")) {
 				boolean inserted = false;
@@ -121,7 +120,7 @@ public class TerminalDBUtility {
 
 		Coordinates coord = new Coordinates(x, y);
 		if(insert) {
-			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			PersistenceFacade facade = new PersistenceFacade();
 			facade.persist(coord);
 		}
 		return coord;
@@ -178,7 +177,7 @@ public class TerminalDBUtility {
 
 		TransportMethod method = new TransportMethod(name, speed, pricePerKm);
 		if(insert) {
-			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			PersistenceFacade facade = new PersistenceFacade();
 			facade.persist(method);
 		}
 		return method;
@@ -227,7 +226,7 @@ public class TerminalDBUtility {
 		Place place = new Place(name, coord, descriptionFile);
 
 		if(insert) {
-			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			PersistenceFacade facade = new PersistenceFacade();
 			facade.persist(place);
 		}
 		return place;
@@ -280,7 +279,7 @@ public class TerminalDBUtility {
 		Visit visit = new Visit(time, price, place);
 
 		if(insert) {
-			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			PersistenceFacade facade = new PersistenceFacade();
 			facade.persist(visit);
 		}
 		return visit;
@@ -343,7 +342,7 @@ public class TerminalDBUtility {
 		Hotel hotel = new Hotel(name, beach.getCoord(), descriptionFile, pricePerDay, beach);
 
 		if(insert) {
-			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			PersistenceFacade facade = new PersistenceFacade();
 			facade.persist(hotel);
 		}
 		return hotel;
