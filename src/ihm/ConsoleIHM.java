@@ -18,6 +18,7 @@ public class ConsoleIHM {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Console IHM");
+		System.out.println("Choose");
 
 		System.out.println("type keywords");
 		String keys = sc.nextLine();
@@ -32,6 +33,8 @@ public class ConsoleIHM {
 			
 			js.put("where", array);
 			js.put("search", keys);
+			
+			
 			
 			System.out.println(js);
 		} catch (JSONException e) {
