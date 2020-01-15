@@ -21,14 +21,12 @@ public class JDBCPersister {
 	}
 	
 	public void persistCoordinates(Coordinates coord) throws SQLException{
-
-		Connection dbConnection = DatabaseConnection.getConnection();
 		
 		String readCoordinatesQuery = "SELECT id FROM Coordinates WHERE x = ? AND y = ?";
 		String insertCoordinatesQuery = "INSERT INTO Coordinates (x, y) VALUES (?,?)";
 		
 		//Check if coord already exists in the database
-		PreparedStatement preparedStatement = dbConnection.prepareStatement(readCoordinatesQuery);
+		PreparedStatement preparedStatement = conn.prepareStatement(readCoordinatesQuery);
 		
 		preparedStatement.setInt(1, coord.getX());
 		preparedStatement.setInt(2, coord.getY());
@@ -40,7 +38,7 @@ public class JDBCPersister {
 		
 		if(!alreadyExists) {
 			//Insert coord in the database
-			preparedStatement = dbConnection.prepareStatement(insertCoordinatesQuery);
+			preparedStatement = conn.prepareStatement(insertCoordinatesQuery);
 			
 			preparedStatement.setInt(1, coord.getX());
 			preparedStatement.setInt(2, coord.getY());
@@ -55,14 +53,12 @@ public class JDBCPersister {
 		
 		//First, persist place.coord
 		persistCoordinates(place.getCoord());
-
-		Connection dbConnection = DatabaseConnection.getConnection();
 		
 		String readCoordinatesPKQuery = "SELECT id FROM Coordinates WHERE x = ? AND y = ?";
 		String insertPlaceQuery = "INSERT INTO Place (name, descriptionFile, id_coord) VALUES (?,?,?)";
 		
 		//Get the primary key of place.coordinates
-		PreparedStatement preparedStatement = dbConnection.prepareStatement(readCoordinatesPKQuery);
+		PreparedStatement preparedStatement = conn.prepareStatement(readCoordinatesPKQuery);
 		
 		preparedStatement.setInt(1, place.getCoord().getX());
 		preparedStatement.setInt(2, place.getCoord().getY());
@@ -75,7 +71,7 @@ public class JDBCPersister {
 		preparedStatement.close();
 
 		//Set place in the database
-		preparedStatement = dbConnection.prepareStatement(insertPlaceQuery);
+		preparedStatement = conn.prepareStatement(insertPlaceQuery);
 		
 		preparedStatement.setString(1, place.getName());
 		preparedStatement.setString(2, place.getDescriptionFile());
@@ -92,14 +88,12 @@ public class JDBCPersister {
 		persistPlace(place);
 		persistPlace(hotel.getBeach());
 		
-		Connection dbConnection = DatabaseConnection.getConnection();
-		
 		String readPlacePKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
 		String readBeachPKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
 		String insertHotelQuery = "INSERT INTO Hotel (id_place, pricePerDay, id_beach) VALUES (?,?,?)";
 
 		//Then, get the primary key of the Place part and the beach
-		PreparedStatement preparedStatement = dbConnection.prepareStatement(readPlacePKQuery);
+		PreparedStatement preparedStatement = conn.prepareStatement(readPlacePKQuery);
 		
 		preparedStatement.setString(1, place.getName());
 		preparedStatement.setString(2, place.getDescriptionFile());
@@ -111,7 +105,7 @@ public class JDBCPersister {
 		
 		preparedStatement.close();
 		
-		preparedStatement = dbConnection.prepareStatement(readBeachPKQuery);
+		preparedStatement = conn.prepareStatement(readBeachPKQuery);
 		
 		preparedStatement.setString(1, hotel.getBeach().getName());
 		preparedStatement.setString(2, hotel.getBeach().getDescriptionFile());
@@ -122,7 +116,7 @@ public class JDBCPersister {
 		int beachPK = result.getInt("id");
 
 		//Set place in the database
-		preparedStatement = dbConnection.prepareStatement(insertHotelQuery);
+		preparedStatement = conn.prepareStatement(insertHotelQuery);
 		
 		preparedStatement.setInt(1, placePK);
 		preparedStatement.setFloat(2, hotel.getPricePerDay());
@@ -138,13 +132,11 @@ public class JDBCPersister {
 		//First, persist the Place of visit
 		persistPlace(visit.getPlace());
 		
-		Connection dbConnection = DatabaseConnection.getConnection();
-		
 		String readPlacePKQuery = "SELECT id FROM Place WHERE name = ? AND descriptionFile = ?";
 		String insertVisitQuery = "INSERT INTO Visit (visitTime, price, id_place) VALUES (?,?,?)";
 
 		//Then, get the primary key of the Place
-		PreparedStatement preparedStatement = dbConnection.prepareStatement(readPlacePKQuery);
+		PreparedStatement preparedStatement = conn.prepareStatement(readPlacePKQuery);
 		
 		preparedStatement.setString(1, visit.getPlace().getName());
 		preparedStatement.setString(2, visit.getPlace().getDescriptionFile());
@@ -157,7 +149,7 @@ public class JDBCPersister {
 		preparedStatement.close();
 
 		//Set visit in the database
-		preparedStatement = dbConnection.prepareStatement(insertVisitQuery);
+		preparedStatement = conn.prepareStatement(insertVisitQuery);
 		
 		preparedStatement.setFloat(1, visit.getTime());
 		preparedStatement.setFloat(2, visit.getPrice());
@@ -170,10 +162,8 @@ public class JDBCPersister {
 
 	public void persistTransportMethod(TransportMethod method) throws SQLException{
 		String insertVisitQuery = "INSERT INTO TransportMethod (name, speed, pricePerKm) VALUES (?,?,?)";
-
-		Connection dbConnection = DatabaseConnection.getConnection();
 		
-		PreparedStatement preparedStatement = dbConnection.prepareStatement(insertVisitQuery);
+		PreparedStatement preparedStatement = conn.prepareStatement(insertVisitQuery);
 		
 		preparedStatement.setString(1, method.getName());
 		preparedStatement.setInt(2, method.getSpeed());
