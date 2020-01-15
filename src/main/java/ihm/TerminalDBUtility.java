@@ -1,18 +1,14 @@
 package ihm;
 
-import java.sql.SQLException;
-import java.util.Scanner;
-
-import data.Coordinates;
-import data.Hotel;
-import data.Place;
-import data.TransportMethod;
-import data.Visit;
+import data.*;
 import db.sql.DatabaseConnection;
 import db.sql.PersistenceFacade;
 import db.sql.exceptions.CancelInsertionIntoDBException;
 import db.sql.exceptions.ClassNotPersistableException;
 import db.sql.exceptions.ExitInsertionIntoDBException;
+
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class TerminalDBUtility {
 	
@@ -24,8 +20,13 @@ public class TerminalDBUtility {
 			System.out.println("Insert a new data in the DB : insert");
 			System.out.println("Exit the utility : exit");
 			System.out.println("Cancel an action in progress : cancel");
+			System.out.println("Search in the database : search");
 			line = scanner.nextLine();
-			if(line.equals("insert")) {
+			if(line.equals("search")) {
+				ConsoleIHM.consoleIHM();
+
+			}
+			else if(line.equals("insert")) {
 				boolean inserted = false;
 				while(!line.equals("cancel") && !inserted && !line.equals("exit")){
 					System.out.println("Insert an object from a type among Coordinates, TransportMethod, Place, Visit and Hotel");
@@ -71,6 +72,8 @@ public class TerminalDBUtility {
 				if(line.equals("cancel")) {
 					System.out.println("Insertion has been canceled");
 				}
+				
+				
 			}
 			else if(!line.equals("exit")){
 				System.out.println("This command is not valid");

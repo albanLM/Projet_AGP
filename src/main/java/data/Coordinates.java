@@ -1,6 +1,10 @@
 package data;
 
 public class Coordinates {
+	@Override
+	public String toString() {
+		return "Coordinates [x=" + x + ", y=" + y + "]";
+	}
 	private int x;
 	private int y;
 	

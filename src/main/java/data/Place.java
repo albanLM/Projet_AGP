@@ -35,4 +35,9 @@ public class Place {
 	public void setDescriptionFile(String descriptionFile) {
 		this.descriptionFile = descriptionFile;
 	}
+
+	@Override
+	public String toString() {
+		return "Place [name=" + name + ", coord=" + coord + ", descriptionFile=" + descriptionFile + "]";
+	}
 }
