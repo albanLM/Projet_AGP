@@ -1,5 +1,7 @@
 package ihm;
 
+import data.Excursion;
+
 import java.util.ArrayList;
 
 public class Criteria {
@@ -7,6 +9,11 @@ public class Criteria {
     private float minPrice, maxPrice;
     private ArrayList<String> keywords;
     private EnumComfort comfort;
+    private int excursionCount;
+
+    public void addKeywords(ArrayList<String> newKeywords) {
+        keywords.addAll(newKeywords);
+    }
 
     public int getNumberOfDay() {
         return numberOfDay;
@@ -46,5 +53,13 @@ public class Criteria {
 
     public void setComfort(EnumComfort comfort) {
         this.comfort = comfort;
+    }
+
+    public int getExcursionCount() {
+        return excursionCount;
+    }
+
+    public void setExcursionCount(int excursionCount) {
+        this.excursionCount = excursionCount;
     }
 }

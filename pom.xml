@@ -33,6 +33,7 @@
       <groupId>com.tngtech.jgiven</groupId>
       <artifactId>jgiven-junit5</artifactId>
       <version>1.0.0-RC3</version>
+      <scope>test</scope>
     </dependency>
     <!--LUCENE-->
     <dependency>
@@ -55,28 +56,12 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
     </dependency>
-    <!--JSF-->
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <version>2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-impl</artifactId>
-      <version>1.2-20</version>
-    </dependency>
-    <!--SERVLET-->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>3.0-alpha-1</version>
-    </dependency>
     <!--SPRING-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>5.2.2.RELEASE</version>
+      <scope>provided</scope>
     </dependency>
     <!--JSON-->
     <dependency>
@@ -84,13 +69,24 @@
       <artifactId>json</artifactId>
       <version>20190722</version>
     </dependency>
-    <!--JAVAX FACES-->
+    <!--JAVAX-->
     <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.faces</artifactId>
-      <version>2.4.0</version>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>8.0</version>
+      <scope>provided</scope>
     </dependency>
-</dependencies>
+    <dependency>
+      <groupId>com.sun.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <version>2.1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.faces</groupId>
+      <artifactId>jsf-impl</artifactId>
+      <version>2.1.7</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <finalName>Kalimera</finalName>
