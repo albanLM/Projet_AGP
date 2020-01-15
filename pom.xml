@@ -84,7 +84,13 @@
       <artifactId>json</artifactId>
       <version>20190722</version>
     </dependency>
-  </dependencies>
+    <!--JAVAX FACES-->
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.faces</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+</dependencies>
 
   <build>
     <finalName>Kalimera</finalName>

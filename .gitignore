@@ -7,4 +7,9 @@ target/
 bin/
 .classpath
 .project
+<<<<<<< HEAD
+/target/
+.settings/*
+=======
 .settings/
+>>>>>>> branch 'master' of https://github.com/albanLM/Projet_AGP/

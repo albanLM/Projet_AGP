@@ -8,9 +8,10 @@ public class Trip {
 	private float price;
 	private Date start;
 	private Date end;
-	
+
+	public Trip() {}
+
 	public Trip(Hotel hotel, ArrayList<Excursion> excursions, float price, Date start, Date end) {
-		super();
 		this.hotel = hotel;
 		this.excursions = excursions;
 		this.price = price;

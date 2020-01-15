@@ -19,7 +19,6 @@ import db.textual.ParseRequest;
 import db.textual.SqlIterator;
 
 public class FacadeDB {
-
     private BuildRequest build;
     private LuceneSystem system;
     private JDBCReader jdbc;
@@ -77,7 +76,6 @@ public class FacadeDB {
 
         return hotels;
     }
-
     public ArrayList<Hotel> getBeaches(JSONObject jsonObject) throws JSONException {
         SqlIterator sqlIt;
         JoinSqlTextual join;
@@ -120,7 +118,6 @@ public class FacadeDB {
         }
         return beaches;
     }
-
     public ArrayList<Place> getPlaces(JSONObject jsonObject) throws JSONException {
         ArrayList<Place> places = new ArrayList<Place>();
         JoinSqlTextual join;
@@ -161,4 +158,6 @@ public class FacadeDB {
         }
         return places;
     }
+
+    // TODO : Ajouter une fonction pour récupérer les véhicules
 }
