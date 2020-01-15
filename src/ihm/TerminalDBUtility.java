@@ -1,4 +1,4 @@
-package db.sql;
+package ihm;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -8,11 +8,13 @@ import data.Hotel;
 import data.Place;
 import data.TransportMethod;
 import data.Visit;
+import db.sql.DatabaseConnection;
+import db.sql.PersistenceFacade;
 import db.sql.exceptions.CancelInsertionIntoDBException;
 import db.sql.exceptions.ClassNotPersistableException;
 import db.sql.exceptions.ExitInsertionIntoDBException;
 
-public class MainFillDB {
+public class TerminalDBUtility {
 	
 	public static void main(String[] args) {
 		String line = "empty";
@@ -79,6 +81,9 @@ public class MainFillDB {
 	}
 	
 	public static Coordinates insertCoordinates(Scanner scanner, String line) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
+		return insertCoordinates(scanner, line, true);
+	}
+	public static Coordinates insertCoordinates(Scanner scanner, String line, boolean insert) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
 		int x = 0;
 		int y = 0;
 		
@@ -112,12 +117,17 @@ public class MainFillDB {
 		}
 
 		Coordinates coord = new Coordinates(x, y);
-		PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
-		facade.persist(coord);
+		if(insert) {
+			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			facade.persist(coord);
+		}
 		return coord;
 	}
 	
 	public static TransportMethod insertTransportMethod(Scanner scanner, String line) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
+		return insertTransportMethod(scanner, line, true);
+	}
+	public static TransportMethod insertTransportMethod(Scanner scanner, String line, boolean insert) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
 		String name = "";
 		int speed = 0;
 		float pricePerKm = 0.0f;
@@ -164,12 +174,17 @@ public class MainFillDB {
 		}
 
 		TransportMethod method = new TransportMethod(name, speed, pricePerKm);
-		PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
-		facade.persist(method);
+		if(insert) {
+			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			facade.persist(method);
+		}
 		return method;
 	}
 	
 	public static Place insertPlace(Scanner scanner, String line) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
+		return insertPlace(scanner, line, true);
+	}
+	public static Place insertPlace(Scanner scanner, String line, boolean insert) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
 		String name = "";
 		Coordinates coord = null;
 		String descriptionFile = "";
@@ -203,16 +218,22 @@ public class MainFillDB {
 		}
 		
 		System.out.println("You have to create Coordinates");
-		coord = insertCoordinates(scanner, line);
+		coord = insertCoordinates(scanner, line, false);
 		System.out.println("Coordinates created");
 		
 		Place place = new Place(name, coord, descriptionFile);
-		PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
-		facade.persist(place);
+
+		if(insert) {
+			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			facade.persist(place);
+		}
 		return place;
 	}
 	
 	public static Visit insertVisit(Scanner scanner, String line) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
+		return insertVisit(scanner, line, true);
+	}
+	public static Visit insertVisit(Scanner scanner, String line, boolean insert) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
 		float time = 0.0f;
 		float price = 0.0f;
 		Place place = null;
@@ -250,16 +271,22 @@ public class MainFillDB {
 		}
 		
 		System.out.println("You have to create a Place");
-		place = insertPlace(scanner, line);
+		place = insertPlace(scanner, line, false);
 		System.out.println("Place created");
 		
 		Visit visit = new Visit(time, price, place);
-		PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
-		facade.persist(visit);
+
+		if(insert) {
+			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			facade.persist(visit);
+		}
 		return visit;
 	}
 	
 	public static Hotel insertHotel(Scanner scanner, String line) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
+		return insertHotel(scanner, line, true);
+	}
+	public static Hotel insertHotel(Scanner scanner, String line, boolean insert) throws SQLException, ClassNotPersistableException, CancelInsertionIntoDBException, ExitInsertionIntoDBException {
 		String name = "";
 		String descriptionFile = "";
 		float pricePerDay = 0.0f;
@@ -307,12 +334,15 @@ public class MainFillDB {
 		}
 		
 		System.out.println("You have to create a beach");
-		beach = insertPlace(scanner, line);
+		beach = insertPlace(scanner, line, false);
 		System.out.println("beach created");
 		
 		Hotel hotel = new Hotel(name, beach.getCoord(), descriptionFile, pricePerDay, beach);
-		PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
-		facade.persist(hotel);
+
+		if(insert) {
+			PersistenceFacade facade = new PersistenceFacade(DatabaseConnection.getConnection());
+			facade.persist(hotel);
+		}
 		return hotel;
 	}
 }
