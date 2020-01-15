@@ -1,4 +1,9 @@
+# IntelliJ
+/.idea/
+/build/
+/target/
+
+# Eclipse
 /bin/
 .classpath
-/build/
 .project
