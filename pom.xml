@@ -21,12 +21,20 @@
   </properties>
 
   <dependencies>
+    <!--JUNIT-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>5.5.2</version>
       <scope>test</scope>
     </dependency>
+    <!--JGIVEN-->
+    <dependency>
+      <groupId>com.tngtech.jgiven</groupId>
+      <artifactId>jgiven-junit5</artifactId>
+      <version>1.0.0-RC3</version>
+    </dependency>
+    <!--LUCENE-->
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
@@ -47,6 +55,7 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
     </dependency>
+    <!--JSF-->
     <dependency>
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
@@ -58,31 +67,21 @@
       <version>1.2-20</version>
     </dependency>
     <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-facelets</artifactId>
-      <version>1.1.11a</version>
-    </dependency><!--SPRING-->
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <!--SPRING-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
       <version>5.2.2.RELEASE</version>
     </dependency>
-    <dependency>
-    	<groupId>javax.servlet</groupId>
-    	<artifactId>servlet-api</artifactId>
-    	<version>2.5</version>
-	</dependency>
     <!--JSON-->
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20190722</version>
-    </dependency>
-    <!--JGiven-->
-    <dependency>
-      <groupId>com.tngtech.jgiven</groupId>
-      <artifactId>jgiven-junit5</artifactId>
-      <version>1.0.0-RC3</version>
     </dependency>
   </dependencies>
 

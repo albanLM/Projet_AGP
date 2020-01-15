@@ -1,17 +1,10 @@
 package ihm;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.prism.impl.BaseMesh.FaceMembers;
-
-import data.Hotel;
-import db.FacadeDB;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ConsoleIHM {
 	public static void consoleIHM() {
