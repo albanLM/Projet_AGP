@@ -12,8 +12,6 @@ import data.Place;
 import data.TransportMethod;
 import data.Visit;
 
-import db.sql.DatabaseConnection;
-
 public class JDBCPersister {
 	
 	private Connection conn;

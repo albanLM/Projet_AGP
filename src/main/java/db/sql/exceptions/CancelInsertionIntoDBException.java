@@ -1,4 +1,4 @@
-package ihm.exceptions;
+package db.sql.exceptions;
 
 public class CancelInsertionIntoDBException extends Exception {
 

@@ -1,18 +1,14 @@
 package ihm;
 
-import java.sql.SQLException;
-import java.util.Scanner;
-
-import data.Coordinates;
-import data.Hotel;
-import data.Place;
-import data.TransportMethod;
-import data.Visit;
+import data.*;
 import db.sql.DatabaseConnection;
 import db.sql.PersistenceFacade;
+import db.sql.exceptions.CancelInsertionIntoDBException;
 import db.sql.exceptions.ClassNotPersistableException;
-import ihm.exceptions.CancelInsertionIntoDBException;
-import ihm.exceptions.ExitInsertionIntoDBException;
+import db.sql.exceptions.ExitInsertionIntoDBException;
+
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class TerminalDBUtility {
 	
@@ -27,15 +23,8 @@ public class TerminalDBUtility {
 			System.out.println("Search in the database : search");
 			line = scanner.nextLine();
 			if(line.equals("search")) {
-				try {
-					ConsoleIHM.consoleIHM();
-				}catch(CancelInsertionIntoDBException e) {
-					line = "cancel";
-				}
-				catch(ExitInsertionIntoDBException e) {
-					line = "exit";
-				}
-				
+				ConsoleIHM.consoleIHM();
+
 			}
 			else if(line.equals("insert")) {
 				boolean inserted = false;
