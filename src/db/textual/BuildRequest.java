@@ -1,5 +1,6 @@
 package db.textual;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -32,13 +33,25 @@ public class BuildRequest {
 		query = sql; 
 		System.out.println();
 		if(jsonObject.has("where")) {
-			query+=" WHERE "; 
-			ArrayList<String> whereArray = (ArrayList<String>) jsonObject.get("where"); 
+			query+=" AND "; 
+			System.out.println(jsonObject);
 			
-		    Iterator<String> iterator = whereArray.listIterator();
+			ArrayList<String> list = new ArrayList<String>();     
+			JSONArray jsonArray = (JSONArray) jsonObject.get("where"); 
+			if (jsonArray != null) { 
+				
+			   int len = jsonArray.length();
+			   System.out.println(len);
+			   for (int i=0;i<len;i++){ 
+				   System.out.println("sssss");
+			    list.add(jsonArray.get(i).toString());
+			   } 
+			} 
+		    Iterator<String> iterator = list.listIterator();
+		  
 		      while(iterator.hasNext()) {
-		        
-		        query += " "+iterator+" "; 
+		        System.out.println("aka aka ");
+		        query += " "+iterator.next().replace("'", "")+" "; 
 		        if(iterator.hasNext()) query+= " AND "; 
 		      }
 		}

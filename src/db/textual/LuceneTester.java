@@ -22,12 +22,7 @@ public class LuceneTester {
 
 				
 		   String request = "{  \n" + 
-						"   \"type\":\"hotel\",\n" + 
-						"   \"where\":[  \n" + 
-						"      {  \n" + 
-						"         \"pricePerDay\":\">10\" "+ 
-						"      }\n" + 
-						"   ],\n" + 
+						"   \"where\":[  \"pricePerDay\":\">10\" "+ "],\n" + 
 						"   \"search\":\"Gortyne\"\n" +
 						"}"; 
 				

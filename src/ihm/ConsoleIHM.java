@@ -7,14 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.prism.impl.BaseMesh.FaceMembers;
+
 
 import data.Hotel;
 import db.FacadeDB;
 
 public class ConsoleIHM {
+	private static String indexDir = "indexFiles";
+	 private static String dataDir = "inputFiles";
 	public static void consoleIHM() {
+		FacadeDB facade = new FacadeDB(indexDir, dataDir); 
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Console IHM");
@@ -34,7 +36,11 @@ public class ConsoleIHM {
 			js.put("where", array);
 			js.put("search", keys);
 			
+			ArrayList<Hotel> hotels = facade.getBeaches(js); 
 			
+			for (int i = 0; i < hotels.size(); i++) {
+			      System.out.println(hotels.get(i).getDescriptionFile());
+			}
 			
 			System.out.println(js);
 		} catch (JSONException e) {
