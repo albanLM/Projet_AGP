@@ -20,7 +20,13 @@ public class ConsoleIHM {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Console IHM");
-		System.out.println("Choose");
+		System.out.println("Choose an object\n"
+				+ "1. beaches\n"
+				+ "2. hotels\n"
+				+ "3. places");
+		
+		String object = sc.nextLine();
+		
 
 		System.out.println("type keywords");
 		String keys = sc.nextLine();
@@ -28,19 +34,69 @@ public class ConsoleIHM {
 		JSONObject js = new JSONObject();
 		
 		try {
-
 			ArrayList<String> array = new ArrayList<String>();
-			array.add("pricePerDay>10");
-			array.add("pricePerDay<50");
 			
-			js.put("where", array);
-			js.put("search", keys);
-			
-			ArrayList<Hotel> hotels = facade.getBeaches(js); 
-			
-			for (int i = 0; i < hotels.size(); i++) {
-			      System.out.println(hotels.get(i).getDescriptionFile());
+			switch (object) {
+			case "1":
+				System.out.println("add condtion");
+				System.out.print("pricePerDay");
+				String bCondition = sc.nextLine();
+				array.add("Hotel.pricePerDay" +bCondition);
+				
+				js.put("where", array);
+				js.put("search", keys);
+				
+				ArrayList<Hotel> beaches = facade.getBeaches(js); 
+				
+				
+				for (int i = 0; i < beaches.size(); i++) {
+				      System.out.println(beaches.get(i).toString());
+				}
+				break;
+				
+			case "2" : 
+				
+				System.out.println("add condtion");
+				System.out.print("name");
+				String hCondition = sc.nextLine();
+				array.add("name" +hCondition);
+				
+				js.put("where", array);
+				js.put("search", keys);
+				
+				ArrayList<Hotel> hotels = facade.getHotels(js); 
+				
+				
+				for (int i = 0; i < hotels.size(); i++) {
+				      System.out.println(hotels.get(i).toString());
+				}
+				break;
+				
+				
+				case "3" : 
+					
+					System.out.println("add condtion");
+					System.out.print("name");
+					String pCondition = sc.nextLine();
+					array.add("name" +pCondition);
+					
+					js.put("where", array);
+					js.put("search", keys);
+					
+					ArrayList<Hotel> places = facade.getHotels(js); 
+					
+					
+					for (int i = 0; i < places.size(); i++) {
+					      System.out.println(places.get(i).toString());
+					}
+					break;
+
+			default:
+				break;
 			}
+
+			
+			
 			
 			System.out.println(js);
 		} catch (JSONException e) {

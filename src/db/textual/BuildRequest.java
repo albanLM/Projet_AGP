@@ -33,13 +33,12 @@ public class BuildRequest {
 		query = sql; 
 		System.out.println();
 		if(jsonObject.has("where")) {
-			query+=" AND "; 
 			System.out.println(jsonObject);
 			
 			ArrayList<String> list = new ArrayList<String>();     
 			JSONArray jsonArray = (JSONArray) jsonObject.get("where"); 
 			if (jsonArray != null) { 
-				
+				query+=" AND "; 
 			   int len = jsonArray.length();
 			   System.out.println(len);
 			   for (int i=0;i<len;i++){ 
@@ -50,8 +49,7 @@ public class BuildRequest {
 		    Iterator<String> iterator = list.listIterator();
 		  
 		      while(iterator.hasNext()) {
-		        System.out.println("aka aka ");
-		        query += " "+iterator.next().replace("'", "")+" "; 
+		        query += " "+iterator.next()+" "; 
 		        if(iterator.hasNext()) query+= " AND "; 
 		      }
 		}

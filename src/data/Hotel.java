@@ -2,6 +2,11 @@ package data;
 
 public class Hotel extends Place {
 	
+	@Override
+	public String toString() {
+		return "Hotel [" + "name=" + super.getName() +  ", pricePerDay=" + pricePerDay + ", beach=" + beach.toString() + ", descriptionFile=" + super.getDescriptionFile()+ "]";
+	}
+
 	private float pricePerDay;
 	private Place beach;
 

@@ -32,28 +32,41 @@ public class JoinSqlTextual implements OperatorInterface{
 
 		String querySql = queryAll[0];
 		String queryTextual = queryAll[1];
-			
+		String rs = "" ; 
 			textualIterator = new TextualIterator(lucene, queryTextual);
 			sqlIterator = new SqlIterator(querySql);
 			
 			sqlIterator.init();
 			textualIterator.init();
 			
+			
 			while(sqlIterator.hasNext()) {
-        		String rs = (String) sqlIterator.next();
+				
+        		rs = (String) sqlIterator.next();
+        		System.out.println("next " + rs);
         		String[] rsR = rs.split("#");
+        		System.out.println(textualIterator.hasNext() + " " +rs);
         		while(textualIterator.hasNext()) {
         			ScoreDoc d = textualIterator.next();
-		        	Document doc = lucene.getSearcher().getDocument(d); 
+		        	Document doc = lucene.getSearcher().getDocument(d);
+		        	
 		        	if(doc.get("path").equalsIgnoreCase(rsR[1])){
 		        		String addRes = rsR[0]+"#"+doc.get("contents")+"#"+d.score; 
+		        		System.out.println(addRes);
+		        		System.out.println(addRes);
 		        		results.add(addRes);
 		        	}
 		        	d = textualIterator.next();
         		}
-        		
+        		textualIterator.reset();
+        		System.out.println(sqlIterator.hasNext() + " test " +rs);
         	}
 			
+	}
+
+	@Override
+	public String toString() {
+		return "JoinSqlTextual [results=" + results + "]";
 	}
 
 	@Override

@@ -40,8 +40,8 @@ public class FacadeDB {
 		SqlIterator sqlIt; 
 		JoinSqlTextual join; 
 		ArrayList<Hotel> hotels = new ArrayList<Hotel>(); 
-		String query = "SELECT id, description FROM place, hotel WHERE " 
-			+	"place.id = hotel.id_beach "; 
+		String query = "SELECT id, descriptionFile FROM Place, Hotel WHERE " 
+			+	"Place.id = Hotel.id_beach "; 
 		build = new BuildRequest(); 
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 
@@ -128,7 +128,7 @@ public class FacadeDB {
 	public ArrayList<Place> getPlaces(JSONObject jsonObject) throws JSONException {
 		ArrayList<Place> places = new ArrayList<Place>();
 		JoinSqlTextual join; 
-		String query = "SELECT id, description FROM place WHERE "; 
+		String query = "SELECT id, description FROM Place WHERE "; 
 		build = new BuildRequest(); 
 		build.buildQuery(jsonObject, query);
 		String sql = build.getQuery(); 

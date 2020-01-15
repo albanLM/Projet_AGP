@@ -32,12 +32,11 @@ public class LuceneSystem {
 		     
 
 //		      // Iterate a topdocs element and get information about every document
-//		      System.out.println(hits.totalHits +
-//		         " documents found. Time :" + (endTime - startTime) +" ms");
-//		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
-//		         Document doc = searcher.getDocument(scoreDoc);
-//		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
-//		      }
+		      
+		      for(ScoreDoc scoreDoc : hits.scoreDocs) {
+		         Document doc = searcher.getDocument(scoreDoc);
+		         System.out.println("File: "+ doc.get("path") + ", Score : " + scoreDoc.score + " type : "+doc.get("type"));
+		      }
 			return hits;
 		      
 		   }
