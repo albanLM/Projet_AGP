@@ -58,7 +58,7 @@ class FacadeDBTest {
     @Test
     void getBeaches() {
         request = "{  \n" +
-                "   \"type\":\"hotel\",\n" +
+                "   \"type\":\"hotel\"\n" +
                 "}";
 
         JSONObject json = new JSONObject(request);
@@ -72,7 +72,7 @@ class FacadeDBTest {
     @Test
     void getPlaces() {
         request = "{  \n" +
-                "   \"type\":\"place\",\n" +
+                "   \"type\":\"place\"\n" +
                 "}";
 
         JSONObject json = new JSONObject(request);

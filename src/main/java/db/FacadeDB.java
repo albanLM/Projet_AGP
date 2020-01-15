@@ -35,8 +35,6 @@ public class FacadeDB {
     }
 
     public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException {
-        return null;
-/*
         SqlIterator sqlIt;
         JoinSqlTextual join;
         ArrayList<Hotel> hotels = new ArrayList<Hotel>();
@@ -78,12 +76,9 @@ public class FacadeDB {
         }
 
         return hotels;
-*/
     }
 
     public ArrayList<Hotel> getBeaches(JSONObject jsonObject) throws JSONException {
-        return null;
-/*
         SqlIterator sqlIt;
         JoinSqlTextual join;
         ArrayList<Hotel> beaches = new ArrayList<Hotel>();
@@ -124,12 +119,10 @@ public class FacadeDB {
             }
         }
         return beaches;
-*/
     }
 
     public ArrayList<Place> getPlaces(JSONObject jsonObject) throws JSONException {
-        return null;
-        /*ArrayList<Place> places = new ArrayList<Place>();
+        ArrayList<Place> places = new ArrayList<Place>();
         JoinSqlTextual join;
         String query = "SELECT id, description FROM place WHERE ";
         build = new BuildRequest();
@@ -166,6 +159,6 @@ public class FacadeDB {
                 e.printStackTrace();
             }
         }
-        return places;*/
+        return places;
     }
 }
