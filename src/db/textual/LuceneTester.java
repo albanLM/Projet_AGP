@@ -14,32 +14,32 @@ import jdk.nashorn.internal.parser.JSONParser;
 
 public class LuceneTester {
 
-	   private static String indexDir = "indexFiles";
-	   private static String dataDir = "inputFiles";
-
-	   public static void main(String[] args) {
-		   FacadeDB facade = new FacadeDB(indexDir, dataDir); 
-
-				
-		   String request = "{  \n" + 
-						"   \"where\":[  \"pricePerDay\":\">10\" "+ "],\n" + 
-						"   \"search\":\"Gortyne\"\n" +
-						"}"; 
-				
-				try {
-					JSONObject json = new JSONObject(request);
-					ArrayList<Hotel> hotels = facade.getBeaches(json); 
-					for (int i = 0; i < hotels.size(); i++) {
-					      System.out.println(hotels.get(i).getDescriptionFile());
-					    }
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			
-
-	   }
+//	   private static String indexDir = "indexFiles";
+//	   private static String dataDir = "inputFiles";
+//
+//	   public static void main(String[] args) {
+//		   FacadeDB facade = new FacadeDB(indexDir, dataDir); 
+//
+//				
+//		   String request = "{  \n" + 
+//						"   \"where\":[  \"pricePerDay\":\">10\" "+ "],\n" + 
+//						"   \"search\":\"Gortyne\"\n" +
+//						"}"; 
+//				
+//				try {
+//					JSONObject json = new JSONObject(request);
+//					ArrayList<Hotel> hotels = facade.getBeaches(json); 
+//					for (int i = 0; i < hotels.size(); i++) {
+//					      System.out.println(hotels.get(i).getDescriptionFile());
+//					    }
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			
+//
+//	   }
 
 
 }

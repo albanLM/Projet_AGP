@@ -10,12 +10,15 @@ import org.json.JSONObject;
 
 
 import data.Hotel;
+import data.Place;
 import db.FacadeDB;
+import ihm.exceptions.CancelInsertionIntoDBException;
+import ihm.exceptions.ExitInsertionIntoDBException;
 
 public class ConsoleIHM {
 	private static String indexDir = "indexFiles";
 	 private static String dataDir = "inputFiles";
-	public static void consoleIHM() {
+	public static void consoleIHM() throws CancelInsertionIntoDBException, ExitInsertionIntoDBException{
 		FacadeDB facade = new FacadeDB(indexDir, dataDir); 
 		Scanner sc = new Scanner(System.in);
 		
@@ -26,6 +29,13 @@ public class ConsoleIHM {
 				+ "3. places");
 		
 		String object = sc.nextLine();
+		if (object.equals("cancel")) {
+			throw new CancelInsertionIntoDBException();
+		}
+		if (object.equals("exit")) {
+			throw new ExitInsertionIntoDBException();
+		}
+		
 		
 
 		System.out.println("type keywords");
@@ -41,12 +51,20 @@ public class ConsoleIHM {
 				System.out.println("add condtion");
 				System.out.print("pricePerDay");
 				String bCondition = sc.nextLine();
+				
+				if (bCondition.equals("cancel")) {
+					throw new CancelInsertionIntoDBException();
+				}
+				if (bCondition.equals("exit")) {
+					throw new ExitInsertionIntoDBException();
+				}
+				
 				array.add("Hotel.pricePerDay" +bCondition);
 				
 				js.put("where", array);
 				js.put("search", keys);
 				
-				ArrayList<Hotel> beaches = facade.getBeaches(js); 
+				ArrayList<Place> beaches = facade.getBeaches(js); 
 				
 				
 				for (int i = 0; i < beaches.size(); i++) {
@@ -59,6 +77,13 @@ public class ConsoleIHM {
 				System.out.println("add condtion");
 				System.out.print("name");
 				String hCondition = sc.nextLine();
+				if (hCondition.equals("cancel")) {
+					throw new CancelInsertionIntoDBException();
+				}
+				if (hCondition.equals("exit")) {
+					throw new ExitInsertionIntoDBException();
+				}
+				
 				array.add("name" +hCondition);
 				
 				js.put("where", array);
@@ -75,13 +100,19 @@ public class ConsoleIHM {
 				
 				case "3" : 
 					
-					System.out.println("add condtion");
-					System.out.print("name");
-					String pCondition = sc.nextLine();
-					array.add("name" +pCondition);
-					
-					js.put("where", array);
-					js.put("search", keys);
+//					System.out.println("add condtion");
+//					System.out.print("name");
+//					String pCondition = sc.nextLine();
+//					if (pCondition.equals("cancel")) {
+//						throw new CancelInsertionIntoDBException();
+//					}
+//					if (pCondition.equals("exit")) {
+//						throw new ExitInsertionIntoDBException();
+//					}
+//					array.add("name" +pCondition);
+//					
+//					js.put("where", array);
+//					js.put("search", keys);
 					
 					ArrayList<Hotel> places = facade.getHotels(js); 
 					

@@ -31,7 +31,6 @@ public class SqlIterator implements OperatorInterface{
 			ResultSet rs = preparedStatement.executeQuery(query);
 			while(rs.next()) {
 				String data = rs.getInt("id")+"#"+rs.getString("descriptionFile");
-				System.out.println(data);
 				results.add(data);
 				
 			}

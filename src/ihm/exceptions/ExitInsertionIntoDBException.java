@@ -1,4 +1,4 @@
-package db.sql.exceptions;
+package ihm.exceptions;
 
 public class ExitInsertionIntoDBException extends Exception{
 

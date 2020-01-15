@@ -31,7 +31,6 @@ public class BuildRequest {
 	
 	public void buildQuery(JSONObject jsonObject, String sql) throws JSONException {
 		query = sql; 
-		System.out.println();
 		if(jsonObject.has("where")) {
 			System.out.println(jsonObject);
 			
@@ -42,7 +41,6 @@ public class BuildRequest {
 			   int len = jsonArray.length();
 			   System.out.println(len);
 			   for (int i=0;i<len;i++){ 
-				   System.out.println("sssss");
 			    list.add(jsonArray.get(i).toString());
 			   } 
 			} 
@@ -58,7 +56,7 @@ public class BuildRequest {
 			search = jsonObject.getString("search"); 
 			query+= " WITH "+ search; 
 		}
-		System.out.println(query); 
+		System.out.println("Sql request "+query); 
 	}
 
 	public String getQuery() {

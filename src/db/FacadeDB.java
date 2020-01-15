@@ -81,10 +81,10 @@ public class FacadeDB {
 		return hotels;
 	}
 	
-	public ArrayList<Hotel> getBeaches(JSONObject jsonObject) throws JSONException{
+	public ArrayList<Place> getBeaches(JSONObject jsonObject) throws JSONException{
 		SqlIterator sqlIt; 
 		JoinSqlTextual join; 
-		ArrayList<Hotel> beaches = new ArrayList<Hotel>(); 
+		ArrayList<Place> beaches = new ArrayList<Place>(); 
 		String query = "SELECT id, descriptionFile FROM Place, Hotel WHERE "
 				+ "Place.id = Hotel.id_beach"; 
 		build = new BuildRequest(); 
@@ -98,7 +98,7 @@ public class FacadeDB {
 					String result[] = join.next().split("#"); 
 					String id = result[0]; 
 					String contents = result[1]; 
-					Hotel beach = jdbc.readHotel(Integer.parseInt(id));
+					Place beach = jdbc.readPlace(Integer.parseInt(id));
 					beach.setDescriptionFile(contents);
 					beaches.add(beach); 
 				}

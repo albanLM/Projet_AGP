@@ -43,23 +43,18 @@ public class JoinSqlTextual implements OperatorInterface{
 			while(sqlIterator.hasNext()) {
 				
         		rs = (String) sqlIterator.next();
-        		System.out.println("next " + rs);
         		String[] rsR = rs.split("#");
-        		System.out.println(textualIterator.hasNext() + " " +rs);
         		while(textualIterator.hasNext()) {
         			ScoreDoc d = textualIterator.next();
 		        	Document doc = lucene.getSearcher().getDocument(d);
 		        	
 		        	if(doc.get("path").equalsIgnoreCase(rsR[1])){
 		        		String addRes = rsR[0]+"#"+doc.get("contents")+"#"+d.score; 
-		        		System.out.println(addRes);
-		        		System.out.println(addRes);
 		        		results.add(addRes);
 		        	}
 		        	d = textualIterator.next();
         		}
         		textualIterator.reset();
-        		System.out.println(sqlIterator.hasNext() + " test " +rs);
         	}
 			
 	}
