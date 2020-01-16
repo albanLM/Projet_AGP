@@ -14,7 +14,7 @@ public class PlaceSearch {
         return null;
     }
 
-    public Hotel searchHotel(ArrayList<String> keywords) {
+    public ArrayList<Hotel> searchHotel(ArrayList<String> keywords) {
         return null;
     }
 }
