@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import data.Event;
 import data.Date;
 import data.Excursion;
+import data.Hotel;
 
 public class ExcursionBuilder {
 
-	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores) {
+	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel) {
 		Excursion excursion = new Excursion(null, null, null, 0);
         ArrayList<Event> finalEvents = new ArrayList<>();
 

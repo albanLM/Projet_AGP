@@ -24,18 +24,31 @@ public class TripBuilder {
         criteria.setMaxTimePerDay(criteria.getTypeOfTrip() == EnumTripType.Dynamic ? DYNAMIC_TIME_A_DAY : LAZY_TIME_A_DAY);
 
         /* Build the trip */
+        // TODO : Set the trip dates
+
         trip.setHotel(getRandomHotel()); // Get a random hotel
 
+        float totalPrice = 0;
         for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
-            if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) finalExcursions.add(excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores));
-            else finalExcursions.add(excursionBuilder.buildEmptyExcursion());
+            if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
+                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel());
+                totalPrice += excursion.getPrice();
+                finalExcursions.add(excursion);
+            } else {
+                finalExcursions.add(excursionBuilder.buildEmptyExcursion());
+            }
         }
+        trip.setExcursions(finalExcursions);
+        trip.setPrice(totalPrice);
 
         return trip;
     }
 
-    private Hotel getRandomHotel() {
-        return null;
+    private Hotel getRandomHotel(Criteria criteria) {
+        PlaceSearch placeSearch = new PlaceSearch();
+        Hotel foundHotels = placeSearch.searchHotel(criteria.getKeywords());
+
+        return foundHotels;
     }
 
 }
