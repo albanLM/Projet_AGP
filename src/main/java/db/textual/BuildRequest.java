@@ -56,7 +56,7 @@ public class BuildRequest {
 			search = jsonObject.getString("search"); 
 			query+= " WITH "+ search; 
 		}
-		System.out.println("Sql request "+query); 
+		System.out.println("SQL REQUEST : "+query);
 	}
 
 	public String getQuery() {
@@ -66,5 +66,4 @@ public class BuildRequest {
 	public void setQuery(String query) {
 		this.query = query;
 	}
-
 }

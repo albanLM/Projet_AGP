@@ -1,12 +1,11 @@
 package ihm;
 
 import data.Date;
-import data.Excursion;
 
 import java.util.ArrayList;
 
 public class Criteria {
-    private int numberOfDay;
+    private int duration;
     private float minPrice, maxPrice;
     private ArrayList<String> keywords;
     private EnumComfort comfort;
@@ -14,26 +13,26 @@ public class Criteria {
     private Date start;
     private Date end;
 
-
-    public Criteria(int numberOfDay, float minPrice, float maxPrice, ArrayList<String> keywords, EnumComfort comfort, int excursionCount) {
-        this.numberOfDay = numberOfDay;
+    public Criteria(int duration, float minPrice, float maxPrice, ArrayList<String> keywords, EnumComfort comfort, Date start, Date end) {
+        this.duration = duration;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
         this.keywords = keywords;
         this.comfort = comfort;
-        this.excursionCount = excursionCount;
+        this.start = start;
+        this.end = end;
     }
 
     public void addKeywords(ArrayList<String> newKeywords) {
         keywords.addAll(newKeywords);
     }
 
-    public int getNumberOfDay() {
-        return numberOfDay;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setNumberOfDay(int numberOfDay) {
-        this.numberOfDay = numberOfDay;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public float getMinPrice() {

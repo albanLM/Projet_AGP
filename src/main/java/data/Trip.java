@@ -11,12 +11,19 @@ public class Trip {
 
 	public Trip() {}
 
-	public Trip(Hotel hotel, ArrayList<Excursion> excursions, float price, Date start, Date end) {
+	public Trip(Hotel hotel, ArrayList<Excursion> excursions, Date start, Date end) {
 		this.hotel = hotel;
 		this.excursions = excursions;
-		this.price = price;
 		this.start = start;
 		this.end = end;
+		updatePrice();
+	}
+
+	private void updatePrice() {
+		price = 0;
+		for (Excursion excursion: excursions) {
+			price += excursion.getPrice();
+		}
 	}
 
 	public Hotel getHotel() {
@@ -33,6 +40,7 @@ public class Trip {
 
 	public void setExcursions(ArrayList<Excursion> excursions) {
 		this.excursions = excursions;
+		updatePrice();
 	}
 
 	public float getPrice() {

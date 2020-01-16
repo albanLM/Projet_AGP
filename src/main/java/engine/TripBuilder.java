@@ -10,31 +10,29 @@ public class TripBuilder {
     ExcursionBuilder excursionBuilder;
     private Criteria criteria;
 
-    public TripBuilder(ExcursionBuilder excursionBuilder, Criteria criteria) {
-        this.excursionBuilder = excursionBuilder;
+    private ArrayList<Trip> proposedTrips;
+
+    public TripBuilder(Criteria criteria) {
         this.criteria = criteria;
+        this.proposedTrips = new ArrayList<>();
     }
 
-    public ArrayList<Trip> buildTrips() {
-        // Ajouter keywords en fonction du confort
-        addKeywords();
-
-        // Définir le nombre d'excursion en fonction du confort
-        int excursionCount = defineExcursionCount();
-
-        // Construire des offre selon certains critères prédéfinis
-        ArrayList<Trip> proposedTrips = new ArrayList<>();
-        proposedTrips.add(getMostPertinentTrip());
-        proposedTrips.add(getLowerPriceTrip());
-        proposedTrips.add(getMostExpensiveTrip());
-
-        return proposedTrips;
+    public void buildTrips() {
+        updateCriteria(); // Add keywords depending on comfort
+        excursionBuilder = new ExcursionBuilder(criteria.getKeywords());
+        excursionBuilder.buildExcursions();
     }
 
-    private Trip getMostExpensiveTrip() {
-        Trip trip = new Trip();
-        ArrayList<Excursion> excursions = excursionBuilder.buildExcursions();
-        trip.setExcursions(excursions);
+    public Trip buildTrip() {
+        for (int i = 0; i < criteria.getExcursionCount(); i++)
+        {
+            proposedTrips.add(getRandomTrip());
+        }
+        return null;
+    }
+
+
+    /*private Trip getMostExpensiveTrip() {
         return null;
     }
 
@@ -44,30 +42,26 @@ public class TripBuilder {
 
     private Trip getLowerPriceTrip() {
         return null;
+    }*/
+    private Trip getRandomTrip () {
+        ArrayList<Excursion> excursions = excursionBuilder.buildExcursions();
+        return null;
     }
 
-    private void addKeywords() {
+    private void updateCriteria() {
         ArrayList<String> newKeywords = new ArrayList<>();
         switch (criteria.getComfort())
         {
-            case Relaxing:
+            case Relaxing: // 20%
                 newKeywords.add("");
                 break;
             case Sportive:
                 break;
             case Historic:
                 break;
-            case Romantic:
-                break;
             case Intense:
                 break;
         }
-
-
-    }
-
-    private int defineExcursionCount() {
-        return 0;
     }
 
     public ExcursionBuilder getExcursionBuilder() {
@@ -84,5 +78,9 @@ public class TripBuilder {
 
     public void setCriteria(Criteria criteria) {
         this.criteria = criteria;
+    }
+
+    public ArrayList<Trip> getProposedTrips() {
+        return proposedTrips;
     }
 }

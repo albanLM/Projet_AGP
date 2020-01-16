@@ -33,10 +33,10 @@ class TripBuilderTest {
         // Tester que buildTrip renvoie bien une des offres
 
         assertDoesNotThrow(() -> {
-            ArrayList<Trip> trips = tripBuilder.buildTrips();
+            tripBuilder.buildTrips();
         }, "building trips should not fail");
 
-        ArrayList<Trip> trips = tripBuilder.buildTrips();
+        ArrayList<Trip> trips = tripBuilder.getProposedTrips();
 
         // Vérification
         assertFalse(trips.isEmpty(), "returned list shouldn't be empty");

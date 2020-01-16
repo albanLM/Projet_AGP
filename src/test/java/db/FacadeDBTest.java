@@ -1,21 +1,27 @@
 package db;
 
 import data.Hotel;
+import db.sql.JDBCReader;
+import db.textual.BuildRequest;
+import db.textual.LuceneSystem;
 import org.json.JSONObject;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.when;
 
 class FacadeDBTest {
-    private static String indexDir;
-    private static String dataDir;
-    private static String request;
-    private static FacadeDB facade;
+    @Mock private BuildRequest build;
+    @Mock private LuceneSystem system;
+    @Mock private JDBCReader jdbc;
+    @InjectMocks private static FacadeDB facade;
 
     @BeforeAll
     static void beforeAll() {
@@ -24,38 +30,36 @@ class FacadeDBTest {
 
     @BeforeEach
     void setUp() {
-        facade = new FacadeDB("ressources/indexFiles", "ressources/inputFiles");
-    }
+        MockitoAnnotations.initMocks(this);
 
-    @AfterEach
-    void tearDown() {
+        when(build.getQuery()).thenReturn("SELECT id FROM place");
     }
 
     @Test
     void getHotels() {
-        request = "{  \n" +
-                "   \"type\":\"hotel\",\n" +
-                "   \"where\":[  \n" +
-                "      {  \n" +
-                "         \"pricePerDay\":\">10\" " +
-                "      }\n" +
-                "   ],\n" +
-                "   \"search\":\"Gortyne\"\n" +
-                "}";
+        JSONObject jsonRequest = new JSONObject();
+        /*JSONArray jsonWhereArray = new JSONArray();
+        JSONObject jsonWhere = new JSONObject();
 
-        JSONObject json = new JSONObject(request);
+        jsonWhere.put("pricePerDay", ">10");
+        jsonWhereArray.put(jsonWhere);
+
+        jsonRequest.put("type", "hotel");
+        jsonRequest.put("where", jsonWhereArray);
+        jsonRequest.put("search", "Gortyne");*/
+
         assertDoesNotThrow(() -> {
-            facade.getHotels(json);
-        });
+            facade.getHotels(jsonRequest);
+        }, "getting hotels should not fail");
     }
 
     @Test
     void getBeaches() {
-        request = "{  \n" +
+/*        request = "{  \n" +
                 "   \"type\":\"hotel\"\n" +
-                "}";
+                "}"*/;
 
-        JSONObject json = new JSONObject(request);
+        JSONObject json = new JSONObject();
         ArrayList<Hotel> hotelBeaches;
         assertDoesNotThrow(() -> {
             facade.getBeaches(json);
@@ -65,11 +69,11 @@ class FacadeDBTest {
 
     @Test
     void getPlaces() {
-        request = "{  \n" +
+/*        request = "{  \n" +
                 "   \"type\":\"place\"\n" +
-                "}";
+                "}"*/;
 
-        JSONObject json = new JSONObject(request);
+        JSONObject json = new JSONObject();
         assertDoesNotThrow(() -> {
             facade.getPlaces(json);
         });

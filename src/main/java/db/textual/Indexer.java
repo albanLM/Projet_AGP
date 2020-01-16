@@ -24,7 +24,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 public class Indexer {
-
     private IndexWriter writer;
 
     public Indexer(String indexDirectoryPath) throws IOException {
@@ -53,7 +52,6 @@ public class Indexer {
         Document document = getDocument(file);
         writer.updateDocument(new Term("path", file.toString()), document);
     }
-
 
     public void createIndex(String dataDirPath) throws IOException {
         Path file = Paths.get(dataDirPath);

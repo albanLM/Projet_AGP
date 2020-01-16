@@ -19,13 +19,12 @@ import db.textual.ParseRequest;
 import db.textual.SqlIterator;
 
 public class FacadeDB {
-
     private BuildRequest build;
     private LuceneSystem system;
     private JDBCReader jdbc;
 
-    public FacadeDB(String indexDir, String dataDir) {
-        system = new LuceneSystem(indexDir, dataDir);
+    public FacadeDB() {
+        system = new LuceneSystem();
         jdbc = new JDBCReader();
         try {
             system.createIndex();

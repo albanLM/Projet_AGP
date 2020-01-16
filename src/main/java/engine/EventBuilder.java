@@ -12,7 +12,9 @@ public class EventBuilder {
         Coordinates c = new Coordinates(10, 20);
         Coordinates c2 = new Coordinates(15, 25);
         Place place = new Place("name", c, "description");
-        return null;
+        Place place2 = new Place("name2", c2, "description2");
 
+        
+        return null;
     }
 }

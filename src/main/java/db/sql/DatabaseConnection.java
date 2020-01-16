@@ -7,7 +7,7 @@ public class DatabaseConnection {
 	private static String host = "localhost";
 	private static String base = "kalimera";
 	private static String user = "root";
-	private static String password = "";
+	private static String password = "231857";
 	private static String url = "jdbc:mysql://" + host + "/" + base;
 
 	private static Connection connection;
