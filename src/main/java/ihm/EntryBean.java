@@ -4,6 +4,7 @@ package ihm;
 import java.awt.List;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -16,7 +17,9 @@ public class  EntryBean implements Serializable{
 	
 	private int duration; 
 	private String type; 
-	private float price; 
+	private float priceMin;
+	private float priceMax;
+	EnumComfort enumComfort; 
 	private ArrayList<SelectItem> items = new ArrayList<SelectItem>();
 	private ArrayList<String> types = new ArrayList<String>();
 	public ArrayList<String> getTypes() {
@@ -40,18 +43,17 @@ public class  EntryBean implements Serializable{
 	private boolean connected = false;
 
 	public EntryBean() {
-		types.add("Détente"); 
-		types.add("aventures"); 
-		types.add("romantique"); 
-		types.add("want"); 
-		type = types.get(0);
-		for (String student : types) {
-			SelectItem menuChoice = new SelectItem(student);
-			items.add(menuChoice);
-			
+		
+		for(EnumComfort env : EnumComfort.values()){
+			System.out.println(env.getText());
+			types.add(env.getText()); 
 		}
 		
-		
+		for (String item : types) {
+			System.out.println(item);
+			SelectItem menuChoice = new SelectItem(item);
+			items.add(menuChoice);	
+		}
 	}
 
 	public int getDuration() {
@@ -72,13 +74,13 @@ public class  EntryBean implements Serializable{
 		this.type = type;
 	}
 
-	public float getPrice() {
-		System.out.println(price);
-		return price;
+
+	public float getPriceMin() {
+		return priceMin;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setPriceMin(float priceMin) {
+		this.priceMin = priceMin;
 	}
 
 	public String getKeywords() {
@@ -99,6 +101,14 @@ public class  EntryBean implements Serializable{
 	
 	public String start() {
 		return "result"; 
+	}
+
+	public float getPriceMax() {
+		return priceMax;
+	}
+
+	public void setPriceMax(float priceMax) {
+		this.priceMax = priceMax;
 	}
 	
 

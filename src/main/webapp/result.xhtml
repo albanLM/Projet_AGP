@@ -11,38 +11,64 @@
 <h:body>
 	<fieldset>
 		<legend>
-			<strong>In memory simulation result</strong>
+			<strong>Search data</strong>
 		</legend>		
-	
-		Average client waiting time : #{resultBean.duration} <br /> 
-		Average client service time : #{resultBean.type} <br />
-		Cashier occupation rate : #{resultBean.price} % <br /> 
+		Excurtion type : #{resultBean.type} <br /> 
+		Keywords : #{resultBean.keywords} <br /> 
+		Duration : #{resultBean.duration} days <br />
+		Range price : Between #{resultBean.priceMin} and #{resultBean.priceMax} <br /> 
 		Client satisfaction rate : #{resultBean.keywords} % <br />
 
 	</fieldset>
-	<fieldset>
-		<legend>
-			<strong>Persisted simulation result</strong>
-		</legend>		
-		Served client count : #{resultBean.duration} <br />
-		Non Served client count : #{resultBean.type} <br /> 
+	<fieldset>		
 		
-		<h:dataTable var="course" value="#{resultBean.types}" border="1" id="scoreTable">
-				<f:facet name="caption">Scores #{resultBean.type}</f:facet>
-				<h:column>
-					<f:facet name="header">Course name</f:facet>
-                                        #{resultBean.type}
-                </h:column>
-				<h:column>
-					<f:facet name="header">Score</f:facet>
-                                        #{resultBean.price}
-                </h:column>
-			</h:dataTable>
+<h:form>
+    <p:dataTable var="trips" value="#{resultBean.trips}">
+        <f:facet name="header">
+            Results
+        </f:facet>
+ 
+        <p:columnGroup type="header">
+            <p:row>
+                <p:column rowspan="2" headerText="Location" />
+                <p:column colspan="2" headerText="Informations" />
+                
+            </p:row>
+            <p:row>
+                <p:column headerText="Excursion" />
+                <p:column headerText="Departure time" />
+                <p:column headerText="Price" />
+            </p:row>
+        </p:columnGroup>
+ 
+        <p:subTable var="stats" value="#{trips.trips}">
+            <f:facet name="header">
+                <h:outputText value="#{stats.hotel.name}" />
+            </f:facet>
+            <p:column>
+                <h:outputText value="#{stats.excursions.price}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{stats.excursions.price}" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Day #{stats.excursions.start.day}" />
+            </p:column>
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column footerText="Totals: " style="text-align:right"/>
+                    <p:column footerText="#{team.allWins}" />
+                    <p:column footerText="#{team.allLosses}" />
+                </p:row>
+            </p:columnGroup>
+        </p:subTable>
+    </p:dataTable>
+</h:form>
 
 	</fieldset>
+	
 	<fieldset>
 		<h:form>
-			 
 			<h:commandButton value="New Search" action="#{resultBean.start}" />
 		</h:form>
 	</fieldset>

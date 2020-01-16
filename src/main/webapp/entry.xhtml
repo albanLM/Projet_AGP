@@ -15,16 +15,17 @@
 	<h2>Please enter values for simulation parameters</h2>
 	<fieldset>
 		<h:form>
-			<div align="center">
-				<b>Excursion type:</b>
+			<div>
+				<b>Trip type:</b>
 				<h:selectOneMenu value="#{entryBean.type}">
 					<f:selectItems value="#{entryBean.items}" />
 					
 				</h:selectOneMenu>
 			</div>
 			Trip duration (in days) : <h:inputText value="#{entryBean.duration}" /> <br />
-			Range Price : <h:inputText value="#{entryBean.price}" /> <br />
-			KeyWords : <h:inputText value="#{entryBean.keywords}" /> <br /> 
+			Minimal Price : <h:inputText value="#{entryBean.priceMin}" /> 
+			Maximal Price : <h:inputText value="#{entryBean.priceMax}" /> <br />
+			Key words : <h:inputText value="#{entryBean.keywords}" /> <br /> 
 			 
 			<h:commandButton value="Search" action="#{entryBean.start}" />
 		</h:form>
