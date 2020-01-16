@@ -11,6 +11,15 @@ public class Criteria {
     private EnumComfort comfort;
     private int excursionCount;
 
+    public Criteria(int numberOfDay, float minPrice, float maxPrice, ArrayList<String> keywords, EnumComfort comfort, int excursionCount) {
+        this.numberOfDay = numberOfDay;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.keywords = keywords;
+        this.comfort = comfort;
+        this.excursionCount = excursionCount;
+    }
+
     public void addKeywords(ArrayList<String> newKeywords) {
         keywords.addAll(newKeywords);
     }

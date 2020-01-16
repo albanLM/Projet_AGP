@@ -8,7 +8,10 @@ import ihm.EnumComfort;
 import java.util.ArrayList;
 
 public class TripBuilder {
-    public TripBuilder() {
+    ExcursionBuilder excursionBuilder;
+
+    public TripBuilder(ExcursionBuilder excursionBuilder) {
+        this.excursionBuilder = excursionBuilder;
     }
 
     public ArrayList<Trip> buildTrips(Criteria criteria) {
@@ -28,6 +31,9 @@ public class TripBuilder {
     }
 
     private Trip getMostExpensiveTrip(Criteria criteria) {
+        Trip trip = new Trip();
+        ArrayList<Excursion> excursions = excursionBuilder.buildExcursions(criteria.getKeywords());
+        trip.setExcursions(excursions);
         return null;
     }
 

@@ -12,20 +12,21 @@ import data.Hotel;
 import data.Place;
 import db.sql.DatabaseConnection;
 import db.sql.JDBCReader;
-import db.textual.RequestBuilder;
+import db.textual.BuildRequest;
 import db.textual.JoinSqlTextual;
 import db.textual.LuceneSystem;
 import db.textual.ParseRequest;
 import db.textual.SqlIterator;
 
 public class FacadeDB {
-    private RequestBuilder build;
+
+    private BuildRequest build;
     private LuceneSystem system;
     private JDBCReader jdbc;
 
-    public FacadeDB() {}
-
-    public void init() {
+    public FacadeDB(String indexDir, String dataDir) {
+        system = new LuceneSystem(indexDir, dataDir);
+        jdbc = new JDBCReader(DatabaseConnection.getConnection());
         try {
             system.createIndex();
         } catch (IOException e) {
@@ -39,8 +40,7 @@ public class FacadeDB {
         ArrayList<Hotel> hotels = new ArrayList<Hotel>();
         String query = "SELECT id, description FROM place, hotel WHERE "
                 + "place.id = hotel.id_beach ";
-
-        build = new RequestBuilder();
+        build = new BuildRequest();
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
 
@@ -77,13 +77,14 @@ public class FacadeDB {
 
         return hotels;
     }
+
     public ArrayList<Hotel> getBeaches(JSONObject jsonObject) throws JSONException {
         SqlIterator sqlIt;
         JoinSqlTextual join;
         ArrayList<Hotel> beaches = new ArrayList<Hotel>();
         String query = "SELECT id, descriptionFile FROM Place, Hotel WHERE "
                 + "Place.id = Hotel.id_beach";
-        build = new RequestBuilder();
+        build = new BuildRequest();
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
         if (ParseRequest.isWith(sql)) {
@@ -119,11 +120,12 @@ public class FacadeDB {
         }
         return beaches;
     }
+
     public ArrayList<Place> getPlaces(JSONObject jsonObject) throws JSONException {
         ArrayList<Place> places = new ArrayList<Place>();
         JoinSqlTextual join;
         String query = "SELECT id, description FROM place WHERE ";
-        build = new RequestBuilder();
+        build = new BuildRequest();
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
         SqlIterator sqlIt;
@@ -158,29 +160,5 @@ public class FacadeDB {
             }
         }
         return places;
-    }
-
-    public RequestBuilder getBuild() {
-        return build;
-    }
-
-    public void setBuild(RequestBuilder build) {
-        this.build = build;
-    }
-
-    public LuceneSystem getSystem() {
-        return system;
-    }
-
-    public void setSystem(LuceneSystem system) {
-        this.system = system;
-    }
-
-    public JDBCReader getJdbc() {
-        return jdbc;
-    }
-
-    public void setJdbc(JDBCReader jdbc) {
-        this.jdbc = jdbc;
     }
 }
