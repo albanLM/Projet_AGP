@@ -18,40 +18,33 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+import static db.textual.RessourcePath.indexDirectoryPath;
 
 public class Searcher {
-	
-	private IndexSearcher indexSearcher;
-	private QueryParser queryParser;
-	private Query query;
-   
-   
-   public Searcher(String indexPath) throws IOException {
-	   Directory dir = FSDirectory.open(Paths.get(indexPath));
+    private IndexSearcher indexSearcher;
 
-       IndexReader reader = DirectoryReader.open(dir);
+    public Searcher() {}
 
-       indexSearcher = new IndexSearcher(reader);
-   }
+    public void init() throws IOException {
+        Directory dir = FSDirectory.open(Paths.get(indexDirectoryPath));
+        IndexReader reader = DirectoryReader.open(dir);
+        indexSearcher = new IndexSearcher(reader);
+    }
 
-   TopDocs search(String textToFind) throws IOException, ParseException {
-	   TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
+    TopDocs search(String textToFind) throws IOException, ParseException {
+        TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
+        QueryParser queryParser = new QueryParser("contents", new StandardAnalyzer());
+        Query query = queryParser.parse(textToFind);
 
-   		queryParser = new QueryParser("contents", new StandardAnalyzer());
+        indexSearcher.search(query, collector);
 
-   		query = queryParser.parse(textToFind);
+        TopDocs hits = indexSearcher.search(query, 100);
+        return hits;
+    }
 
-   		indexSearcher.search(query, collector);
-
-       TopDocs hits = indexSearcher.search(query, 100);
-       return hits;
-   }
-   
-   public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
-	
-		      return indexSearcher.doc(scoreDoc.doc);	
-   }
-   
+    public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
+        return indexSearcher.doc(scoreDoc.doc);
+    }
 
 
 }
