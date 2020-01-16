@@ -2,16 +2,22 @@ package engine;
 
 import data.Excursion;
 import data.Trip;
+import db.FacadeDB;
 import ihm.Criteria;
 import ihm.EnumComfort;
 
+import org.json.JSONObject;
+
+import javax.json.JsonObject;
 import java.util.ArrayList;
 
 public class TripBuilder {
     ExcursionBuilder excursionBuilder;
+    FacadeDB dbmanager;
 
     public TripBuilder(ExcursionBuilder excursionBuilder) {
         this.excursionBuilder = excursionBuilder;
+        this.dbmanager = new FacadeDB("", "");
     }
 
     public ArrayList<Trip> buildTrips(Criteria criteria) {
@@ -32,6 +38,10 @@ public class TripBuilder {
 
     private Trip getMostExpensiveTrip(Criteria criteria) {
         Trip trip = new Trip();
+        JSONObject js = new JSONObject();
+        trip.setStart(criteria.getStart());
+        trip.setEnd(criteria.getEnd());
+
         ArrayList<Excursion> excursions = excursionBuilder.buildExcursions(criteria.getKeywords());
         trip.setExcursions(excursions);
         return null;

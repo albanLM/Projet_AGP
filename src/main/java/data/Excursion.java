@@ -21,7 +21,13 @@ public class Excursion {
     }
 
     public void setEvents(ArrayList<Event> events) {
+        int eventsPrice = 0;
         this.events = events;
+
+        for (int index = 0; index<events.size(); index++) {
+            eventsPrice += events.get(index).getPrice();
+        }
+        setPrice(eventsPrice);
     }
 
     public Date getStart() {
