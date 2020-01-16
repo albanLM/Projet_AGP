@@ -31,7 +31,6 @@ class TripBuilderTest {
         when(excursionBuilderMock.buildExcursions()).thenReturn(excursions);
 
         // Tester que buildTrip renvoie bien une des offres
-
         assertDoesNotThrow(() -> {
             tripBuilder.buildTrips();
         }, "building trips should not fail");
