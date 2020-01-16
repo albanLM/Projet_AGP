@@ -26,7 +26,7 @@ public class FacadeDB {
 
     public FacadeDB(String indexDir, String dataDir) {
         system = new LuceneSystem(indexDir, dataDir);
-        jdbc = new JDBCReader(DatabaseConnection.getConnection());
+        jdbc = new JDBCReader();
         try {
             system.createIndex();
         } catch (IOException e) {

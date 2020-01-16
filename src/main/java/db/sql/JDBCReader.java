@@ -16,8 +16,8 @@ public class JDBCReader {
 	
 	private Connection conn;
 	
-	public JDBCReader(Connection co){
-		conn = co;
+	public JDBCReader(){
+		conn = DatabaseConnection.getConnection();
 	}
 	
 	public Place readPlace(int id) throws SQLException{

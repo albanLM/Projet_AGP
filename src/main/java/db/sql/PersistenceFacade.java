@@ -15,9 +15,9 @@ public class PersistenceFacade {
 	private JDBCPersister persister;
 	private JDBCReader reader;
 	
-	public PersistenceFacade(Connection co) {
-		persister = new JDBCPersister(co);
-		reader = new JDBCReader(co);
+	public PersistenceFacade() {
+		persister = new JDBCPersister();
+		reader = new JDBCReader();
 	}
 	
 	public void persist(Object obj) throws SQLException, ClassNotPersistableException{

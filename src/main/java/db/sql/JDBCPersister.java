@@ -16,8 +16,8 @@ public class JDBCPersister {
 	
 	private Connection conn;
 	
-	public JDBCPersister(Connection co) {
-		this.conn = co;
+	public JDBCPersister() {
+		this.conn = DatabaseConnection.getConnection();
 	}
 	
 	public void persistCoordinates(Coordinates coord) throws SQLException{

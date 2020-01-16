@@ -1,19 +1,15 @@
 package db;
 
-import business.SpringIoC;
 import data.Hotel;
-import data.Place;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class FacadeDBTest {
     private static String indexDir;
@@ -23,12 +19,12 @@ class FacadeDBTest {
 
     @BeforeAll
     static void beforeAll() {
-        facade = (FacadeDB) SpringIoC.getBean("dbFacade");
+
     }
 
     @BeforeEach
     void setUp() {
-
+        facade = new FacadeDB("ressources/indexFiles", "ressources/inputFiles");
     }
 
     @AfterEach
