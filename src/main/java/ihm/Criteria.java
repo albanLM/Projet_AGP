@@ -1,5 +1,6 @@
 package ihm;
 
+import data.Date;
 import data.Excursion;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ public class Criteria {
     private ArrayList<String> keywords;
     private EnumComfort comfort;
     private int excursionCount;
+    private Date start;
+    private Date end;
+
 
     public Criteria(int numberOfDay, float minPrice, float maxPrice, ArrayList<String> keywords, EnumComfort comfort, int excursionCount) {
         this.numberOfDay = numberOfDay;
