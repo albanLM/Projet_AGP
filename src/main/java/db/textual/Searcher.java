@@ -18,33 +18,40 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import static db.textual.RessourcePath.indexDirectoryPath;
 
 public class Searcher {
-    private IndexSearcher indexSearcher;
+	
+	private IndexSearcher indexSearcher;
+	private QueryParser queryParser;
+	private Query query;
+   
+   
+   public Searcher(String indexPath) throws IOException {
+	   Directory dir = FSDirectory.open(Paths.get(indexPath));
 
-    public Searcher() {}
+       IndexReader reader = DirectoryReader.open(dir);
 
-    public void init() throws IOException {
-        Directory dir = FSDirectory.open(Paths.get(indexDirectoryPath));
-        IndexReader reader = DirectoryReader.open(dir);
-        indexSearcher = new IndexSearcher(reader);
-    }
+       indexSearcher = new IndexSearcher(reader);
+   }
 
-    TopDocs search(String textToFind) throws IOException, ParseException {
-        TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
-        QueryParser queryParser = new QueryParser("contents", new StandardAnalyzer());
-        Query query = queryParser.parse(textToFind);
+   TopDocs search(String textToFind) throws IOException, ParseException {
+	   TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
 
-        indexSearcher.search(query, collector);
+   		queryParser = new QueryParser("contents", new StandardAnalyzer());
 
-        TopDocs hits = indexSearcher.search(query, 100);
-        return hits;
-    }
+   		query = queryParser.parse(textToFind);
 
-    public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
-        return indexSearcher.doc(scoreDoc.doc);
-    }
+   		indexSearcher.search(query, collector);
+
+       TopDocs hits = indexSearcher.search(query, 100);
+       return hits;
+   }
+   
+   public Document getDocument(ScoreDoc scoreDoc) throws CorruptIndexException, IOException {
+	
+		      return indexSearcher.doc(scoreDoc.doc);	
+   }
+   
 
 
 }
