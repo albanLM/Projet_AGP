@@ -3,14 +3,14 @@ package engine;
 import java.util.ArrayList;
 
 public class Criteria {
-    private int numberOfDay;
+    private int duration;
     private float maxPrice;
     private ArrayList<String> keywords;
     private EnumTripType typeOfTrip;
 
-    public Criteria(int numberOfDay, float maxPrice, ArrayList<String> keywords, EnumTripType typeOfTrip) {
+    public Criteria(int duration, float maxPrice, ArrayList<String> keywords, EnumTripType typeOfTrip) {
 		super();
-		this.numberOfDay = numberOfDay;
+		this.duration = duration;
 		this.maxPrice = maxPrice;
 		this.keywords = keywords;
 		this.typeOfTrip = typeOfTrip;
@@ -20,12 +20,12 @@ public class Criteria {
         keywords.addAll(newKeywords);
     }
 
-    public int getNumberOfDay() {
-        return numberOfDay;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setNumberOfDay(int numberOfDay) {
-        this.numberOfDay = numberOfDay;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public float getMaxPrice() {

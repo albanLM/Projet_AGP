@@ -11,4 +11,8 @@ public class ExcursionBuilder {
 		
 		return excursion;
 	}
+
+	public Excursion buildEmptyExcursion() {
+		return null;
+	}
 }
