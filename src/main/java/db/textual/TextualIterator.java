@@ -24,33 +24,27 @@ public class TextualIterator implements OperatorInterface {
 
     @Override
     public void init() throws IOException, ParseException {
-/*
         if (results.size() == 0) {
             TopDocs hits = lucene.search(query);
             for (ScoreDoc doc : hits.scoreDocs) {
                 this.results.add(doc);
             }
         }
-*/
     }
 
     @Override
     public boolean hasNext() {
-    	return false;
-        /*return currentPosition < results.size();*/
+        return currentPosition < results.size();
     }
 
     @Override
     public ScoreDoc next() {
-    	return null;
-/*
         if (!hasNext()) {
             return null;
         }
         ScoreDoc doc = results.get(currentPosition);
         currentPosition++;
         return doc;
-*/
     }
 
     @Override

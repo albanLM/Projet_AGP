@@ -14,43 +14,31 @@ import org.mockito.junit.MockitoJUnit;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class TripBuilderTest {
-    private Criteria criteria;
-    private ArrayList<Excursion> excursionsMock;
-    @Mock private ExcursionBuilder excursionBuilder;
-    @InjectMocks private TripBuilder tripBuilder;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-        excursionsMock.add(mock(Excursion.class));
-
-//        when(excursionBuilder.buildExcursions()).thenReturn();
-
-        ArrayList<String> keywords = new ArrayList<>();
-        keywords.add("string1");
-        int minPrice = 10;
-        int maxPrice = 50;
-        int numberOfDay = 5;
-
-        criteria = new Criteria(numberOfDay, minPrice, maxPrice, keywords, EnumComfort.Relaxing, 0);
-    }
+    @Mock Criteria criteriaMock;
+    @Mock ExcursionBuilder excursionBuilderMock;
+    @InjectMocks TripBuilder tripBuilder;
 
     @Test
     void buildTrips() {
-        int keywordCountStart = criteria.getKeywords().size();
-        int keywordCountEnd;
-        ArrayList<Trip> trips;
+        MockitoAnnotations.initMocks(this);
+        ArrayList<Excursion> excursions = new ArrayList<Excursion>();
+        excursions.add(mock(Excursion.class));
+        excursions.add(mock(Excursion.class));
+        when(excursionBuilderMock.buildExcursions()).thenReturn(excursions);
 
-        trips = tripBuilder.buildTrips(criteria);
+        // Tester que buildTrip renvoie bien une des offres
 
-        keywordCountEnd = criteria.getKeywords().size();
-        assertTrue(keywordCountStart < keywordCountEnd, "building trips should add keywords");
-        assertNotEquals(criteria.getExcursionCount(), 0, "excursion count should be set");
+        assertDoesNotThrow(() -> {
+            ArrayList<Trip> trips = tripBuilder.buildTrips();
+        }, "building trips should not fail");
+
+        ArrayList<Trip> trips = tripBuilder.buildTrips();
+
+        // Vérification
+        assertFalse(trips.isEmpty(), "returned list shouldn't be empty");
     }
 }

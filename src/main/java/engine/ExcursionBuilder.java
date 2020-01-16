@@ -5,11 +5,23 @@ import data.Excursion;
 import java.util.ArrayList;
 
 public class ExcursionBuilder {
-    public ExcursionBuilder() {}
+    private ArrayList<String> keywords;
 
-    public ArrayList<Excursion> buildExcursions(ArrayList<String> keywords) {
+    public ExcursionBuilder(ArrayList<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    public ArrayList<Excursion> buildExcursions() {
         // Chercher des lieux avec les keywords
         // Chercher les véhicules correspondant
         return null;
+    }
+
+    public ArrayList<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(ArrayList<String> keywords) {
+        this.keywords = keywords;
     }
 }
