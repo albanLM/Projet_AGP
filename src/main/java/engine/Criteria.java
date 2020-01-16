@@ -7,6 +7,7 @@ public class Criteria {
     private float maxPrice;
     private ArrayList<String> keywords;
     private EnumTripType typeOfTrip;
+    private float maxTimePerDay;
 
     public Criteria(int duration, float maxPrice, ArrayList<String> keywords, EnumTripType typeOfTrip) {
 		super();
@@ -50,6 +51,14 @@ public class Criteria {
 
 	public void setTypeOfTrip(EnumTripType typeOfTrip) {
 		this.typeOfTrip = typeOfTrip;
+	}
+
+	public float getMaxTimePerDay() {
+		return maxTimePerDay;
+	}
+
+	public void setMaxTimePerDay(float maxTimePerDay) {
+		this.maxTimePerDay = maxTimePerDay;
 	}
 
 }
