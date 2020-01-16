@@ -45,20 +45,25 @@ public class TripBuilder {
         return null;
     }
 
+    // Faire une requete pour chaque mot clé ajouté
     private void addKeywords(Criteria criteria) {
         ArrayList<String> newKeywords = new ArrayList<>();
          switch (criteria.getComfort())
          {
              case Relaxing:
-                 newKeywords.add("");
+                 newKeywords.add("Facile, convient à tout public");
                  break;
              case Sportive:
+                 newKeywords.add("volcan");
+                 newKeywords.add("montagnes");
+
                  break;
              case Historic:
-                 break;
-             case Romantic:
+                 newKeywords.add("histoire");
+                 newKeywords.add("historique");
                  break;
              case Intense:
+                 newKeywords.add("toute la journée");
                  break;
          }
     }
