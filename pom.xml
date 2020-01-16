@@ -56,15 +56,15 @@
       <version>${lucene.version}</version>
     </dependency>
     <!--JSF-->
-    <dependency>
-      <groupId>javax.faces</groupId>
+     <dependency>
+      <groupId>com.sun.faces</groupId>
       <artifactId>jsf-api</artifactId>
-      <version>2.1</version>
+      <version>2.1.7</version>
     </dependency>
     <dependency>
-      <groupId>javax.faces</groupId>
+      <groupId>com.sun.faces</groupId>
       <artifactId>jsf-impl</artifactId>
-      <version>1.2-20</version>
+      <version>2.1.7</version>
     </dependency>
     <!--SERVLET-->
     <dependency>
