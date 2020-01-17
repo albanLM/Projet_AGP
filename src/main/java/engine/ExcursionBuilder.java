@@ -1,27 +1,54 @@
 package engine;
 
-import data.Excursion;
-
 import java.util.ArrayList;
 
+import data.Date;
+import data.Event;
+import data.Date;
+import data.Excursion;
+import data.Hotel;
+
 public class ExcursionBuilder {
-    private ArrayList<String> keywords;
 
-    public ExcursionBuilder(ArrayList<String> keywords) {
-        this.keywords = keywords;
-    }
+	private ArrayList<Event> events;
+	private ArrayList<Float> scores;
 
-    public ArrayList<Excursion> buildExcursions() {
-        // Chercher des lieux avec les keywords
-        // Chercher les véhicules correspondant
-        return null;
-    }
+	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel, Date start) {
+		Excursion excursion = new Excursion(new ArrayList<Event>(), start, start, 0.0f);
+		EventBuilder eventBuilder = new EventBuilder();
 
-    public ArrayList<String> getKeywords() {
-        return keywords;
-    }
+		for(Float f : matchingScores) {
+			scores.add(f + 1.0f);
+		}
+		for(Float f : nonMatchingScores) {
+			scores.add(0.3f);
+		}
+		events.addAll(matchingEvents);
+		events.addAll(nonMatchingEvents);
 
-    public void setKeywords(ArrayList<String> keywords) {
-        this.keywords = keywords;
-    }
+		while(!events.isEmpty() && !scores.isEmpty()) {
+			float scoresSum = 0.0f;
+			for(Float f : scores) {
+				scoresSum += f;
+			}
+			double randomNumber = (float)(Math.random() * scoresSum);
+			int index = 0;
+			while(randomNumber > scores.get(index)) {
+				index++;
+			}
+			Event possibleEvent = events.get(index);
+			scores.remove(index);
+			events.remove(index);
+
+			eventBuilder.buildEvent(possibleEvent, excursion, criteria.getMaxTimePerDay(), criteria.getMaxPrice()/criteria.getDuration(), hotel);
+		}
+
+		eventBuilder.buildBackToHotel(excursion, hotel);
+
+		return excursion;
+	}
+
+	public Excursion buildEmptyExcursion(Date date) {
+		return new Excursion(new ArrayList<Event>(), date, date, 0);
+	}
 }
