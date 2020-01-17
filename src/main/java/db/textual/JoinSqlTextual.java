@@ -9,18 +9,26 @@ import java.util.List;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.ScoreDoc;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class JoinSqlTextual implements OperatorInterface{
+public class JoinSqlTextual implements IteratorInterface{
 
 	private LuceneSystem lucene;
 	private String queryJson;
 	private List<String> results = new ArrayList<>();
 	private int currentPosition = 0;
+	private String tableName;
+	private String columnName;
+	private String idName;
 	
-	public JoinSqlTextual(LuceneSystem lucene,String queryJson) {
+	public JoinSqlTextual(LuceneSystem lucene,String queryJson,String tableName,String columnName,String idName) {
 		this.queryJson = queryJson;
 		this.lucene = lucene;
+		this.tableName = tableName;
+		this.columnName = columnName;
+		this.idName = idName;
 	}
 
 	@Override
@@ -32,31 +40,42 @@ public class JoinSqlTextual implements OperatorInterface{
 
 		String querySql = queryAll[0];
 		String queryTextual = queryAll[1];
-		String rs = "" ; 
+		ScoreDoc textualIt = null;
+		String sqlIt  = null;
+		
 			textualIterator = new TextualIterator(lucene, queryTextual);
-			sqlIterator = new SqlIterator(querySql);
+			sqlIterator = new SqlIterator(querySql,tableName,columnName,idName);
 			
 			sqlIterator.init();
 			textualIterator.init();
 			
-			
+            
 			while(sqlIterator.hasNext()) {
 				
-        		rs = (String) sqlIterator.next();
-        		String[] rsR = rs.split("#");
+				textualIt = textualIterator.next();
+				sqlIt = sqlIterator.next();
+				
+        		String[] rsR = sqlIt.split("#");
+        		//System.out.println(sqlIt);
         		while(textualIterator.hasNext()) {
-        			ScoreDoc d = textualIterator.next();
-		        	Document doc = lucene.getSearcher().getDocument(d);
+        			
+		        	Document doc = lucene.getSearcher().getDocument(textualIt);
+		        	//System.out.println(rsR[0]+"=="+rsR[1]+"#"+textualIt.score+"#"+doc.get("path"));
 		        	
-		        	if(doc.get("path").equalsIgnoreCase(rsR[1])){
-		        		String addRes = rsR[0]+"#"+doc.get("contents")+"#"+d.score; 
+		        	if(doc.get("path").equals(rsR[1])){
+		        		String addRes = "score:"+textualIt.score+"#id:"+rsR[0];
+		        		for(int i = 2; i<rsR.length;i++) {
+		        			addRes = addRes +"#"+ rsR[i];
+		        		}
+		        		
 		        		results.add(addRes);
+		        		//System.out.println("resultat : "+ addRes);
 		        	}
-		        	d = textualIterator.next();
+		        	textualIt = textualIterator.next();
+		        	
         		}
         		textualIterator.reset();
         	}
-			
 	}
 
 	@Override
@@ -79,9 +98,22 @@ public class JoinSqlTextual implements OperatorInterface{
         currentPosition ++;
         return doc; 
 	}
-
+	
+	public String position() {
+		String doc = results.get(currentPosition);
+        return doc; 
+	}
+	
 	@Override
 	public void reset() {
 		currentPosition = 0;
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 }
