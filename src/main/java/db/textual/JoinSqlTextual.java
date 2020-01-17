@@ -48,28 +48,29 @@ public class JoinSqlTextual implements IteratorInterface{
 			
 			sqlIterator.init();
 			textualIterator.init();
-			
-            
+
 			while(sqlIterator.hasNext()) {
 				
 				textualIt = textualIterator.next();
 				sqlIt = sqlIterator.next();
 				
         		String[] rsR = sqlIt.split("#");
-        		//System.out.println(sqlIt);
+        		System.out.println(sqlIt);
         		while(textualIterator.hasNext()) {
         			
 		        	Document doc = lucene.getSearcher().getDocument(textualIt);
-		        	//System.out.println(rsR[0]+"=="+rsR[1]+"#"+textualIt.score+"#"+doc.get("path"));
+		        	System.out.println(rsR[0]+"=="+rsR[1]+"#"+textualIt.score+"#"+doc.get("path"));
 		        	
 		        	if(doc.get("path").equals(rsR[1])){
-		        		String addRes = "score:"+textualIt.score+"#id:"+rsR[0];
+		        		String addRes = "score:"+textualIt.score+"#id:"+rsR[0]+"#"+doc.get("contents");
+
+						System.out.println(rsR[0]+"=="+rsR[1]+"#"+textualIt.score+"#"+doc.get("contents"));
 		        		for(int i = 2; i<rsR.length;i++) {
 		        			addRes = addRes +"#"+ rsR[i];
 		        		}
 		        		
 		        		results.add(addRes);
-		        		//System.out.println("resultat : "+ addRes);
+		        		System.out.println("resultat : "+ addRes);
 		        	}
 		        	textualIt = textualIterator.next();
 		        	

@@ -37,7 +37,8 @@ public class SqlIterator implements IteratorInterface {
         try {
         	ResultSet rs = null;
             Statement preparedStatement = (Statement) DatabaseConnection.getConnection().createStatement();
-            //System.out.println(!query.contains("*"));
+            System.out.println(!query.contains("*"));
+			System.out.println(query);
             if(!query.contains(tableName)) {
             	rs = preparedStatement.executeQuery(query);
             	ResultSetMetaData metaData = rs.getMetaData();
