@@ -28,12 +28,11 @@
       <version>5.5.2</version>
       <scope>test</scope>
     </dependency>
-    <!--MOCKITO-->
+    <!--JGIVEN-->
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>2.0.2-beta</version>
-      <scope>test</scope>
+      <groupId>com.tngtech.jgiven</groupId>
+      <artifactId>jgiven-junit5</artifactId>
+      <version>1.0.0-RC3</version>
     </dependency>
     <!--LUCENE-->
     <dependency>
@@ -56,27 +55,8 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
     </dependency>
-    <!--SPRING-->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>5.2.2.RELEASE</version>
-      <scope>provided</scope>
-    </dependency>
-    <!--JSON-->
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20190722</version>
-    </dependency>
-    <!--JAVAX-->
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>8.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
+    <!--JSF-->
+     <dependency>
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <version>2.1.7</version>
@@ -85,6 +65,30 @@
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-impl</artifactId>
       <version>2.1.7</version>
+    </dependency>
+    <!--SERVLET-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>3.0-alpha-1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+	<dependency>
+	    <groupId>org.primefaces</groupId>
+	    <artifactId>primefaces</artifactId>
+	    <version>6.0</version>
+	</dependency>
+    <!--SPRING-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.2.2.RELEASE</version>
+    </dependency>
+    <!--JSON-->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20190722</version>
     </dependency>
   </dependencies>
 

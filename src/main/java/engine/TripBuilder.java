@@ -9,6 +9,10 @@ public class TripBuilder {
     private final int DYNAMIC_START_OF_DAY = 8;
     private final int LAZY_TIME_A_DAY = 6;
     private final int LAZY_START_OF_DAY = 10;
+    
+    public TripBuilder() {
+    	
+    }
 
     public Trip buildTrip(Criteria criteria) {
         Trip trip = new Trip();
@@ -20,7 +24,7 @@ public class TripBuilder {
         ArrayList<Excursion> finalExcursions = new ArrayList<>();
         int duration = criteria.getDuration();
         float maxPrice = criteria.getMaxPrice() / duration;
-        criteria.setMaxTimePerDay(criteria.getTypeOfTrip() == EnumTripType.Dynamic ? DYNAMIC_TIME_A_DAY : LAZY_TIME_A_DAY);
+        criteria.setMaxTimePerDay(criteria.getTypeOfTrip() == EnumTripType.B ? DYNAMIC_TIME_A_DAY : LAZY_TIME_A_DAY);
 
         /* Build the trip */
         trip.setStart(new Date(0, 0, 0));
@@ -28,7 +32,7 @@ public class TripBuilder {
         trip.setHotel(getRandomHotel(criteria)); // Get a random hotel
         float totalPrice = 0;
         for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
-            if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
+            if (criteria.getTypeOfTrip() == EnumTripType.B || Math.random() > 0.5) {
             	Date date = new Date(i, 0, 0);
                 Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel(), date);
                 totalPrice += excursion.getPrice();
