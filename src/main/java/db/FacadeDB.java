@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import engine.DataSearch;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +33,40 @@ public class FacadeDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String createQuery(DataSearch ds){
+        String query = "SELECT * FROM ";
+        String where = "";
+        String objectType = ds.getObjectType();
+        ArrayList<String> conditions = ds.getConditions();
+        String table = "";
+
+        if (objectType.equals("hotel"))
+            table = "place, " + objectType;
+        else table = objectType;
+
+        query = query.concat(table);
+
+        if (conditions != null){
+            if(objectType.equals("hotel"))
+                 where = " WHERE place.id = hotel.id_place AND "+conditions.get(0);
+            else where = " WHERE "+ conditions.get(0);
+
+            System.out.println(conditions.size());
+
+            for (int conditionsIndex = 1; conditionsIndex<conditions.size(); conditionsIndex++){
+                where = where.concat(" AND " + conditions.get(conditionsIndex));
+            }
+
+            query = query.concat(where);
+        }
+        if (ds.getKeywords() != null){
+            query = query.concat(" WITH " + ds.getKeywords());
+        }
+
+
+        return query;
     }
 
     public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException {
