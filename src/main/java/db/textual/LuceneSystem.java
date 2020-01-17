@@ -16,6 +16,7 @@ public class LuceneSystem {
 	private Searcher searcher;
 	
 	public LuceneSystem(String indexDir, String dataDir) {
+		
 		this.dataDir = dataDir; 
 		this.indexDir = indexDir; 
 	}
@@ -55,6 +56,22 @@ public class LuceneSystem {
 
 	public void setSearcher(Searcher searcher) {
 		this.searcher = searcher;
+	}
+
+	public String getIndexDir() {
+		return indexDir;
+	}
+
+	public void setIndexDir(String indexDir) {
+		this.indexDir = indexDir;
+	}
+
+	public String getDataDir() {
+		return dataDir;
+	}
+
+	public void setDataDir(String dataDir) {
+		this.dataDir = dataDir;
 	}
 	   
 	   

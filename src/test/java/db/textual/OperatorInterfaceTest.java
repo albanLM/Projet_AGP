@@ -13,7 +13,7 @@ class OperatorInterfaceTest {
     @BeforeEach
     void setUp() {
         query = "";
-        sqlIterator = new SqlIterator(query);
+//        sqlIterator = new SqlIterator(query);
     }
 
     @AfterEach

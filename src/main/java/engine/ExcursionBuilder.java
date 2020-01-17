@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import data.Date;
 import data.Event;
-import data.Date;
 import data.Excursion;
 import data.Hotel;
 
@@ -40,7 +39,7 @@ public class ExcursionBuilder {
 			scores.remove(index);
 			events.remove(index);
 
-			eventBuilder.buildEvent(possibleEvent, excursion, criteria.getMaxTimePerDay(), criteria.getMaxPrice()/criteria.getDuration(), hotel);
+			eventBuilder.buildEvent(possibleEvent, excursion, criteria.getMaxTimePerDay(), criteria.getMaxPrice()/criteria.getNumberOfDays(), hotel);
 		}
 
 		eventBuilder.buildBackToHotel(excursion, hotel);

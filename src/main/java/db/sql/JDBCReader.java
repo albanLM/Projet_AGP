@@ -21,8 +21,8 @@ public class JDBCReader {
 	}
 	
 	public Place readPlace(int id) throws SQLException{
-		String placeQuery = "SELECT * FROM Place WHERE id=?";
-		String coordsQuery = "SELECT * FROM Coordinates WHERE id=?";
+		String placeQuery = "SELECT * FROM place WHERE id=?";
+		String coordsQuery = "SELECT * FROM coordinates WHERE id=?";
 		
 		PreparedStatement placeStatement = conn.prepareStatement(placeQuery);
 		placeStatement.setInt(1,id);
@@ -33,7 +33,7 @@ public class JDBCReader {
 			ResultSet resultCoords = coordsStatement.executeQuery();
 			if(resultCoords.next()) {
 				Coordinates coords = new Coordinates(resultCoords.getInt("x"),resultCoords.getInt("y"));
-				return new Place(resultPlace.getString("name"),coords,resultPlace.getString("descriptionFile"));
+				return new Place(resultPlace.getString("name"),coords,resultPlace.getString("description"));
 			}
 			return null; 
 		}
@@ -43,8 +43,8 @@ public class JDBCReader {
 	public ArrayList<Place> readAllPlaces() throws SQLException{
 		ArrayList<Place> places = new ArrayList<Place>();
 		
-		String placeQuery = "SELECT * FROM Place";
-		String coordsQuery = "SELECT * FROM Coordinates WHERE id=?";
+		String placeQuery = "SELECT * FROM place";
+		String coordsQuery = "SELECT * FROM coordinates WHERE id=?";
 		
 		PreparedStatement placeStatement = conn.prepareStatement(placeQuery);
 		ResultSet resultPlace = placeStatement.executeQuery();
@@ -63,7 +63,7 @@ public class JDBCReader {
 	}
 	
 	public TransportMethod readTransportMethod(int id) throws SQLException{
-		String transportQuery = "SELECT * FROM TransportMethod WHERE id=?";
+		String transportQuery = "SELECT * FROM transportMethod WHERE id=?";
 		
 		PreparedStatement transportStatement = conn.prepareStatement(transportQuery);
 		transportStatement.setInt(1,id);
@@ -74,7 +74,7 @@ public class JDBCReader {
 	
 	public ArrayList<TransportMethod> readAllTransportMethods() throws SQLException{
 		ArrayList<TransportMethod> methods = new ArrayList<TransportMethod>();
-		String transportQuery = "SELECT * FROM TransportMethod WHERE";
+		String transportQuery = "SELECT * FROM transportMethod WHERE";
 		
 		PreparedStatement transportStatement = conn.prepareStatement(transportQuery);
 		ResultSet resultTransport = transportStatement.executeQuery();
@@ -88,8 +88,8 @@ public class JDBCReader {
 
 	public Hotel readHotel(int id) throws SQLException{
 		Place place = this.readPlace(id);
-		
-		String hotelQuery = "SELECT * FROM Hotel WHERE id_place=?";
+		String hotelQuery = "SELECT * FROM hotel WHERE id_place=?";
+
 		
 		PreparedStatement hotelStatement = conn.prepareStatement(hotelQuery);
 		hotelStatement.setInt(1,id);
@@ -105,7 +105,7 @@ public class JDBCReader {
 	public ArrayList<Hotel> readAllHotels() throws SQLException{
 		ArrayList<Hotel> hotels = new ArrayList<Hotel>();
 		
-		String hotelQuery = "SELECT * FROM Hotel";
+		String hotelQuery = "SELECT * FROM hotel";
 		
 		PreparedStatement hotelStatement = conn.prepareStatement(hotelQuery);
 		ResultSet resultHotel = hotelStatement.executeQuery();
@@ -121,7 +121,7 @@ public class JDBCReader {
 	}
 
 	public Visit readVisit(int id) throws SQLException{
-		String visitQuery = "SELECT * FROM Visit WHERE id=?";
+		String visitQuery = "SELECT * FROM visit WHERE id=?";
 		
 		PreparedStatement visitStatement = conn.prepareStatement(visitQuery);
 		visitStatement.setInt(1,id);
@@ -135,7 +135,7 @@ public class JDBCReader {
 	public ArrayList<Visit> readAllVisits() throws SQLException{
 		ArrayList<Visit> visits = new ArrayList<Visit>();
 		
-String visitQuery = "SELECT * FROM Visit";
+		String visitQuery = "SELECT * FROM visit";
 		
 		PreparedStatement visitStatement = conn.prepareStatement(visitQuery);
 		ResultSet resultVisit = visitStatement.executeQuery();

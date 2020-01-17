@@ -1,9 +1,13 @@
 package db;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.TransportMethod;
+import data.Visit;
+import db.textual.*;
+import engine.DataSearch;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,11 +16,6 @@ import data.Hotel;
 import data.Place;
 import db.sql.DatabaseConnection;
 import db.sql.JDBCReader;
-import db.textual.BuildRequest;
-import db.textual.JoinSqlTextual;
-import db.textual.LuceneSystem;
-import db.textual.ParseRequest;
-import db.textual.SqlIterator;
 
 public class FacadeDB {
 
@@ -34,46 +33,128 @@ public class FacadeDB {
         }
     }
 
-    public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException {
-        SqlIterator sqlIt;
-        JoinSqlTextual join;
-        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-        String query = "SELECT id, description FROM place, hotel WHERE "
-                + "place.id = hotel.id_beach ";
-        build = new BuildRequest();
-        build.buildQuery(jsonObject, query);
-        String sql = build.getQuery();
+    public String readFile(String filename) {
+        InputStream is = null;
 
-        if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
-            try {
-                join.init();
-                while (join.hasNext()) {
-                    String result[] = join.next().split("#");
-                    String id = result[0];
-                    String contents = result[1];
-                    Hotel hotel = jdbc.readHotel(Integer.parseInt(id));
-                    hotel.setDescriptionFile(contents);
-                    hotels.add(hotel);
-                }
-            } catch (IOException | ParseException | SQLException | JSONException e) {
-                e.printStackTrace();
+        try {
+            is = new FileInputStream("./src/main/resources/inputFiles/"+filename+".txt");
+            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+            String line = buf.readLine();
+            StringBuilder sb = new StringBuilder();
+
+            while(line != null){
+                sb.append(line).append("\n");
+                line = buf.readLine();
             }
 
-            return hotels;
-        } else {
-            sqlIt = new SqlIterator(sql);
-            try {
-                sqlIt.init();
-                while (sqlIt.hasNext()) {
-                    String[] result = sqlIt.next().split("#");
-                    Hotel hotel = jdbc.readHotel(Integer.parseInt(result[0]));
-                    hotels.add(hotel);
-                }
-            } catch (IOException | ParseException | SQLException e) {
-                e.printStackTrace();
-            }
+            return sb.toString();
+        } catch (FileNotFoundException e) {
+            return "";
+        } catch (IOException e) {
+            return "";
         }
+
+
+    }
+
+    public static String createQuery(DataSearch ds){
+        String query = "SELECT * FROM ";
+        String where = "";
+        String objectType = ds.getObjectType();
+        ArrayList<String> conditions = ds.getConditions();
+        String table = "";
+
+        if (objectType.equals("hotel"))
+            table = "place, " + objectType;
+        else table = objectType;
+
+        query = query.concat(table);
+
+        if (conditions != null){
+            if(objectType.equals("hotel"))
+                 where = " WHERE place.id = hotel.id_place AND "+conditions.get(0);
+            else where = " WHERE "+ conditions.get(0);
+
+            System.out.println(conditions.size());
+
+            for (int conditionsIndex = 1; conditionsIndex<conditions.size(); conditionsIndex++){
+                where = where.concat(" AND " + conditions.get(conditionsIndex));
+            }
+
+            query = query.concat(where);
+        }
+        else if(objectType.equals("hotel")){
+            where = " WHERE place.id = hotel.id_place";
+        }
+        if (ds.getKeywords() != null){
+            query = query.concat(" WITH " + ds.getKeywords());
+        }
+
+
+        return query;
+    }
+
+
+    public ArrayList<Visit> getVisits(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Visit> visits = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Visit visit = jdbc.readVisit(Integer.parseInt(id));
+            visits.add(visit);
+        }
+        return visits;
+    }
+
+    public ArrayList<Place> getPlaces(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Place> places = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Place place = jdbc.readPlace(Integer.parseInt(id));
+            places.add(place);
+        }
+        return places;
+    }
+
+    public TransportMethod getTransportMethods(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<TransportMethod> transportMethods = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+            String[] result = array.get(0).split("#");
+            String id = result[0];
+            TransportMethod transportMethod = jdbc.readTransportMethod(Integer.parseInt(id));
+        return transportMethod;
+    }
+
+    public ArrayList<Hotel> getHotels(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Hotel hotel = jdbc.readHotel(Integer.parseInt(id));
+
+            hotel.setDescriptionFile(readFile(contents));
+            hotels.add(hotel);
+        }
+
 
         return hotels;
     }
@@ -88,7 +169,8 @@ public class FacadeDB {
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -106,7 +188,8 @@ public class FacadeDB {
             return beaches;
 
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
@@ -130,7 +213,8 @@ public class FacadeDB {
         String sql = build.getQuery();
         SqlIterator sqlIt;
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -147,7 +231,8 @@ public class FacadeDB {
 
             return places;
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
