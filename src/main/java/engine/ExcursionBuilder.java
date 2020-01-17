@@ -1,43 +1,53 @@
 package engine;
 
-import data.Excursion;
-import data.Place;
-import db.FacadeDB;
-
 import java.util.ArrayList;
 
+import data.Date;
+import data.Event;
+import data.Excursion;
+import data.Hotel;
+
 public class ExcursionBuilder {
-    private ArrayList<String> keywords;
-    private ArrayList<Excursion> proposedExcursions;
-    private PlaceSearch placeSearch;
 
-    public ExcursionBuilder(ArrayList<String> keywords) {
-        this.keywords = keywords;
-        proposedExcursions = new ArrayList<>();
-        placeSearch = new PlaceSearch(new FacadeDB());
-    }
+	private ArrayList<Event> events;
+	private ArrayList<Float> scores;
 
-    public ArrayList<Excursion> buildExcursions() {
-        // Chercher des lieux avec les keywords
-        placeSearch.searchPlaces(keywords);
-        ArrayList<Place> places = placeSearch.getPlaces();
+	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel, Date start) {
+		Excursion excursion = new Excursion(new ArrayList<Event>(), start, start, 0.0f);
+		EventBuilder eventBuilder = new EventBuilder();
 
+		for(Float f : matchingScores) {
+			scores.add(f + 1.0f);
+		}
+		for(Float f : nonMatchingScores) {
+			scores.add(0.3f);
+		}
+		events.addAll(matchingEvents);
+		events.addAll(nonMatchingEvents);
 
-        // Construire les véhicules correspondants
+		while(!events.isEmpty() && !scores.isEmpty()) {
+			float scoresSum = 0.0f;
+			for(Float f : scores) {
+				scoresSum += f;
+			}
+			double randomNumber = (float)(Math.random() * scoresSum);
+			int index = 0;
+			while(randomNumber > scores.get(index)) {
+				index++;
+			}
+			Event possibleEvent = events.get(index);
+			scores.remove(index);
+			events.remove(index);
 
-        return null;
-    }
+			eventBuilder.buildEvent(possibleEvent, excursion, criteria.getMaxTimePerDay(), criteria.getMaxPrice()/criteria.getNumberOfDays(), hotel);
+		}
 
-    public Excursion buildExcursion() {
-        
-        return null;
-    }
+		eventBuilder.buildBackToHotel(excursion, hotel);
 
-    public ArrayList<String> getKeywords() {
-        return keywords;
-    }
+		return excursion;
+	}
 
-    public void setKeywords(ArrayList<String> keywords) {
-        this.keywords = keywords;
-    }
+	public Excursion buildEmptyExcursion(Date date) {
+		return new Excursion(new ArrayList<Event>(), date, date, 0);
+	}
 }

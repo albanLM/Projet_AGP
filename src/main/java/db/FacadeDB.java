@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import engine.DataSearch;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,40 @@ public class FacadeDB {
         }
     }
 
+    public static String createQuery(DataSearch ds){
+        String query = "SELECT * FROM ";
+        String where = "";
+        String objectType = ds.getObjectType();
+        ArrayList<String> conditions = ds.getConditions();
+        String table = "";
+
+        if (objectType.equals("hotel"))
+            table = "place, " + objectType;
+        else table = objectType;
+
+        query = query.concat(table);
+
+        if (conditions != null){
+            if(objectType.equals("hotel"))
+                 where = " WHERE place.id = hotel.id_place AND "+conditions.get(0);
+            else where = " WHERE "+ conditions.get(0);
+
+            System.out.println(conditions.size());
+
+            for (int conditionsIndex = 1; conditionsIndex<conditions.size(); conditionsIndex++){
+                where = where.concat(" AND " + conditions.get(conditionsIndex));
+            }
+
+            query = query.concat(where);
+        }
+        if (ds.getKeywords() != null){
+            query = query.concat(" WITH " + ds.getKeywords());
+        }
+
+
+        return query;
+    }
+
     public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException {
         SqlIterator sqlIt;
         JoinSqlTextual join;
@@ -44,7 +79,8 @@ public class FacadeDB {
         String sql = build.getQuery();
 
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -61,7 +97,8 @@ public class FacadeDB {
 
             return hotels;
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
@@ -87,7 +124,8 @@ public class FacadeDB {
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -105,7 +143,8 @@ public class FacadeDB {
             return beaches;
 
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
@@ -129,7 +168,8 @@ public class FacadeDB {
         String sql = build.getQuery();
         SqlIterator sqlIt;
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -146,7 +186,8 @@ public class FacadeDB {
 
             return places;
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {

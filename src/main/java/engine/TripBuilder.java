@@ -1,86 +1,57 @@
 package engine;
 
-import data.Excursion;
-import data.Trip;
-import ihm.Criteria;
+import data.*;
 
 import java.util.ArrayList;
 
 public class TripBuilder {
-    ExcursionBuilder excursionBuilder;
-    private Criteria criteria;
+    private final int DYNAMIC_TIME_A_DAY = 10;
+    private final int DYNAMIC_START_OF_DAY = 8;
+    private final int LAZY_TIME_A_DAY = 6;
+    private final int LAZY_START_OF_DAY = 10;
 
-    private ArrayList<Trip> proposedTrips;
+    public Trip buildTrip(Criteria criteria) {
+        Trip trip = new Trip();
+        ExcursionBuilder excursionBuilder = new ExcursionBuilder();
+        ArrayList<Event> matchingEvents = new ArrayList<>();
+        ArrayList<Event> nonMatchingEvents = new ArrayList<>();
+        ArrayList<Float> matchingScores = new ArrayList<>();
+        ArrayList<Float> nonMatchingScores = new ArrayList<>();
+        ArrayList<Excursion> finalExcursions = new ArrayList<>();
+        int duration = criteria.getNumberOfDays();
+        float maxPrice = criteria.getMaxPrice() / duration;
+        criteria.setMaxTimePerDay(criteria.getTypeOfTrip() == EnumTripType.Dynamic ? DYNAMIC_TIME_A_DAY : LAZY_TIME_A_DAY);
 
-    public TripBuilder(Criteria criteria) {
-        this.criteria = criteria;
-        this.proposedTrips = new ArrayList<>();
-    }
-
-    public void buildTrips() {
-        updateCriteria(); // Add keywords depending on comfort
-        excursionBuilder = new ExcursionBuilder(criteria.getKeywords());
-        excursionBuilder.buildExcursions();
-    }
-
-    public Trip buildTrip() {
-        for (int i = 0; i < criteria.getExcursionCount(); i++)
-        {
-            proposedTrips.add(getRandomTrip());
+        /* Build the trip */
+        trip.setStart(new Date(0, 0, 0));
+        trip.setEnd(new Date(duration, 0, 0));
+        trip.setHotel(getRandomHotel()); // Get a random hotel
+        float totalPrice = 0;
+        for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
+            if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
+            	Date date = new Date(i, 0, 0);
+                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel(), date);
+                totalPrice += excursion.getPrice();
+                finalExcursions.add(excursion);
+            } else {
+                finalExcursions.add(excursionBuilder.buildEmptyExcursion(new Date(i, 0, 0)));
+            }
         }
-        return null;
+        trip.setExcursions(finalExcursions);
+        trip.setPrice(totalPrice);
+
+        return trip;
     }
 
+    private Hotel getRandomHotel() {
 
-    /*private Trip getMostExpensiveTrip() {
-        return null;
+        DataSearch dataSearch = new DataSearch("hotel", null, null);
+
+        ArrayList<Hotel> foundHotels = dataSearch.searchHotel();
+        int randIndex = (int)Math.random()*foundHotels.size();
+
+        return foundHotels.get(randIndex);
+
     }
 
-    private Trip getMostPertinentTrip() {
-        return null;
-    }
-
-    private Trip getLowerPriceTrip() {
-        return null;
-    }*/
-    private Trip getRandomTrip () {
-        ArrayList<Excursion> excursions = excursionBuilder.buildExcursions();
-        return null;
-    }
-
-    private void updateCriteria() {
-        ArrayList<String> newKeywords = new ArrayList<>();
-        switch (criteria.getComfort())
-        {
-            case Relaxing: // 20%
-                newKeywords.add("");
-                break;
-            case Sportive:
-                break;
-            case Historic:
-                break;
-            case Intense:
-                break;
-        }
-    }
-
-    public ExcursionBuilder getExcursionBuilder() {
-        return excursionBuilder;
-    }
-
-    public void setExcursionBuilder(ExcursionBuilder excursionBuilder) {
-        this.excursionBuilder = excursionBuilder;
-    }
-
-    public Criteria getCriteria() {
-        return criteria;
-    }
-
-    public void setCriteria(Criteria criteria) {
-        this.criteria = criteria;
-    }
-
-    public ArrayList<Trip> getProposedTrips() {
-        return proposedTrips;
-    }
 }

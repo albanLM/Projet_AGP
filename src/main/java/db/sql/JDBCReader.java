@@ -135,7 +135,7 @@ public class JDBCReader {
 	public ArrayList<Visit> readAllVisits() throws SQLException{
 		ArrayList<Visit> visits = new ArrayList<Visit>();
 		
-String visitQuery = "SELECT * FROM Visit";
+		String visitQuery = "SELECT * FROM Visit";
 		
 		PreparedStatement visitStatement = conn.prepareStatement(visitQuery);
 		ResultSet resultVisit = visitStatement.executeQuery();
