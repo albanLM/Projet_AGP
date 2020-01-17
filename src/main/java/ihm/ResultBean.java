@@ -16,7 +16,6 @@ import data.Hotel;
 import data.Place;
 import data.Trip;
 import data.TripList;
-import data.TripListIterator;
 import data.Visit;
 
 
