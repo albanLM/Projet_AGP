@@ -2,6 +2,7 @@ package engine;
 
 import data.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TripBuilder {
@@ -10,7 +11,7 @@ public class TripBuilder {
     private final int LAZY_TIME_A_DAY = 6;
     private final int LAZY_START_OF_DAY = 10;
 
-    public Trip buildTrip(Criteria criteria) {
+    public Trip buildTrip(Criteria criteria) throws SQLException {
         Trip trip = new Trip();
         ExcursionBuilder excursionBuilder = new ExcursionBuilder();
         ArrayList<Event> matchingEvents = new ArrayList<>();
@@ -43,7 +44,7 @@ public class TripBuilder {
         return trip;
     }
 
-    private Hotel getRandomHotel() {
+    private Hotel getRandomHotel() throws SQLException {
 
         DataSearch dataSearch = new DataSearch("hotel", null, null);
 

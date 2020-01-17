@@ -4,7 +4,9 @@ import data.Hotel;
 import data.Place;
 import data.TransportMethod;
 import data.Visit;
+import db.FacadeDB;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DataSearch {
@@ -13,6 +15,7 @@ public class DataSearch {
     private String objectType;
     private ArrayList<String> conditions;
     private String keywords;
+    private FacadeDB fdb = new FacadeDB("./src/main/resources/indexFiles","./src/main/resources/inputFiles");
 
     public DataSearch(String objectType, ArrayList<String> conditions, String keywords) {
         this.objectType = objectType;
@@ -44,28 +47,37 @@ public class DataSearch {
         this.keywords = keywords;
     }
 
-    public ArrayList<Hotel> searchHotel(){
-        ArrayList<Hotel> list = new ArrayList<>();
-
-        return list;
+    public ArrayList<Hotel> searchHotel() throws SQLException {
+        return fdb.getHotels(this);
     }
 
     public ArrayList<Place> searchPlace(){
-        ArrayList<Place> list = new ArrayList<>();
 
-        return list;
+        try {
+            return fdb.getPlaces(this);
+        } catch (SQLException e) {
+            ArrayList<Place> places = new ArrayList<>();
+            return places;
+        }
     }
 
-    public ArrayList<TransportMethod> searchTransport(){
-        ArrayList<TransportMethod> list = new ArrayList<>();
+    public TransportMethod searchTransport(){
 
-        return list;
+        try {
+            return fdb.getTransportMethods(this);
+        } catch (SQLException e) {
+            return new TransportMethod("car", 100, 5);
+        }
     }
 
     public ArrayList<Visit> searchVisit(){
         ArrayList<Visit> list = new ArrayList<>();
 
-        return list;
+        try {
+            return fdb.getVisits(this);
+        } catch (SQLException e) {
+            return new ArrayList<Visit>();
+        }
     }
 
 }

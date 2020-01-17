@@ -1,9 +1,12 @@
 package db;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.TransportMethod;
+import data.Visit;
+import db.textual.*;
 import engine.DataSearch;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.JSONException;
@@ -13,11 +16,6 @@ import data.Hotel;
 import data.Place;
 import db.sql.DatabaseConnection;
 import db.sql.JDBCReader;
-import db.textual.BuildRequest;
-import db.textual.JoinSqlTextual;
-import db.textual.LuceneSystem;
-import db.textual.ParseRequest;
-import db.textual.SqlIterator;
 
 public class FacadeDB {
     private BuildRequest build;
@@ -32,6 +30,30 @@ public class FacadeDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String readFile(String filename) {
+        InputStream is = null;
+
+        try {
+            is = new FileInputStream("./src/main/resources/inputFiles/"+filename+".txt");
+            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+            String line = buf.readLine();
+            StringBuilder sb = new StringBuilder();
+
+            while(line != null){
+                sb.append(line).append("\n");
+                line = buf.readLine();
+            }
+
+            return sb.toString();
+        } catch (FileNotFoundException e) {
+            return "";
+        } catch (IOException e) {
+            return "";
+        }
+
+
     }
 
     public static String createQuery(DataSearch ds){
@@ -60,6 +82,9 @@ public class FacadeDB {
 
             query = query.concat(where);
         }
+        else if(objectType.equals("hotel")){
+            where = " WHERE place.id = hotel.id_place";
+        }
         if (ds.getKeywords() != null){
             query = query.concat(" WITH " + ds.getKeywords());
         }
@@ -68,48 +93,67 @@ public class FacadeDB {
         return query;
     }
 
-    public ArrayList<Hotel> getHotels(JSONObject jsonObject) throws JSONException {
-        SqlIterator sqlIt;
-        JoinSqlTextual join;
-        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-        String query = "SELECT id, description FROM place, hotel WHERE "
-                + "place.id = hotel.id_beach ";
-        build = new BuildRequest();
-        build.buildQuery(jsonObject, query);
-        String sql = build.getQuery();
 
-        if (ParseRequest.isWith(sql)) {
-            // FIXME : Correct constructor
-            join = new JoinSqlTextual(system, sql, "", "", "");
-            try {
-                join.init();
-                while (join.hasNext()) {
-                    String result[] = join.next().split("#");
-                    String id = result[0];
-                    String contents = result[1];
-                    Hotel hotel = jdbc.readHotel(Integer.parseInt(id));
-                    hotel.setDescriptionFile(contents);
-                    hotels.add(hotel);
-                }
-            } catch (IOException | ParseException | SQLException | JSONException e) {
-                e.printStackTrace();
-            }
+    public ArrayList<Visit> getVisits(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Visit> visits = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
 
-            return hotels;
-        } else {
-            // FIXME : Correct constructor
-            sqlIt = new SqlIterator(sql, "", "", "");
-            try {
-                sqlIt.init();
-                while (sqlIt.hasNext()) {
-                    String[] result = sqlIt.next().split("#");
-                    Hotel hotel = jdbc.readHotel(Integer.parseInt(result[0]));
-                    hotels.add(hotel);
-                }
-            } catch (IOException | ParseException | SQLException e) {
-                e.printStackTrace();
-            }
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Visit visit = jdbc.readVisit(Integer.parseInt(id));
+            visits.add(visit);
         }
+        return visits;
+    }
+
+    public ArrayList<Place> getPlaces(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Place> places = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Place place = jdbc.readPlace(Integer.parseInt(id));
+            places.add(place);
+        }
+        return places;
+    }
+
+    public TransportMethod getTransportMethods(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<TransportMethod> transportMethods = new ArrayList<>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+            String[] result = array.get(0).split("#");
+            String id = result[0];
+            TransportMethod transportMethod = jdbc.readTransportMethod(Integer.parseInt(id));
+        return transportMethod;
+    }
+
+    public ArrayList<Hotel> getHotels(DataSearch ds) throws SQLException {
+        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+        String query = createQuery(ds);
+        ArrayList<String> array = api.executeSqle(query);
+
+        for(String str : array){
+            String[] result = str.split("#");
+            String id = result[0];
+            String contents = result[1];
+            Hotel hotel = jdbc.readHotel(Integer.parseInt(id));
+
+            hotel.setDescriptionFile(readFile(contents));
+            hotels.add(hotel);
+        }
+
 
         return hotels;
     }
