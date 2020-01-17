@@ -45,7 +45,8 @@ public class FacadeDB {
         String sql = build.getQuery();
 
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -62,7 +63,8 @@ public class FacadeDB {
 
             return hotels;
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
@@ -88,7 +90,8 @@ public class FacadeDB {
         build.buildQuery(jsonObject, query);
         String sql = build.getQuery();
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -106,7 +109,8 @@ public class FacadeDB {
             return beaches;
 
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
@@ -130,7 +134,8 @@ public class FacadeDB {
         String sql = build.getQuery();
         SqlIterator sqlIt;
         if (ParseRequest.isWith(sql)) {
-            join = new JoinSqlTextual(system, sql);
+            // FIXME : Correct constructor
+            join = new JoinSqlTextual(system, sql, "", "", "");
             try {
                 join.init();
                 while (join.hasNext()) {
@@ -147,7 +152,8 @@ public class FacadeDB {
 
             return places;
         } else {
-            sqlIt = new SqlIterator(sql);
+            // FIXME : Correct constructor
+            sqlIt = new SqlIterator(sql, "", "", "");
             try {
                 sqlIt.init();
                 while (sqlIt.hasNext()) {
