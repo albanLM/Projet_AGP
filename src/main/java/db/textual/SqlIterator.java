@@ -23,7 +23,6 @@ public class SqlIterator implements IteratorInterface {
 	private String idName;
 	
     public SqlIterator(String query,String tableName,String columnName,String idName) {
-        this.query = query;
         this.tableName = tableName;
         this.setColumnName(columnName);
         this.setIdName(idName);
@@ -36,6 +35,7 @@ public class SqlIterator implements IteratorInterface {
     public void init() throws IOException, ParseException {
         try {
         	ResultSet rs = null;
+        	System.out.println(query);
             Statement preparedStatement = (Statement) DatabaseConnection.getConnection().createStatement();
             System.out.println(!query.contains("*"));
 			System.out.println(query);
@@ -43,9 +43,7 @@ public class SqlIterator implements IteratorInterface {
             	rs = preparedStatement.executeQuery(query);
             	ResultSetMetaData metaData = rs.getMetaData();
                 int columns = metaData.getColumnCount();
-                
-                
-                
+ 
                 while (rs.next()) {
                 	String data =  metaData.getColumnName(1)+":" + rs.getString(1);
                 	

@@ -3,6 +3,7 @@ package ihm;
 
 import java.awt.List;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -35,19 +36,18 @@ public class  EntryBean implements Serializable{
 	
 	
 	public String start() {
+		ArrayList<String> keys = new ArrayList<String>(); 
+		keys.add(keywords); 
+		Criteria criteria  = new Criteria(duration, priceMax, keys, EnumTripType.fromString(type)); 
+		
 		return "result";
 	}
 	
 
 
 	public EntryBean() {
-		ArrayList<String> keys = new ArrayList<String>(); 
-		keys.add(keywords); 
-		Criteria criteria  = new Criteria(duration, priceMax, keys, EnumTripType.fromString(type)); 
-		trip = new TripBuilder().buildTrip(criteria);  
 		
 		
-	
 		for(EnumComfort env : EnumComfort.values()){
 			System.out.println(env.getText());
 			types.add(env.getText()); 
@@ -58,6 +58,9 @@ public class  EntryBean implements Serializable{
 			items.add(menuChoice);	
 		}
 		
+		
+	
+
 	}
 
 
