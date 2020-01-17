@@ -7,8 +7,13 @@ import data.TransportMethod;
 public class UtilityClass {
 
 	public static String determineTransportMethod(Place placeA, Place placeB) {
-		return "car";
-		//return "boat";
+
+		if (placeA.getDescriptionFile().indexOf("Samaria") == placeB.getDescriptionFile().indexOf("Samaria") ||
+			placeA.getDescriptionFile().indexOf("Crète") == placeB.getDescriptionFile().indexOf("Crète"))
+			return "car";
+		else return "boat";
+
+
 	}
 	
 	public static int calculateDistance(Coordinates coordA, Coordinates coordB) {
