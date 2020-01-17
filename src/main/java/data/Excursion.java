@@ -1,9 +1,11 @@
 package data;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Excursion {
     private ArrayList<Event> events;
+  
     private Date start;
     private Date end;
     private float price;
@@ -18,6 +20,16 @@ public class Excursion {
 
     public ArrayList<Event> getEvents() {
         return events;
+    }
+    
+    private ArrayList<Visit> getVisit(){
+    	ArrayList<Visit> visit = new ArrayList<Visit>();
+    	
+    	for(Event ev : events) {
+    		visit.add((Visit) ev); 
+    	}
+    	
+    	return visit;
     }
 
     public void setEvents(ArrayList<Event> events) {

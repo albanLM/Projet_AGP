@@ -22,10 +22,11 @@ public class TerminalDBUtility {
 			System.out.println("Cancel an action in progress : cancel");
 			System.out.println("Search in the database : search");
 			line = scanner.nextLine();
-			if(line.equals("search")) {
-				ConsoleIHM.consoleIHM();
-			}
-			else if(line.equals("insert")) {
+//			if(line.equals("search")) {
+//				ConsoleIHM.consoleIHM();
+//			}
+//			else
+				if(line.equals("insert")) {
 				boolean inserted = false;
 				while(!line.equals("cancel") && !inserted && !line.equals("exit")){
 					System.out.println("Insert an object from a type among Coordinates, TransportMethod, Place, Visit and Hotel");

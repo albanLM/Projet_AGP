@@ -2,9 +2,9 @@ package ihm;
 
 public enum EnumComfort {
     A("Lazy"),
-    B("Dynamic");
-
-
+    B("Dynamic"); 
+    
+    
     private String text;
 
 	EnumComfort(String text) {

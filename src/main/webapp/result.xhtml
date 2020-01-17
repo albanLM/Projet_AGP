@@ -16,20 +16,17 @@
 		Excursion type : #{resultBean.type} <br /> 
 		Keywords : #{resultBean.keywords} <br /> 
 		Duration : #{resultBean.duration} days <br />
-		Range price : Between #{resultBean.priceMin} and #{resultBean.priceMax} <br /> 
+		Max price : #{resultBean.priceMax} <br /> 
 
 	</fieldset>
 	<fieldset>		
 		
 	<fieldset>
 		<ul>
-		<ui:repeat value="#{resultBean.listtrips}" var="item">
-		
-			<ul>
-				<ui:repeat value="#{item.trips}" var="trips">
-					<li><h:outputText value="Hotel #{trips.hotel.name}"/></li>
-					<ul>
-						<ui:repeat value="#{trips.excursions}" var="excursions">
+
+					<li><h:outputText value="Hotel #{resultBean.trip.hotel.name}"/></li>
+			
+						<ui:repeat value="#{resultBean.trip.excursions}" var="excursions">
 							<li><h:outputText value="Departure Hour #{excursions.start.day}"/></li>
 							<ul>
 								<ui:repeat value="#{excursions.events}" var="events">
@@ -37,11 +34,6 @@
 								</ui:repeat>
 							</ul>
 						</ui:repeat>
-					</ul>
-				</ui:repeat>
-			</ul>
-			
-		</ui:repeat>
 		</ul>
 	</fieldset>
 	
