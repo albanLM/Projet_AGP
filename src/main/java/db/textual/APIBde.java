@@ -137,6 +137,7 @@ public class APIBde {
 		return result;
 		
 	}
+
 	
 	public String getTableName() {
 		return tableName;

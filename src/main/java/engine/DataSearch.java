@@ -66,7 +66,7 @@ public class DataSearch {
         try {
             return fdb.getTransportMethods(this);
         } catch (SQLException e) {
-            return new TransportMethod("car", 100, 5);
+            return new TransportMethod("bus", 100, 5);
         }
     }
 
