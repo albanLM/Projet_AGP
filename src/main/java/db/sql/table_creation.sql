@@ -30,6 +30,7 @@ CREATE TABLE Visit (
 CREATE TABLE Hotel (
 	id_place BIGINT UNSIGNED PRIMARY KEY,
 	pricePerDay FLOAT,
+	hotelTime FLOAT,
 	id_beach BIGINT UNSIGNED,
 	CONSTRAINT fk_hotel_place FOREIGN KEY (id_place) REFERENCES Place(id),
 	CONSTRAINT fk_hotel_beach FOREIGN KEY (id_beach) REFERENCES Place(id)

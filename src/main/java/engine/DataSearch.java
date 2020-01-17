@@ -11,11 +11,26 @@ public class DataSearch {
     private ArrayList<Hotel> hotels;
     private ArrayList<TransportMethod> vehicles;
 
-    public void searchForPlaces() {
+    public void searchForPlaces(ArrayList<String> keywords) {
+
     }
 
-    public void searchForHotel() {
+    public void searchForHotels(ArrayList<String> keywords) {
     }
 
+    public void searchForVehicles() {
+        String request = "SELECT * FROM";
+    }
 
+    public ArrayList<Place> getPlaces() {
+        return places;
+    }
+
+    public ArrayList<Hotel> getHotels() {
+        return hotels;
+    }
+
+    public ArrayList<TransportMethod> getVehicles() {
+        return vehicles;
+    }
 }
