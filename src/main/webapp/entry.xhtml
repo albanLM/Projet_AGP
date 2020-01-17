@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Kalimera</title>
+</h:head>
+<h:body>
+	<p>
+		<strong>Welcome to excursion simulator !</strong>
+	</p>
+
+	<h2>Please enter values for simulation parameters</h2>
+	<fieldset>
+		<h:form>
+			<div align="center">
+				<b>Trip type:</b>
+				<h:selectOneMenu value="#{entryBean.type}">
+					<f:selectItems value="#{entryBean.items}" />
+					
+				</h:selectOneMenu>
+			</div>
+			<p align="center"> Trip duration (in days) : <h:inputText value="#{entryBean.duration}" /></p>
+			<p align="center">Maximal Price : <h:inputText value="#{entryBean.priceMax}" /> </p>
+			<p align="center">Key words : <h:inputText value="#{entryBean.keywords}" /> </p>
+			 
+			<h:commandButton value="Search" action="#{entryBean.start}" align="center" />
+		</h:form>
+	</fieldset>
+</h:body>
+</html>

@@ -13,7 +13,8 @@ public class Place {
 	}
 
 	public String getName() {
-		return name;
+		System.out.println("hello world");
+		return "12345";
 	}
 
 	public void setName(String name) {

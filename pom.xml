@@ -56,19 +56,6 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
     </dependency>
-    <!--SPRING-->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>5.2.3.RELEASE</version>
-      <scope>provided</scope>
-    </dependency>
-    <!--JSON-->
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20190722</version>
-    </dependency>
     <!--JAVAX-->
     <dependency>
       <groupId>javax</groupId>
@@ -76,7 +63,8 @@
       <version>8.0.1</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+    <!--JSF-->
+     <dependency>
       <groupId>com.sun.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <version>2.2.20</version>
@@ -91,6 +79,13 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.19</version>
     </dependency>
+    <!--PRIMEFACES-->
+	<dependency>
+	    <groupId>org.primefaces</groupId>
+	    <artifactId>primefaces</artifactId>
+	    <version>6.0</version>
+	</dependency>
+    <!--SPRING-->
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-backward-codecs</artifactId>
