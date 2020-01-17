@@ -44,12 +44,14 @@ public class TripBuilder {
     }
 
     private Hotel getRandomHotel(Criteria criteria) {
-/*
-        DataSearch dataSearch = new DataSearch();
-        ArrayList<Hotel> foundHotels = dataSearch.searchHotel(criteria.getKeywords());
-        return foundHotels.get(0);
-*/
-        return null;
+
+        DataSearch dataSearch = new DataSearch("hotel", null, null);
+
+        ArrayList<Hotel> foundHotels = dataSearch.searchHotel();
+        int randIndex = (int)Math.random()*foundHotels.size();
+
+        return foundHotels.get(randIndex);
+
     }
 
 }
