@@ -43,7 +43,7 @@ public class  EntryBean implements Serializable{
 	private boolean connected = false;
 
 	public EntryBean() {
-		
+//		TripBuilder tripbuilder = new TripBuilder(new Criteria(getDuration(), getPriceMax(), getKeywords(), getSelect))
 		for(EnumComfort env : EnumComfort.values()){
 			System.out.println(env.getText());
 			types.add(env.getText()); 

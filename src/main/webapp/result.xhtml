@@ -13,57 +13,38 @@
 		<legend>
 			<strong>Search data</strong>
 		</legend>		
-		Excurtion type : #{resultBean.type} <br /> 
+		Excursion type : #{resultBean.type} <br /> 
 		Keywords : #{resultBean.keywords} <br /> 
 		Duration : #{resultBean.duration} days <br />
 		Range price : Between #{resultBean.priceMin} and #{resultBean.priceMax} <br /> 
-		Client satisfaction rate : #{resultBean.keywords} % <br />
 
 	</fieldset>
 	<fieldset>		
 		
-<h:form>
-    <p:dataTable var="trips" value="#{resultBean.trips}">
-        <f:facet name="header">
-            Results
-        </f:facet>
- 
-        <p:columnGroup type="header">
-            <p:row>
-                <p:column rowspan="2" headerText="Location" />
-                <p:column colspan="2" headerText="Informations" />
-                
-            </p:row>
-            <p:row>
-                <p:column headerText="Excursion" />
-                <p:column headerText="Departure time" />
-                <p:column headerText="Price" />
-            </p:row>
-        </p:columnGroup>
- 
-        <p:subTable var="stats" value="#{trips.trips}">
-            <f:facet name="header">
-                <h:outputText value="#{stats.hotel.name}" />
-            </f:facet>
-            <p:column>
-                <h:outputText value="#{stats.excursions.price}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="#{stats.excursions.price}" />
-            </p:column>
-            <p:column>
-                <h:outputText value="Day #{stats.excursions.start.day}" />
-            </p:column>
-            <p:columnGroup type="footer">
-                <p:row>
-                    <p:column footerText="Totals: " style="text-align:right"/>
-                    <p:column footerText="#{team.allWins}" />
-                    <p:column footerText="#{team.allLosses}" />
-                </p:row>
-            </p:columnGroup>
-        </p:subTable>
-    </p:dataTable>
-</h:form>
+	<fieldset>
+		<ul>
+		<ui:repeat value="#{resultBean.listtrips}" var="item">
+		
+			<ul>
+				<ui:repeat value="#{item.trips}" var="trips">
+					<li><h:outputText value="Hotel #{trips.hotel.name}"/></li>
+					<ul>
+						<ui:repeat value="#{trips.excursions}" var="excursions">
+							<li><h:outputText value="Departure Hour #{excursions.start.day}"/></li>
+							<ul>
+								<ui:repeat value="#{excursions.events}" var="events">
+									<li><h:outputText value="Excursion #{events.place.name}"/></li>
+								</ui:repeat>
+							</ul>
+						</ui:repeat>
+					</ul>
+				</ui:repeat>
+			</ul>
+			
+		</ui:repeat>
+		</ul>
+	</fieldset>
+	
 
 	</fieldset>
 	

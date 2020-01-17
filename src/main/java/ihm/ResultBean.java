@@ -16,6 +16,7 @@ import data.Hotel;
 import data.Place;
 import data.Trip;
 import data.TripList;
+import data.TripListIterator;
 import data.Visit;
 
 
@@ -31,12 +32,18 @@ public class ResultBean implements Serializable{
 	private String type;
 	private double priceMin;
 	private double priceMax;
-	private TripList trips; 
-	private ArrayList<Trip> trip = new ArrayList<Trip>(); 
-	private ArrayList<Event> events = new ArrayList<Event>(); 
-	private String keywords;
-	private ArrayList<String> types = new ArrayList<String>();
-	private ArrayList<Excursion> exc = new ArrayList<Excursion>(); 
+	private TripList listtrips; 
+	private ArrayList<String> infos = new ArrayList<String>(); 
+	public ArrayList<String> getInfos() {
+		return infos;
+	}
+
+	public void setInfos(ArrayList<String> infos) {
+		this.infos = infos;
+	}
+
+	String keywords;
+	
 	public double getPriceMin() {
 		return  entryBeans.getPriceMin();
 	}
@@ -47,8 +54,19 @@ public class ResultBean implements Serializable{
 
 	
 	public ResultBean() {
-		events.add(new Visit(10,10, new Place("salut", new Coordinates(10,10), "salut"))); 
+		ArrayList<Trip> trip = new ArrayList<Trip>(); 
+		ArrayList<Visit> events = new ArrayList<Visit>(); 
+		String inf = "";
+		ArrayList<String> types = new ArrayList<String>();
+		ArrayList<Excursion> exc = new ArrayList<Excursion>(); 
+		events.add(new Visit(10,10, new Place("2222", new Coordinates(10,10), "1111"))); 
 		events.add(new Visit(20,20, new Place("au revoir", new Coordinates(10,10), "au revoir")));
+		events.add(new Visit(10,10, new Place("33333", new Coordinates(10,10), "1111"))); 
+		events.add(new Visit(20,20, new Place("au revoir", new Coordinates(10,10), "au revoir")));
+		events.add(new Visit(10,10, new Place("4444", new Coordinates(10,10), "1111"))); 
+		events.add(new Visit(20,20, new Place("au revoir", new Coordinates(10,10), "au revoir")));
+		exc.add(new Excursion(events, new Date(10,10,2012), new Date(10,10,2012), 20));
+		exc.add(new Excursion(events, new Date(10,10,2012), new Date(10,10,2012), 20));
 		exc.add(new Excursion(events, new Date(10,10,2012), new Date(10,10,2012), 20));
 		Hotel hotel = new Hotel("salut", new Coordinates(10,10), keywords, duration,
 				new Place("salut", new Coordinates(10,10), "salut")); 
@@ -69,34 +87,27 @@ public class ResultBean implements Serializable{
 				new Date(10,10,2012), 
 				new Date(10,10,2012))); 
 		
-		setTrips(new TripList(trip)); 
+		setListTrips(new TripList(trip)); 
 		
-		System.out.println("hotel "+trips.getTrips().get(0).getHotel().getName());
+		System.out.println("hotel "+listtrips.getTrips().get(0).getHotel().getName());
+		System.out.println("SSSS "+listtrips.getTrips().get(0).getExcursions().get(0).getEvents().get(0).getPlace().getName());
+		
+		for(Trip tr : listtrips.getTrips()) {
+			inf+=" Hotel "+tr.getHotel().getName()+"\n "; 
+			for(Excursion ex : tr.getExcursions()) {
+				inf+=" Departure Time "+ex.getStart().getDay()+"\n"; 
+				for(Visit vi : ex.getEvents()) {
+					inf+=" Excursion"+vi.getPlace().getName()+"\n"; 
+				}
+				inf+="\n \n"; 
+			}
+			System.out.println(inf);
+			infos.add(inf); 
+			inf = ""; 
+		}
 	}
 	
-	public ArrayList<Trip> getTrip() {
-		return trip;
-	}
-
-	public void setTrip(ArrayList<Trip> trip) {
-		this.trip = trip;
-	}
-
-	public ArrayList<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(ArrayList<Event> events) {
-		this.events = events;
-	}
-
-	public ArrayList<Excursion> getExc() {
-		return exc;
-	}
-
-	public void setExc(ArrayList<Excursion> exc) {
-		this.exc = exc;
-	}
+	
 
 	public String start() {
 		return "entry"; 
@@ -138,10 +149,6 @@ public class ResultBean implements Serializable{
 		return entryBeans.getTypes();
 	}
 
-	public void setTypes(ArrayList<String> types) {
-		this.types = types;
-	}
-
 	public double getPriceMax() {
 		return  entryBeans.getPriceMax();
 	}
@@ -150,11 +157,13 @@ public class ResultBean implements Serializable{
 		this.priceMax = priceMax;
 	}
 
-	public TripList getTrips() {
-		return trips;
+	public TripList getListtrips() {
+		return listtrips;
 	}
 
-	public void setTrips(TripList trips) {
-		this.trips = trips;
+	public void setListTrips(TripList listtrips) {
+		this.listtrips = listtrips;
 	}
+
+
 }

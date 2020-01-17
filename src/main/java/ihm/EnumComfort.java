@@ -1,10 +1,8 @@
 package ihm;
 
 public enum EnumComfort {
-    A("Relaxing"),
-    B("Sportive"),
-    C("Historic"),
-    D("Intense"); 
+    A("Lazy"),
+    B("Dynamic"); 
     
     
     private String text;
