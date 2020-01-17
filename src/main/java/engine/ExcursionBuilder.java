@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 import data.Date;
 import data.Event;
+import data.Date;
 import data.Excursion;
 import data.Hotel;
 
 public class ExcursionBuilder {
-	
+
 	private ArrayList<Event> events;
 	private ArrayList<Float> scores;
 
 	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel, Date start) {
 		Excursion excursion = new Excursion(new ArrayList<Event>(), start, start, 0.0f);
 		EventBuilder eventBuilder = new EventBuilder();
-		
+
 		for(Float f : matchingScores) {
 			scores.add(f + 1.0f);
 		}
@@ -24,7 +25,7 @@ public class ExcursionBuilder {
 		}
 		events.addAll(matchingEvents);
 		events.addAll(nonMatchingEvents);
-		
+
 		while(!events.isEmpty() && !scores.isEmpty()) {
 			float scoresSum = 0.0f;
 			for(Float f : scores) {
@@ -38,16 +39,16 @@ public class ExcursionBuilder {
 			Event possibleEvent = events.get(index);
 			scores.remove(index);
 			events.remove(index);
-			
+
 			eventBuilder.buildEvent(possibleEvent, excursion, criteria.getMaxTimePerDay(), criteria.getMaxPrice()/criteria.getDuration(), hotel);
 		}
-		
+
 		eventBuilder.buildBackToHotel(excursion, hotel);
-		
+
 		return excursion;
 	}
 
 	public Excursion buildEmptyExcursion() {
-		return null;
+		return new Excursion(new ArrayList<Event>(), new Date(0, 0, 0), new Date(0, 0, 0), 0);
 	}
 }

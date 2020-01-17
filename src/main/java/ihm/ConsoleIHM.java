@@ -31,7 +31,6 @@ public class ConsoleIHM {
 			
 			System.out.println(js);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
