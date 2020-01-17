@@ -48,7 +48,7 @@ public class ExcursionBuilder {
 		return excursion;
 	}
 
-	public Excursion buildEmptyExcursion() {
-		return new Excursion(new ArrayList<Event>(), new Date(0, 0, 0), new Date(0, 0, 0), 0);
+	public Excursion buildEmptyExcursion(Date date) {
+		return new Excursion(new ArrayList<Event>(), date, date, 0);
 	}
 }

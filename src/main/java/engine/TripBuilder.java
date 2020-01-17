@@ -34,7 +34,7 @@ public class TripBuilder {
                 totalPrice += excursion.getPrice();
                 finalExcursions.add(excursion);
             } else {
-                finalExcursions.add(excursionBuilder.buildEmptyExcursion());
+                finalExcursions.add(excursionBuilder.buildEmptyExcursion(new Date(i, 0, 0)));
             }
         }
         trip.setExcursions(finalExcursions);
