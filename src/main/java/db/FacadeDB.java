@@ -95,7 +95,7 @@ public class FacadeDB {
 
 
     public ArrayList<Visit> getVisits(DataSearch ds) throws SQLException {
-        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        APIBde api = new APIBde("place","description","id");
         ArrayList<Visit> visits = new ArrayList<>();
         String query = createQuery(ds);
         ArrayList<String> array = api.executeSqle(query);
@@ -111,7 +111,7 @@ public class FacadeDB {
     }
 
     public ArrayList<Place> getPlaces(DataSearch ds) throws SQLException {
-        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        APIBde api = new APIBde("place","description","id");
         ArrayList<Place> places = new ArrayList<>();
         String query = createQuery(ds);
         ArrayList<String> array = api.executeSqle(query);
@@ -127,7 +127,7 @@ public class FacadeDB {
     }
 
     public TransportMethod getTransportMethods(DataSearch ds) throws SQLException {
-        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        APIBde api = new APIBde("place","description","id");
         ArrayList<TransportMethod> transportMethods = new ArrayList<>();
         String query = createQuery(ds);
         ArrayList<String> array = api.executeSqle(query);
@@ -139,7 +139,7 @@ public class FacadeDB {
     }
 
     public ArrayList<Hotel> getHotels(DataSearch ds) throws SQLException {
-        APIBde api = new APIBde("place","description","id","./src/main/resources/inputFiles","./src/main/resources/indexFiles");
+        APIBde api = new APIBde("place","description","id");
         ArrayList<Hotel> hotels = new ArrayList<Hotel>();
         String query = createQuery(ds);
         ArrayList<String> array = api.executeSqle(query);

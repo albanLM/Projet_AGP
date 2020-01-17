@@ -10,12 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DataSearch {
-
-
     private String objectType;
     private ArrayList<String> conditions;
     private String keywords;
-    private FacadeDB fdb = new FacadeDB("./src/main/resources/indexFiles","./src/main/resources/inputFiles");
+    private FacadeDB fdb = new FacadeDB();
 
     public DataSearch(String objectType, ArrayList<String> conditions, String keywords) {
         this.objectType = objectType;

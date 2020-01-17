@@ -1,18 +1,19 @@
 package db.textual;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.primefaces.json.JSONException;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.json.JSONException;
+
+import static db.RessourcePath.indexPath;
 
 public class APIBde {
 	
 	private String tableName;
 	private String columnName;
-	private String inputDir;
-	private String indexDir;
 	private String idName;
 	
 
@@ -23,17 +24,15 @@ public class APIBde {
 	 où seront placés les fichiers texte 
 	 et indexDir le dossier ou sont placé les fichiers indexes.
 	 */
-	public APIBde(String tableName,String columnName,String idName,String inputDir,String indexDir){
-		if(APIUtil.indexExist(indexDir)) {
+	public APIBde(String tableName,String columnName,String idName){
+		if(APIUtil.indexExist(indexPath)) {
 			try {
 				if(APIUtil.tableExist(tableName)) {
 					if(APIUtil.columnExist(tableName,columnName)) {
 						this.tableName = tableName;
 						this.columnName = columnName;
 						this.idName = idName;
-						this.inputDir = inputDir;
-						this.indexDir = indexDir;
-						
+
 					}else {
 						System.out.println("ERREUR : La colonne clé n'existe pas.");
 					}
@@ -46,7 +45,7 @@ public class APIBde {
 			}
 		}else {
 			System.out.println("ERREUR : L'index n'existe pas, creation de l'index");
-			LuceneSystem system = new LuceneSystem(indexDir,inputDir); 
+			LuceneSystem system = new LuceneSystem();
 			try {
 				system.createIndex();
 				try {
@@ -55,8 +54,6 @@ public class APIBde {
 							this.tableName = tableName;
 							this.columnName = columnName;
 							this.setIdName(idName);
-							this.inputDir = inputDir;
-							this.indexDir = indexDir;
 						}else {
 							System.out.println("ERREUR : La colonne clé n'existe pas.");
 						}
@@ -80,7 +77,7 @@ public class APIBde {
 	
 	/* Fonction qui met à jour l'index, par exemple pour ajouter un fichier a index */
 	public void updateIndex() {
-		LuceneSystem system = new LuceneSystem(indexDir,inputDir);
+		LuceneSystem system = new LuceneSystem();
 		APIUtil.deleteFiles("resources/indexFiles");
 		try {
 			system.createIndex();
@@ -97,7 +94,7 @@ public class APIBde {
 	public ArrayList<String> executeSqle(String query) {
 		SqlIterator sqlIt;
         JoinSqlTextual join;
-        LuceneSystem system = new LuceneSystem(indexDir,inputDir);
+        LuceneSystem system = new LuceneSystem();
         ArrayList<String> result = new ArrayList<String>();
         
         if (ParseRequest.isWith(query)) {
@@ -152,22 +149,6 @@ public class APIBde {
 
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
-	}
-
-	public String getInputDir() {
-		return inputDir;
-	}
-
-	public void setInputDir(String inputDir) {
-		this.inputDir = inputDir;
-	}
-
-	public String getIndexDir() {
-		return indexDir;
-	}
-
-	public void setIndexDir(String indexDir) {
-		this.indexDir = indexDir;
 	}
 
 	public String getIdName() {

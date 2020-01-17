@@ -37,7 +37,7 @@ public class DataBaseIntegrationTest {
         String request = "SELECT id, description FROM Place, Hotel WHERE Place.id = Hotel.id_beach  AND  pricePerDay > 10  WITH Gortyne";
 
         assertDoesNotThrow(()->{
-            ArrayList<Hotel> hotels = facadeDB.getHotels(jsonRequest);
+//            ArrayList<Hotel> hotels = facadeDB.getHotels();
         });
 
 //        System.out.println(hotels);
