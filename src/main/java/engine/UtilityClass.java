@@ -23,9 +23,9 @@ public class UtilityClass {
 	}
 	
 	public static float calculateTrajectoryTime(int distance, TransportMethod vehicule) {
-		return 0;
+		return distance*vehicule.getSpeed();
 	}
 	public static float calculateTrajectoryPrice(int distance, TransportMethod vehicule) {
-		return 0;
+		return distance*vehicule.getPricePerKm();
 	}
 }
