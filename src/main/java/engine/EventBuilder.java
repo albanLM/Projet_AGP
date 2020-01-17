@@ -4,6 +4,7 @@ import data.Event;
 import data.Excursion;
 import data.Hotel;
 import data.Place;
+import data.Trajectory;
 import data.TransportMethod;
 import data.Visit;
 
@@ -28,7 +29,7 @@ public class EventBuilder {
 //		}
 		int distanceToGoToEvent = UtilityClass.calculateDistance(startPlace.getCoord(), endPlace.getCoord());
 		float timeToGoToEvent = UtilityClass.calculateTrajectoryTime(distanceToGoToEvent, car);
-		float priceToGoToEvent = UtilityClass.calculateTrajectoryTime(distanceToGoToEvent, car);
+		float priceToGoToEvent = UtilityClass.calculateTrajectoryPrice(distanceToGoToEvent, car);
 		
 //		if(transportName.equals("car"))
 //		{
@@ -40,7 +41,7 @@ public class EventBuilder {
 //		}
 		int distanceToGoBackToHotel = UtilityClass.calculateDistance(endPlace.getCoord(), hotel.getCoord());
 		float timeToGoBackToHotel = UtilityClass.calculateTrajectoryTime(distanceToGoBackToHotel, car);
-		float priceToGoBackToHotel = UtilityClass.calculateTrajectoryTime(distanceToGoBackToHotel, car);
+		float priceToGoBackToHotel = UtilityClass.calculateTrajectoryPrice(distanceToGoBackToHotel, car);
 		
 		float totalTime = 0.0f;
 		for(Event e : excursion.getEvents()) {
@@ -50,6 +51,8 @@ public class EventBuilder {
 		if(totalTime + timeToGoToEvent + event.getTime() + timeToGoBackToHotel <= maxTimePerDay){
 			if(excursion.getPrice() + priceToGoToEvent + event.getPrice() + priceToGoBackToHotel <= maxPricePerDay) {
 				excursion.setPrice(excursion.getPrice() + priceToGoToEvent + event.getPrice());
+				excursion.getEvents().add(new Trajectory(timeToGoToEvent, priceToGoToEvent, car));
+				excursion.getEvents().add(event);
 			}
 		}
 		
@@ -64,10 +67,11 @@ public class EventBuilder {
 		
 //		String transportName = UtilityClass.determineTransportMethod(startPlace, endPlace);
 		
-//		float timeToGoBackToHotel = UtilityClass.calculateTrajectoryTime(distanceToGoBackToHotel, car);
-		float priceToGoBackToHotel = UtilityClass.calculateTrajectoryTime(distanceToGoBackToHotel, car);
+		float timeToGoBackToHotel = UtilityClass.calculateTrajectoryTime(distanceToGoBackToHotel, car);
+		float priceToGoBackToHotel = UtilityClass.calculateTrajectoryPrice(distanceToGoBackToHotel, car);
 		
 		excursion.setPrice(excursion.getPrice() + priceToGoBackToHotel);
+		excursion.getEvents().add(new Trajectory(timeToGoBackToHotel, priceToGoBackToHotel, car));
 		
 		return excursion;
 	}
