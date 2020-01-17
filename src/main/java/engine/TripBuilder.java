@@ -1,88 +1,57 @@
 package engine;
 
-import data.Excursion;
-import data.Trip;
-import ihm.Criteria;
+import data.*;
 
 import java.util.ArrayList;
 
 public class TripBuilder {
-    ExcursionBuilder excursionBuilder;
-    private Criteria criteria;
+    private final int DYNAMIC_TIME_A_DAY = 10;
+    private final int DYNAMIC_START_OF_DAY = 8;
+    private final int LAZY_TIME_A_DAY = 6;
+    private final int LAZY_START_OF_DAY = 10;
 
-    public TripBuilder(ExcursionBuilder excursionBuilder, Criteria criteria) {
-        this.excursionBuilder = excursionBuilder;
-        this.criteria = criteria;
-    }
-
-    public ArrayList<Trip> buildTrips() {
-        // Ajouter keywords en fonction du confort
-        addKeywords();
-
-        // Définir le nombre d'excursion en fonction du confort
-        int excursionCount = defineExcursionCount();
-
-        // Construire des offre selon certains critères prédéfinis
-        ArrayList<Trip> proposedTrips = new ArrayList<>();
-        proposedTrips.add(getMostPertinentTrip());
-        proposedTrips.add(getLowerPriceTrip());
-        proposedTrips.add(getMostExpensiveTrip());
-
-        return proposedTrips;
-    }
-
-    private Trip getMostExpensiveTrip() {
+    public Trip buildTrip(Criteria criteria) {
         Trip trip = new Trip();
-        ArrayList<Excursion> excursions = excursionBuilder.buildExcursions();
-        trip.setExcursions(excursions);
-        return null;
-    }
+        ExcursionBuilder excursionBuilder = new ExcursionBuilder();
+        ArrayList<Event> matchingEvents = new ArrayList<>();
+        ArrayList<Event> nonMatchingEvents = new ArrayList<>();
+        ArrayList<Float> matchingScores = new ArrayList<>();
+        ArrayList<Float> nonMatchingScores = new ArrayList<>();
+        ArrayList<Excursion> finalExcursions = new ArrayList<>();
+        int duration = criteria.getDuration();
+        float maxPrice = criteria.getMaxPrice() / duration;
+        criteria.setMaxTimePerDay(criteria.getTypeOfTrip() == EnumTripType.Dynamic ? DYNAMIC_TIME_A_DAY : LAZY_TIME_A_DAY);
 
-    private Trip getMostPertinentTrip() {
-        return null;
-    }
-
-    private Trip getLowerPriceTrip() {
-        return null;
-    }
-
-    private void addKeywords() {
-        ArrayList<String> newKeywords = new ArrayList<>();
-        switch (criteria.getComfort())
-        {
-            case Relaxing:
-                newKeywords.add("");
-                break;
-            case Sportive:
-                break;
-            case Historic:
-                break;
-            case Romantic:
-                break;
-            case Intense:
-                break;
+        /* Build the trip */
+        trip.setStart(new Date(0, 0, 0));
+        trip.setEnd(new Date(duration, 0, 0));
+        trip.setHotel(getRandomHotel(criteria)); // Get a random hotel
+        float totalPrice = 0;
+        for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
+            if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
+            	Date date = new Date(i, 0, 0);
+                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel(), date);
+                totalPrice += excursion.getPrice();
+                finalExcursions.add(excursion);
+            } else {
+                finalExcursions.add(excursionBuilder.buildEmptyExcursion(new Date(i, 0, 0)));
+            }
         }
+        trip.setExcursions(finalExcursions);
+        trip.setPrice(totalPrice);
 
+        return trip;
+    }
+
+    private Hotel getRandomHotel(Criteria criteria) {
+
+        DataSearch dataSearch = new DataSearch("hotel", null, null);
+
+        ArrayList<Hotel> foundHotels = dataSearch.searchHotel();
+        int randIndex = (int)Math.random()*foundHotels.size();
+
+        return foundHotels.get(randIndex);
 
     }
 
-    private int defineExcursionCount() {
-        return 0;
-    }
-
-    public ExcursionBuilder getExcursionBuilder() {
-        return excursionBuilder;
-    }
-
-    public void setExcursionBuilder(ExcursionBuilder excursionBuilder) {
-        this.excursionBuilder = excursionBuilder;
-    }
-
-    public Criteria getCriteria() {
-        return criteria;
-    }
-
-    public void setCriteria(Criteria criteria) {
-        this.criteria = criteria;
-    }
 }
