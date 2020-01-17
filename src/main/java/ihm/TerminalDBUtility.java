@@ -23,7 +23,7 @@ public class TerminalDBUtility {
 			System.out.println("Search in the database : search");
 			line = scanner.nextLine();
 			if(line.equals("search")) {
-				ConsoleIHM.consoleIHM();
+				//ConsoleIHM.consoleIHM();
 			}
 			else if(line.equals("insert")) {
 				boolean inserted = false;
