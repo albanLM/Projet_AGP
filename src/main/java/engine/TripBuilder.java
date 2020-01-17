@@ -29,7 +29,8 @@ public class TripBuilder {
         float totalPrice = 0;
         for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
             if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
-                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel());
+            	Date date = new Date(i, 0, 0);
+                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel(), date);
                 totalPrice += excursion.getPrice();
                 finalExcursions.add(excursion);
             } else {
