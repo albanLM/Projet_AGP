@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 public class TripBuilder {
     private final int DYNAMIC_TIME_A_DAY = 10;
+    private final int DYNAMIC_START_OF_DAY = 8;
     private final int LAZY_TIME_A_DAY = 6;
+    private final int LAZY_START_OF_DAY = 10;
 
     public Trip buildTrip(Criteria criteria) {
         Trip trip = new Trip();
@@ -27,7 +29,7 @@ public class TripBuilder {
         float totalPrice = 0;
         for (int i = 0; i < duration; i++) { // For each day : add an excursion or not
             if (criteria.getTypeOfTrip() == EnumTripType.Dynamic || Math.random() > 0.5) {
-                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel());
+                Excursion excursion = excursionBuilder.buildExcursion(criteria, matchingEvents, nonMatchingEvents, matchingScores, nonMatchingScores, trip.getHotel(), DYNAMIC_START_OF_DAY, LAZY_START_OF_DAY);
                 totalPrice += excursion.getPrice();
                 finalExcursions.add(excursion);
             } else {
@@ -41,9 +43,12 @@ public class TripBuilder {
     }
 
     private Hotel getRandomHotel(Criteria criteria) {
-        PlaceSearch placeSearch = new PlaceSearch();
-        ArrayList<Hotel> foundHotels = placeSearch.searchHotel(criteria.getKeywords());
+/*
+        DataSearch dataSearch = new DataSearch();
+        ArrayList<Hotel> foundHotels = dataSearch.searchHotel(criteria.getKeywords());
         return foundHotels.get(0);
+*/
+        return null;
     }
 
 }

@@ -9,7 +9,7 @@ import data.Hotel;
 
 public class ExcursionBuilder {
 
-	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel) {
+	public Excursion buildExcursion(Criteria criteria, ArrayList<Event> matchingEvents, ArrayList<Event> nonMatchingEvents, ArrayList<Float> matchingScores, ArrayList<Float> nonMatchingScores, Hotel hotel, int DYNAMIC_START_OF_DAY, int LAZY_START_OF_DAY) {
 		Excursion excursion = new Excursion(null, null, null, 0);
         ArrayList<Event> finalEvents = new ArrayList<>();
 
