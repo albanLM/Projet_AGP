@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.document.Document;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 
-public class TextualIterator implements OperatorInterface {
+public class TextualIterator implements IteratorInterface {
 
     private LuceneSystem lucene;
     private int currentPosition;
@@ -28,6 +29,10 @@ public class TextualIterator implements OperatorInterface {
             TopDocs hits = lucene.search(query);
             for (ScoreDoc doc : hits.scoreDocs) {
                 this.results.add(doc);
+                
+
+	        	//Document d = lucene.getSearcher().getDocument(doc);
+                //System.out.println("textual : "+doc.score+" "+d.get("path"));
             }
         }
     }
@@ -46,10 +51,14 @@ public class TextualIterator implements OperatorInterface {
         currentPosition++;
         return doc;
     }
-
+    
+    public ScoreDoc position() {
+        return results.get(currentPosition);
+	}
+    
     @Override
     public void reset() {
-        /*currentPosition = 0;*/
+        currentPosition = 0;
     }
 
 	public LuceneSystem getLucene() {
@@ -83,4 +92,5 @@ public class TextualIterator implements OperatorInterface {
 	public void setQuery(String query) {
 		this.query = query;
 	}
+
 }

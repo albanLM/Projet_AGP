@@ -27,8 +27,9 @@ public class Searcher {
    
    
    public Searcher(String indexPath) throws IOException {
+	   
 	   Directory dir = FSDirectory.open(Paths.get(indexPath));
-
+	   
        IndexReader reader = DirectoryReader.open(dir);
 
        indexSearcher = new IndexSearcher(reader);
@@ -38,7 +39,8 @@ public class Searcher {
 	   TopScoreDocCollector collector = TopScoreDocCollector.create(2, 1);
 
    		queryParser = new QueryParser("contents", new StandardAnalyzer());
-
+   		queryParser.setDefaultOperator(QueryParser.AND_OPERATOR);
+   		queryParser.setDefaultOperator(QueryParser.OR_OPERATOR);
    		query = queryParser.parse(textToFind);
 
    		indexSearcher.search(query, collector);
